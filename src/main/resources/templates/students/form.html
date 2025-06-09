@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${student.id} ? 'Sửa Sinh Viên' : 'Thêm Sinh Viên'">Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        .form-group label {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group input[type="radio"] {
+            width: auto;
+            margin-left: 10px;
+        }
+        .button {
+            padding: 8px 16px;
+            margin: 5px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-save { background-color: #28a745; }
+        .btn-cancel { background-color: #6c757d; }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 th:text="${student.id} ? 'Sửa Sinh Viên' : 'Thêm Sinh Viên'"></h2>
+        <form th:action="${student.id} ? @{/students/{id}(id=${student.id})} : @{/students}" th:object="${student}" method="post">
+            <div class="form-group">
+                <label>Tên:</label>
+                <input type="text" th:field="*{name}" required>
+                <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+            <div class="form-group">
+                <label>Ngày Sinh:</label>
+                <input type="date" th:field="*{dob}" required>
+                <span class="error" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></span>
+            </div>
+            <div class="form-group">
+                <label>Giới Tính:</label>
+                <input type="radio" th:field="*{gender}" value="Nam" id="male" required>
+                <label for="male">Nam</label>
+                <input type="radio" th:field="*{gender}" value="Nữ" id="female">
+                <label for="female">Nữ</label>
+                <span class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+            </div>
+            <div class="form-group">
+                <label>Điện Thoại:</label>
+                <input type="text" th:field="*{phone}" required>
+                <span class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+            </div>
+            <div class="form-group">
+                <label>Địa Chỉ:</label>
+                <input type="text" th:field="*{address}" required>
+                <span class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" th:field="*{email}" required>
+                <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            </div>
+            <div class="form-group">
+                <label>Khoa:</label>
+                <input type="text" th:field="*{department}" required>
+                <span class="error" th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></span>
+            </div>
+            <div class="form-group">
+                <label>Năm Học:</label>
+                <input type="number" th:field="*{year}" required min="1" max="6">
+                <span class="error" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
+            </div>
+            <div>
+                <button type="submit" class="button btn-save">Lưu</button>
+                <a th:href="@{/students}" class="button btn-cancel">Hủy</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

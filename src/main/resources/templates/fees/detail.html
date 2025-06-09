@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi Tiết Phí</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 32px 24px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #2b6cb0;
+            margin-bottom: 24px;
+            font-size: 2em;
+        }
+        .info-table {
+            margin: 0 auto 24px auto;
+            border-collapse: collapse;
+        }
+        .info-table td {
+            padding: 10px 16px;
+            font-size: 1.05em;
+        }
+        .info-table td.label {
+            font-weight: bold;
+            color: #444;
+            text-align: right;
+            width: 160px;
+        }
+        .info-table td.value {
+            text-align: left;
+            color: #222;
+        }
+        .button {
+            padding: 8px 16px;
+            margin: 5px 8px 0 0;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 1em;
+        }
+        .btn-back { background-color: #6c757d; }
+        .btn-edit { background-color: #007bff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Chi Tiết Phí</h2>
+        <table class="info-table">
+            <tr>
+                <td class="label">ID:</td>
+                <td class="value" th:text="${fee.id}"></td>
+            </tr>
+            <tr>
+                <td class="label">Hợp Đồng:</td>
+                <td class="value" th:text="${fee.contract.id}"></td>
+            </tr>
+            <tr>
+                <td class="label">Loại Phí:</td>
+                <td class="value" th:text="${fee.type}"></td>
+            </tr>
+            <tr>
+                <td class="label">Số Tiền:</td>
+                <td class="value" th:text="${fee.amount}"></td>
+            </tr>
+            <tr>
+                <td class="label">Ngày Đáo Hạn:</td>
+                <td class="value" th:text="${fee.dueDate}"></td>
+            </tr>
+            <tr>
+                <td class="label">Trạng Thái Thanh Toán:</td>
+                <td class="value" th:text="${fee.paymentStatus}"></td>
+            </tr>
+        </table>
+        <a th:href="@{/fees}" class="button btn-back">Quay Lại</a>
+        <a th:href="@{/fees/{id}/edit(id=${fee.id})}" class="button btn-edit">Sửa</a>
+    </div>
+</body>
+</html>

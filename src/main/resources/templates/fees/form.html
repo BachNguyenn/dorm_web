@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${fee.id} ? 'Sửa Phí' : 'Thêm Phí'">Thêm Phí</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        .form-group label {
+            display: inline-block;
+            width: 140px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .button {
+            padding: 8px 16px;
+            margin: 5px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-save { background-color: #28a745; }
+        .btn-cancel { background-color: #6c757d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 th:text="${fee.id} ? 'Sửa Phí' : 'Thêm Phí'"></h2>
+        <form th:action="${fee.id} ? @{/fees/{id}(id=${fee.id})} : @{/fees}" th:object="${fee}" method="post">
+            <div class="form-group">
+                <label for="contract">Hợp Đồng</label>
+                <select id="contract" th:field="*{contract.id}" required>
+                    <option th:each="contract : ${contracts}" 
+                            th:value="${contract.id}" 
+                            th:text="${contract.id} + ' - ' + ${contract.student.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="type">Loại Phí</label>
+                <select id="type" th:field="*{type}" required>
+                    <option value="RENT">Tiền Thuê</option>
+                    <option value="ELECTRICITY">Tiền Điện</option>
+                    <option value="WATER">Tiền Nước</option>
+                    <option value="MAINTENANCE">Bảo Trì</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amount">Số Tiền</label>
+                <input type="number" id="amount" th:field="*{amount}" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="dueDate">Ngày Đáo Hạn</label>
+                <input type="date" id="dueDate" th:field="*{dueDate}" required>
+            </div>
+            <div class="form-group">
+                <label for="paymentStatus">Trạng Thái Thanh Toán</label>
+                <select id="paymentStatus" th:field="*{paymentStatus}" required>
+                    <option value="PAID">Đã Thanh Toán</option>
+                    <option value="UNPAID">Chưa Thanh Toán</option>
+                </select>
+            </div>
+            <button type="submit" class="button btn-save">Lưu</button>
+            <a th:href="@{/fees}" class="button btn-cancel">Hủy</a>
+        </form>
+    </div>
+</body>
+</html>

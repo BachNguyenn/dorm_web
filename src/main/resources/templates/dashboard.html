@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Quản Lý Kí Túc Xá</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f0f4f8, #e6e9ef);
+            color: #2d3748;
+        }
+        .nav-bar {
+            background: #ffffff;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-bar h1 {
+            font-size: 1.7em;
+            color: #2b6cb0;
+            margin: 0;
+            font-weight: 700;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #38a169;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 400;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .nav-links a:hover {
+            background-color: #2f855a;
+            transform: translateY(-2px);
+        }
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+            background: linear-gradient(180deg, #ffffff, #f7fafc);
+        }
+        .hero h2 {
+            font-size: 2.3em;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .hero p {
+            font-size: 1.1em;
+            color: #718096;
+            font-weight: 300;
+        }
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .stat-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+        .stat-card h3 {
+            font-size: 1.2em;
+            color: #4a5568;
+            margin-bottom: 10px;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+        .stat-card .count {
+            font-size: 2.8em;
+            font-weight: 700;
+            color: #2b6cb0;
+            margin-bottom: 10px;
+        }
+        .stat-card a {
+            text-decoration: none;
+            color: #38a169;
+            font-size: 0.9em;
+            font-weight: 400;
+            border: 1px solid #38a169;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .stat-card a:hover {
+            background-color: #38a169;
+            color: #ffffff;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 768px) {
+            .nav-bar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            .hero h2 {
+                font-size: 1.9em;
+            }
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            .stat-card {
+                padding: 20px;
+            }
+            .stat-card .count {
+                font-size: 2.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <h1>Quản Lý Kí Túc Xá</h1>
+        <div class="nav-links">
+            <a th:href="@{/students}">Sinh Viên</a>
+            <a th:href="@{/rooms}">Phòng</a>
+            <a th:href="@{/contracts}">Hợp Đồng</a>
+            <a th:href="@{/fees}">Phí</a>
+        </div>
+    </div>
+    <div class="hero">
+        <h2>Dashboard Quản Lý</h2>
+        <p>Quản lý thông tin kí túc xá một cách dễ dàng và hiệu quả</p>
+    </div>
+    <div class="stats-container">
+        <div class="stat-card">
+            <h3>Tổng Sinh Viên</h3>
+            <div class="count" th:text="${studentCount} ?: '0'"></div>
+            <a th:href="@{/students}">Xem Chi Tiết</a>
+        </div>
+        <div class="stat-card">
+            <h3>Tổng Phòng</h3>
+            <div class="count" th:text="${roomCount} ?: '0'"></div>
+            <a th:href="@{/rooms}">Xem Chi Tiết</a>
+        </div>
+        <div class="stat-card">
+            <h3>Tổng Hợp Đồng</h3>
+            <div class="count" th:text="${contractCount} ?: '0'"></div>
+            <a th:href="@{/contracts}">Xem Chi Tiết</a>
+        </div>
+        <div class="stat-card">
+            <h3>Tổng Phí</h3>
+            <div class="count" th:text="${feeCount} ?: '0'"></div>
+            <a th:href="@{/fees}">Xem Chi Tiết</a>
+        </div>
+    </div>
+
+    <!-- Thêm biểu đồ thống kê -->
+    <div style="max-width:700px;margin:40px auto 0;background:#fff;padding:24px;border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,0.08);">
+        <h3 style="text-align:center;color:#2b6cb0;margin-bottom:20px;">Biểu Đồ Thống Kê Tổng Quan</h3>
+        <canvas id="dashboardChart" height="120"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:inline="javascript">
+        const ctx = document.getElementById('dashboardChart').getContext('2d');
+        const dashboardChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Sinh Viên', 'Phòng', 'Hợp Đồng', 'Phí'],
+                datasets: [{
+                    label: 'Số lượng',
+                    data: [
+                        /*[[${studentCount}]]*/,
+                        /*[[${roomCount}]]*/,
+                        /*[[${contractCount}]]*/,
+                        /*[[${feeCount}]]*/
+                    ],
+                    backgroundColor: [
+                        '#2b6cb0', '#38a169', '#ed8936', '#e53e3e'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, ticks: { stepSize: 1 } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
