@@ -71,6 +71,10 @@
         <div class="detail">
             <label>Năm Học:</label> <span th:text="${student.year}"></span>
         </div>
+        <div class="detail">
+            <label>Phòng:</label>
+            <span th:text="${student.room != null ? student.room.number : 'Chưa có'}"></span>
+        </div>
         <div>
             <a th:href="@{/students}" class="button btn-back">Quay Lại</a>
             <a th:href="@{/students/{id}/edit(id=${student.id})}" class="button btn-edit">Sửa</a>

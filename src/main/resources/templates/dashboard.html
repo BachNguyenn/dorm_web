@@ -51,6 +51,18 @@
             background-color: #2f855a;
             transform: translateY(-2px);
         }
+        /* Nút giới thiệu nổi bật */
+        #aboutPhenikaaBtn {
+            background: #ffb703 !important;
+            color: #2d3748 !important;
+            font-weight: 700 !important;
+            border: 2px solid #219ebc;
+            box-shadow: 0 2px 8px rgba(255,183,3,0.12);
+        }
+        #aboutPhenikaaBtn:hover {
+            background: #219ebc !important;
+            color: #fff !important;
+        }
         .hero {
             text-align: center;
             padding: 80px 20px 40px;
@@ -143,20 +155,71 @@
                 font-size: 2.2em;
             }
         }
+        /* Popup giới thiệu Phenikaa khác biệt */
+        #phenikaaAboutModal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(34, 49, 63, 0.22);
+        }
+        #phenikaaAboutModal .about-content {
+            background: linear-gradient(135deg, #ffb703 60%, #219ebc 100%);
+            max-width: 420px;
+            margin: 90px auto;
+            padding: 32px 36px 24px;
+            border-radius: 32px 8px 32px 8px;
+            box-shadow: 0 8px 40px rgba(44,62,80,0.18);
+            position:relative;
+            color: #22223b;
+            border: 3px solid #219ebc;
+            font-family: 'Roboto', Arial, sans-serif;
+            animation: fadeIn 0.4s;
+        }
+        #phenikaaAboutModal .about-content h2 {
+            color: #023047;
+            margin-bottom: 14px;
+            text-align: center;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+        #phenikaaAboutModal .about-content ul {
+            margin: 16px 0 0 18px;
+            color: #023047;
+        }
+        #phenikaaAboutModal .about-content a {
+            color: #023047;
+            text-decoration: underline;
+        }
+        #closePhenikaaAbout {
+            position:absolute;
+            top:10px;
+            right:18px;
+            background:none;
+            border:none;
+            font-size:2em;
+            color:#22223b;
+            cursor:pointer;
+            line-height:1;
+        }
     </style>
 </head>
 <body>
     <div class="nav-bar">
-        <h1>Quản Lý Kí Túc Xá</h1>
+        <h1>Quản Lý Kí Túc Xá Đại Học PHENIKAA</h1>
         <div class="nav-links">
             <a th:href="@{/students}">Sinh Viên</a>
             <a th:href="@{/rooms}">Phòng</a>
             <a th:href="@{/contracts}">Hợp Đồng</a>
             <a th:href="@{/fees}">Phí</a>
+            <a href="javascript:void(0)" id="aboutPhenikaaBtn">Giới thiệu</a>
         </div>
     </div>
     <div class="hero">
-        <h2>Dashboard Quản Lý</h2>
+        <h2>Dashboard</h2>
         <p>Quản lý thông tin kí túc xá một cách dễ dàng và hiệu quả</p>
     </div>
     <div class="stats-container">
@@ -272,6 +335,39 @@
 
         // Khởi tạo lần đầu
         renderChart(chartType);
+    </script>
+
+    <!-- Popup Giới thiệu Đại học Phenikaa -->
+    <div id="phenikaaAboutModal">
+        <div class="about-content">
+            <button id="closePhenikaaAbout">&times;</button>
+            <h2>Đại học Phenikaa</h2>
+            <p style="font-size:1.08em;line-height:1.7;margin-bottom:10px;">
+                <strong>Phenikaa University</strong> là trường đại học đa ngành, định hướng nghiên cứu, đổi mới sáng tạo và hội nhập quốc tế. Trường cung cấp môi trường học tập hiện đại, năng động với hệ thống ký túc xá tiện nghi, an toàn, đáp ứng nhu cầu học tập và sinh hoạt của sinh viên.
+            </p>
+            <ul>
+                <li>Chương trình đào tạo đa dạng, cập nhật theo xu hướng quốc tế</li>
+                <li>Đội ngũ giảng viên giàu kinh nghiệm, tận tâm</li>
+                <li>Cơ sở vật chất hiện đại, khuôn viên xanh, thân thiện</li>
+                <li>Hỗ trợ sinh viên phát triển toàn diện về học thuật, kỹ năng và thể chất</li>
+            </ul>
+            <p style="margin-top:14px;">
+                <b>Địa chỉ:</b> Đường Nguyễn Văn Trác, Yên Nghĩa, Hà Đông, Hà Nội<br>
+                <b>Website:</b> <a href="https://phenikaa-uni.edu.vn" target="_blank">phenikaa-uni.edu.vn</a>
+            </p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('aboutPhenikaaBtn').onclick = function() {
+            document.getElementById('phenikaaAboutModal').style.display = 'block';
+        };
+        document.getElementById('closePhenikaaAbout').onclick = function() {
+            document.getElementById('phenikaaAboutModal').style.display = 'none';
+        };
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('phenikaaAboutModal');
+            if (event.target === modal) modal.style.display = 'none';
+        });
     </script>
 </body>
 </html>
