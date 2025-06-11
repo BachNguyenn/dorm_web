@@ -18,6 +18,10 @@ public class Student {
     private String department;
     private int year;
 
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
+
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -38,6 +42,8 @@ public class Student {
     public void setDepartment(String department) { this.department = department; }
     public int getYear() { return year; }
     public void setYear(int year) { this.year = year; }
+    public Room getRoom() { return room; }
+    public void setRoom(Room room) { this.room = room; }
 }
 
 

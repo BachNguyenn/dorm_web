@@ -29,6 +29,12 @@ public class RoomController {
 
     @PostMapping
     public String createRoom(@ModelAttribute Room room) {
+        // Đảm bảo giá đúng theo loại phòng
+        if ("Phòng bốn".equals(room.getType())) {
+            room.setPrice(2000000);
+        } else if ("Phòng tám".equals(room.getType())) {
+            room.setPrice(1200000);
+        }
         roomRepository.save(room);
         return "redirect:/rooms";
     }
@@ -37,7 +43,9 @@ public class RoomController {
     public String viewRoom(@PathVariable Long id, Model model) {
         Optional<Room> roomOptional = roomRepository.findById(id);
         if (roomOptional.isPresent()) {
-            model.addAttribute("room", roomOptional.get());
+            Room room = roomOptional.get();
+            model.addAttribute("room", room);
+            // room.getStudents() sẽ tự động lấy danh sách sinh viên nếu đã ánh xạ đúng
             return "rooms/detail";
         } else {
             model.addAttribute("errorMessage", "Không tìm thấy phòng với ID: " + id);
@@ -61,6 +69,10 @@ public class RoomController {
     public String updateRoom(@PathVariable Long id, @ModelAttribute Room room, Model model) {
         Optional<Room> roomOptional = roomRepository.findById(id);
         if (roomOptional.isPresent()) {
+            Room existingRoom = roomOptional.get();
+            // Không cho sửa loại phòng và giá
+            room.setType(existingRoom.getType());
+            room.setPrice(existingRoom.getPrice());
             room.setId(id);
             roomRepository.save(room);
             return "redirect:/rooms";
@@ -80,6 +92,17 @@ public class RoomController {
             model.addAttribute("errorMessage", "Không tìm thấy phòng với ID: " + id);
             return "error";
         }
+    }
+
+    @GetMapping("/search")
+    public String searchRooms(@RequestParam("search") String search, Model model) {
+        if (search == null || search.trim().isEmpty()) {
+            model.addAttribute("rooms", roomRepository.findAll());
+        } else {
+            model.addAttribute("rooms", roomRepository.findByNumberContainingIgnoreCaseOrTypeContainingIgnoreCase(search, search));
+        }
+        model.addAttribute("search", search);
+        return "rooms/list";
     }
 
 }

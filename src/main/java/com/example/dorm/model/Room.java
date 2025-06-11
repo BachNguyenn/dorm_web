@@ -2,6 +2,7 @@
 package com.example.dorm.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Room {
@@ -11,6 +12,10 @@ public class Room {
     private String number;
     private String type;
     private int capacity;
+    private int price; // Giá phòng, có thể thêm nếu cần
+
+    @OneToMany(mappedBy = "room")
+    private List<Student> students;
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -21,4 +26,8 @@ public class Room {
     public void setType(String type) { this.type = type; }
     public int getCapacity() { return capacity; }
     public void setCapacity(int capacity) { this.capacity = capacity; }
+    public int getPrice() { return price; }
+    public void setPrice(int price) { this.price = price; }
+    public List<Student> getStudents() { return students; }
+    public void setStudents(List<Student> students) { this.students = students; }
 }

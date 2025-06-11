@@ -102,4 +102,28 @@ public class FeeController {
         }
     }
 
+    @GetMapping("/search")
+    public String searchFees(@RequestParam("search") String search, Model model) {
+        if (search == null || search.trim().isEmpty()) {
+            model.addAttribute("fees", feeRepository.findAll());
+        } else {
+            try {
+                Long id = Long.parseLong(search);
+                Optional<Fee> feeOptional = feeRepository.findById(id);
+                if (feeOptional.isPresent()) {
+                    model.addAttribute("fees", java.util.List.of(feeOptional.get()));
+                } else {
+                    model.addAttribute("fees", java.util.Collections.emptyList());
+                    model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
+                }
+            } catch (NumberFormatException e) {
+                // Nếu không phải số, trả về tất cả hoặc danh sách rỗng tùy ý bạn
+                model.addAttribute("fees", java.util.Collections.emptyList());
+                model.addAttribute("errorMessage", "Vui lòng nhập ID hợp lệ (số).");
+            }
+        }
+        model.addAttribute("search", search);
+        return "fees/list";
+    }
+
 }

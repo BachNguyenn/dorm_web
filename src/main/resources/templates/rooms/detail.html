@@ -21,9 +21,16 @@
             margin-bottom: 24px;
             font-size: 2em;
         }
+        h3 {
+            color: #333;
+            margin: 24px 0 16px 0;
+            font-size: 1.5em;
+            text-align: left;
+        }
         .info-table {
             margin: 0 auto 24px auto;
             border-collapse: collapse;
+            width: 100%;
         }
         .info-table td {
             padding: 10px 16px;
@@ -52,6 +59,23 @@
         }
         .btn-back { background-color: #6c757d; }
         .btn-edit { background-color: #007bff; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
     </style>
 </head>
 <body>
@@ -75,8 +99,29 @@
                 <td class="value" th:text="${room.capacity}"></td>
             </tr>
         </table>
+        <h3>Danh sách sinh viên trong phòng</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Ngày sinh</th>
+                    <th>Khoa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="student : ${room.students}">
+                    <td th:text="${student.id}"></td>
+                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.dob}"></td>
+                    <td th:text="${student.department}"></td>
+                </tr>
+                <tr th:if="${room.students == null or #lists.isEmpty(room.students)}">
+                    <td colspan="4">Chưa có sinh viên nào trong phòng này.</td>
+                </tr>
+            </tbody>
+        </table>
         <a th:href="@{/rooms}" class="button btn-back">Quay Lại</a>
-        <a th:href="@{/rooms/{id}/edit(id=${room.id})}" class="button btn-edit">Sửa</a>
     </div>
 </body>
 </html>

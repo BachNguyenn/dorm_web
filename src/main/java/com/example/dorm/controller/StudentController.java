@@ -2,6 +2,7 @@
 package com.example.dorm.controller;
 
 import com.example.dorm.model.Student;
+import com.example.dorm.repository.RoomRepository;
 import com.example.dorm.repository.StudentRepository;
 
 import java.util.Optional;
@@ -16,6 +17,9 @@ public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private RoomRepository roomRepository;
+
     @GetMapping
     public String listStudents(Model model) {
         model.addAttribute("students", studentRepository.findAll());
@@ -25,6 +29,7 @@ public class StudentController {
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("student", new Student());
+        model.addAttribute("rooms", roomRepository.findAll());
         return "students/form";
     }
 
@@ -51,6 +56,7 @@ public class StudentController {
         Optional<Student> studentOptional = studentRepository.findById(id);
     if (studentOptional.isPresent()) {
         model.addAttribute("student", studentOptional.get());
+        model.addAttribute("rooms", roomRepository.findAll());
         return "students/form";
     } else {
         model.addAttribute("errorMessage", "Không tìm thấy sinh viên với ID: " + id);

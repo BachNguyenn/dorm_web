@@ -188,35 +188,90 @@
         <canvas id="dashboardChart" height="120"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <div style="text-align:center;margin:16px 0;">
+        <label for="chartType">Kiểu biểu đồ:</label>
+        <select id="chartType">
+            <option value="bar">Cột</option>
+            <option value="pie">Tròn</option>
+            <option value="line">Đường</option>
+        </select>
+        <button id="refreshChart" style="margin-left:12px;padding:4px 12px;">Tải lại</button>
+    </div>
     <script th:inline="javascript">
-        const ctx = document.getElementById('dashboardChart').getContext('2d');
-        const dashboardChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Sinh Viên', 'Phòng', 'Hợp Đồng', 'Phí'],
-                datasets: [{
-                    label: 'Số lượng',
-                    data: [
-                        /*[[${studentCount}]]*/,
-                        /*[[${roomCount}]]*/,
-                        /*[[${contractCount}]]*/,
-                        /*[[${feeCount}]]*/
-                    ],
-                    backgroundColor: [
-                        '#2b6cb0', '#38a169', '#ed8936', '#e53e3e'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: false }
+        // Dữ liệu mẫu, thực tế lấy từ Thymeleaf
+        const chartLabels = ['Sinh Viên', 'Phòng', 'Hợp Đồng', 'Phí'];
+        const chartData = [
+            /*[[${studentCount}]]*/,
+            /*[[${roomCount}]]*/,
+            /*[[${contractCount}]]*/,
+            /*[[${feeCount}]]*/
+        ];
+        const chartColors = ['#2b6cb0', '#38a169', '#ed8936', '#e53e3e'];
+
+        let chartType = 'bar';
+        let dashboardChart;
+
+        function renderChart(type) {
+            if (dashboardChart) dashboardChart.destroy();
+            const ctx = document.getElementById('dashboardChart').getContext('2d');
+            dashboardChart = new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: 'Số lượng',
+                        data: chartData,
+                        backgroundColor: chartColors,
+                        borderRadius: type === 'bar' ? 10 : 0,
+                        fill: false,
+                        borderColor: chartColors,
+                        tension: 0.3
+                    }]
                 },
-                scales: {
-                    y: { beginAtZero: true, ticks: { stepSize: 1 } }
-                }
-            }
+                options: {
+                    responsive: true,
+                    animation: { duration: 800 },
+                    plugins: {
+                        legend: { display: type !== 'bar', position: 'bottom' },
+                        tooltip: {
+                            enabled: true,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: true,
+                            anchor: type === 'bar' ? 'end' : 'center',
+                            align: type === 'bar' ? 'top' : 'center',
+                            color: '#2d3748',
+                            font: { weight: 'bold', size: 16 },
+                            formatter: Math.round
+                        }
+                    },
+                    scales: type === 'bar' || type === 'line' ? {
+                        y: { beginAtZero: true, ticks: { stepSize: 1 } }
+                    } : {}
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+
+        // Sự kiện đổi loại biểu đồ
+        document.getElementById('chartType').addEventListener('change', function() {
+            chartType = this.value;
+            renderChart(chartType);
         });
+
+        // Sự kiện tải lại dữ liệu (có thể thay bằng fetch API nếu muốn lấy dữ liệu động)
+        document.getElementById('refreshChart').addEventListener('click', function() {
+            renderChart(chartType);
+        });
+
+        // Khởi tạo lần đầu
+        renderChart(chartType);
     </script>
 </body>
 </html>

@@ -109,4 +109,16 @@ public class ContractController {
         }
     }
 
+    @GetMapping("/search")
+    public String searchContracts(@RequestParam("search") String search, Model model) {
+        if (search == null || search.trim().isEmpty()) {
+            model.addAttribute("contracts", contractRepository.findAll());
+        } else {
+            // Tìm kiếm theo tên sinh viên hoặc số phòng hoặc trạng thái hợp đồng
+            model.addAttribute("contracts", contractRepository.findByStudent_NameContainingIgnoreCaseOrRoom_NumberContainingIgnoreCaseOrStatusContainingIgnoreCase(search, search, search));
+        }
+        model.addAttribute("search", search);
+        return "contracts/list";
+    }
+
 }

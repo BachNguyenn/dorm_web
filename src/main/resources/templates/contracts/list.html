@@ -3,57 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Danh Sách Hợp Đồng</title>
-    <style>
-        body {
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 30px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        h2 {
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-        th {
-            background-color: #007bff;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .button {
-            padding: 8px 16px;
-            margin: 5px;
-            text-decoration: none;
-            color: #fff;
-            border-radius: 4px;
-            display: inline-block;
-        }
-        .btn-add { background-color: #28a745; }
-        .btn-view { background-color: #17a2b8; }
-        .btn-edit { background-color: #007bff; }
-        .btn-delete { background-color: #dc3545; }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <div class="container">
         <h2>Danh Sách Hợp Đồng</h2>
-        <a th:href="@{/contracts/new}" class="button btn-add">Thêm Hợp Đồng</a>
+        <div class="search-container">
+            <form th:action="@{/contracts/search}" method="get">
+                <input type="text" name="search" placeholder="Tìm kiếm hợp đồng..." th:value="${search}">
+                <button type="submit">Tìm kiếm</button>
+            </form>
+            <a th:href="@{/contracts/new}" class="button btn-add">Thêm Hợp Đồng</a>
+        </div>
         <table>
             <thead>
                 <tr>

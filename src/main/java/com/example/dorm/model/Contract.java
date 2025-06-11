@@ -12,18 +12,15 @@ public class Contract {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "room_id")
     private Room room;
 
     private LocalDate startDate;
     private LocalDate endDate;
 
-    @Enumerated(EnumType.STRING)
-    private ContractStatus status;
+    private String status;
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -36,11 +33,7 @@ public class Contract {
     public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
     public LocalDate getEndDate() { return endDate; }
     public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
-    public ContractStatus getStatus() { return status; }
-    public void setStatus(ContractStatus status) { this.status = status; }
-}
-
-enum ContractStatus {
-    ACTIVE, EXPIRED, TERMINATED
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }
 
