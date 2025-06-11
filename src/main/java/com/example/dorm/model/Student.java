@@ -18,6 +18,7 @@ public class Student {
     private String department;
     private int year;
 
+
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
