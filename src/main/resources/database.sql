@@ -86,11 +86,11 @@ INSERT INTO contract (student_id, room_id, start_date, end_date, status) VALUES
 
 -- Insert sample data into Fee table
 INSERT INTO fee (contract_id, type, amount, due_date, payment_status) VALUES
-(1, 'RENT', 1500000.00, '2025-06-30', 'PAID'),
-(1, 'ELECTRICITY', 200000.00, '2025-06-15', 'UNPAID'),
-(2, 'RENT', 1500000.00, '2025-06-30', 'PAID'),
-(2, 'WATER', 100000.00, '2025-06-15', 'PAID'),
-(3, 'RENT', 1200000.00, '2025-07-01', 'UNPAID'),
-(4, 'MAINTENANCE', 300000.00, '2025-06-20', 'PAID');
+(1, 'CLEANING', 150000, '2025-06-30', 'PAID'),
+(1, 'ELECTRICITY', 200000, '2025-06-15', 'UNPAID'),
+(2, 'CLEANING', 100000, '2025-06-30', 'PAID'),
+(2, 'WATER', 124000, '2025-06-15', 'PAID'),
+(3, 'CLEANING', 120000, '2025-07-01', 'UNPAID'),
+(4, 'MAINTENANCE', 300000, '2025-06-20', 'PAID');
 
 

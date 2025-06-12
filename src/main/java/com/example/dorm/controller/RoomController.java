@@ -33,7 +33,7 @@ public class RoomController {
         if ("Phòng bốn".equals(room.getType())) {
             room.setPrice(2000000);
         } else if ("Phòng tám".equals(room.getType())) {
-            room.setPrice(1200000);
+            room.setPrice( 1200000);
         }
         roomRepository.save(room);
         return "redirect:/rooms";
