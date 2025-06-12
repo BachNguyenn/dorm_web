@@ -39,7 +39,7 @@ public class Fee {
 }
 
 enum FeeType {
-    RENT, ELECTRICITY, WATER, MAINTENANCE
+    CLEANING, ELECTRICITY, WATER, MAINTENANCE
 }
 
 enum PaymentStatus {
