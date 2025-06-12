@@ -59,10 +59,10 @@ INSERT INTO student (name, dob, gender, phone, address, email, department, year)
 ('Trần Thị Bình', '2003-07-22', 'FEMALE', '+84987654321', 'Nình Bình', 'binh.tran@example.com', 'Kinh tế', 2),
 ('Lê Minh Châu', '2001-11-30', 'FEMALE', '+84911223344', 'Nghệ An', 'chau.le@example.com', 'Kỹ thuật Điện', 4),
 ('Phạm Quốc Đạt', '2002-05-10', 'MALE', '+84933445566', 'Thái Nguyên', 'dat.pham@example.com', 'Cơ khí', 3),
-('Hoàng Thị Mai', '2003-01-25', 'FEMALE', '+84955667788', 'Thanh Hóa', 'mai.hoang@example.com', 'Hóa học', 2);
+('Hoàng Thị Mai', '2003-01-25', 'FEMALE', '+84955667788', 'Thanh Hóa', 'mai.hoang@example.com', 'Hóa học', 2),
 ('Nguyễn Văn Hùng', '2002-08-05', 'MALE', '+84999887766', 'Hải Phòng', 'hung.nguyen@example.com', 'Toán học', 3),
 ('Trần Thị Lan', '2001-12-15', 'FEMALE', '+84988776655', 'Đà Nẵng', 'lan.tran@example.com', 'Văn học', 4),
-('Lê Văn Nam', '2003-04-20', 'MALE', '+84977665544', 'Hồ Chí Minh', 'nam.le@example.com', 'Khoa học Máy tính', 2),
+('Lê Văn Nam', '2003-04-20', 'MALE', '+84977665544', 'Hồ Chí Minh', 'nam.le@example.com', 'Khoa học Máy tính', 2);
 
 -- Insert sample data into Room table
 INSERT INTO room (number, type, capacity, price) VALUES
