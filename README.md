@@ -27,7 +27,6 @@ Hệ thống quản lý ký túc xá Đại học Phenikaa, phát triển bằng
 - **Quản lý phòng:** Thêm, sửa, xóa, xem chi tiết phòng; theo dõi tình trạng phòng (trống, đầy, đang sửa); tìm kiếm phòng.
 - **Quản lý hợp đồng:** Tạo, sửa, xóa, xem chi tiết hợp đồng thuê phòng; liên kết sinh viên và phòng; theo dõi thời hạn hợp đồng.
 - **Quản lý phí:** Thêm, sửa, xóa, xem chi tiết các loại phí (dọn dẹp, điện, nước, bảo trì); liên kết phí với hợp đồng; theo dõi hạn thanh toán và trạng thái thanh toán.
-- **Báo cáo & thống kê:** Thống kê tổng quan, công suất sử dụng phòng, tài chính, danh sách sinh viên theo tiêu chí, xuất báo cáo theo thời gian.
 - **Giao diện web:** Sử dụng Thymeleaf, có các trang danh sách, chi tiết, form cho từng đối tượng (sinh viên, phòng, hợp đồng, phí), dashboard tổng quan, popup giới thiệu trường.
 - **Kiến trúc:** Java Spring Boot, Thymeleaf, JPA/Hibernate, JUnit, Chart.js; mô hình MVC, RESTful; lưu trữ dữ liệu bằng SQL (MySQL/H2/PostgreSQL).
 - **Cấu trúc thư mục:** 
