@@ -44,7 +44,6 @@ Hệ thống quản lý ký túc xá Đại học Phenikaa, phát triển bằng
 ### 👥 Quản Lý Sinh Viên
 - Thêm, sửa, xóa, xem chi tiết sinh viên
 - Phân phòng cho sinh viên
-- Theo dõi trạng thái sinh viên (ACTIVE, INACTIVE)
 
 ### 🏠 Quản Lý Phòng
 - Thêm, sửa, xóa, xem chi tiết phòng
