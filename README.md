@@ -44,6 +44,7 @@ Hệ thống quản lý ký túc xá Đại học Phenikaa, phát triển bằng
 ### 👥 Quản Lý Sinh Viên
 - Thêm, sửa, xóa, xem chi tiết sinh viên
 - Phân phòng cho sinh viên
+- Tìm kiếm sinh viên theo nhiều tiêu chí
 
 ### 🏠 Quản Lý Phòng
 - Thêm, sửa, xóa, xem chi tiết phòng
@@ -59,13 +60,6 @@ Hệ thống quản lý ký túc xá Đại học Phenikaa, phát triển bằng
 - Quản lý các loại phí: dọn dẹp, điện, nước, bảo trì
 - Theo dõi hạn thanh toán
 - Cập nhật trạng thái thanh toán
-
-### 📊 Báo Cáo & Thống Kê
-- Báo cáo tổng quan tình trạng KTX
-- Thống kê công suất sử dụng phòng
-- Báo cáo tài chính (thu/chi)
-- Báo cáo danh sách sinh viên theo tiêu chí
-- Xuất báo cáo theo khoảng thời gian
 
 ---
 
