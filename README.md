@@ -48,7 +48,7 @@ Hệ thống quản lý ký túc xá Đại học Phenikaa, phát triển bằng
 
 ### 🏠 Quản Lý Phòng
 - Thêm, sửa, xóa, xem chi tiết phòng
-- Theo dõi tình trạng phòng (TRỐNG, ĐẦY, ĐANG SỬA)
+- Theo dõi tình trạng phòng (TRỐNG, ĐẦY)
 - Tìm kiếm phòng theo nhiều tiêu chí
 
 ### 📄 Quản Lý Hợp Đồng
