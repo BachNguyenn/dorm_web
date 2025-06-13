@@ -31,7 +31,7 @@ Hệ thống quản lý ký túc xá Đại học Phenikaa, phát triển bằng
 - **Giao diện web:** Sử dụng Thymeleaf, có các trang danh sách, chi tiết, form cho từng đối tượng (sinh viên, phòng, hợp đồng, phí), dashboard tổng quan, popup giới thiệu trường.
 - **Kiến trúc:** Java Spring Boot, Thymeleaf, JPA/Hibernate, JUnit, Chart.js; mô hình MVC, RESTful; lưu trữ dữ liệu bằng SQL (MySQL/H2/PostgreSQL).
 - **Cấu trúc thư mục:** 
-  - `src/main/java/com/example/dorm/`: mã nguồn backend (controller, model, repository, service)
+  - `src/main/java/com/example/dorm/`: mã nguồn backend (controller, model, repository)
   - `src/main/resources/templates/`: giao diện Thymeleaf cho dashboard, sinh viên, phòng, hợp đồng, phí, lỗi
   - `src/main/resources/static/css/`: style.css
   - `src/main/resources/application.properties`: cấu hình ứng dụng
@@ -45,7 +45,7 @@ Hệ thống quản lý ký túc xá Đại học Phenikaa, phát triển bằng
 ### 👥 Quản Lý Sinh Viên
 - Thêm, sửa, xóa, xem chi tiết sinh viên
 - Phân phòng cho sinh viên
-- Theo dõi trạng thái sinh viên (ACTIVE, INACTIVE, GRADUATED)
+- Theo dõi trạng thái sinh viên (ACTIVE, INACTIVE)
 
 ### 🏠 Quản Lý Phòng
 - Thêm, sửa, xóa, xem chi tiết phòng
@@ -79,8 +79,7 @@ Hệ thống quản lý ký túc xá Đại học Phenikaa, phát triển bằng
 - `Room`: Thông tin phòng
 - `Contract`: Hợp đồng thuê phòng
 - `Fee`: Quản lý phí
-- `FeeType`: Enum các loại phí
-
+  
 ### 2. Web & API
 
 - **Controller:** Xử lý request, trả về view hoặc JSON
