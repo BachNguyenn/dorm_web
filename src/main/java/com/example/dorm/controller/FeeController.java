@@ -22,15 +22,25 @@ public class FeeController {
 
     @GetMapping
     public String listFees(Model model) {
-        model.addAttribute("fees", feeRepository.findAll());
-        return "fees/list";
+        try {
+            model.addAttribute("fees", feeRepository.findAll());
+            return "fees/list";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi lấy danh sách phí: " + e.getMessage());
+            return "error";
+        }
     }
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
-        model.addAttribute("fee", new Fee());
-        model.addAttribute("contracts", contractRepository.findAll());
-        return "fees/form";
+        try {
+            model.addAttribute("fee", new Fee());
+            model.addAttribute("contracts", contractRepository.findAll());
+            return "fees/form";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi hiển thị form tạo phí: " + e.getMessage());
+            return "error";
+        }
     }
 
     @PostMapping
@@ -39,31 +49,46 @@ public class FeeController {
             model.addAttribute("contracts", contractRepository.findAll());
             return "fees/form";
         }
-        feeRepository.save(fee);
-        return "redirect:/fees";
+        try {
+            feeRepository.save(fee);
+            return "redirect:/fees";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi lưu phí: " + e.getMessage());
+            return "error";
+        }
     }
 
     @GetMapping("/{id}")
     public String viewFee(@PathVariable Long id, Model model) {
-        Optional<Fee> feeOptional = feeRepository.findById(id);
-        if (feeOptional.isPresent()) {
-            model.addAttribute("fee", feeOptional.get());
-            return "fees/detail";
-        } else {
-            model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
+        try {
+            Optional<Fee> feeOptional = feeRepository.findById(id);
+            if (feeOptional.isPresent()) {
+                model.addAttribute("fee", feeOptional.get());
+                return "fees/detail";
+            } else {
+                model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
+                return "error";
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi xem chi tiết phí: " + e.getMessage());
             return "error";
         }
     }
 
     @GetMapping("/{id}/edit")
     public String showUpdateForm(@PathVariable Long id, Model model) {
-        Optional<Fee> feeOptional = feeRepository.findById(id);
-        if (feeOptional.isPresent()) {
-            model.addAttribute("fee", feeOptional.get());
-            model.addAttribute("contracts", contractRepository.findAll());
-            return "fees/form";
-        } else {
-            model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
+        try {
+            Optional<Fee> feeOptional = feeRepository.findById(id);
+            if (feeOptional.isPresent()) {
+                model.addAttribute("fee", feeOptional.get());
+                model.addAttribute("contracts", contractRepository.findAll());
+                return "fees/form";
+            } else {
+                model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
+                return "error";
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi hiển thị form chỉnh sửa: " + e.getMessage());
             return "error";
         }
     }
@@ -74,56 +99,69 @@ public class FeeController {
             model.addAttribute("contracts", contractRepository.findAll());
             return "fees/form";
         }
-        Optional<Fee> feeOptional = feeRepository.findById(id);
-        if (feeOptional.isPresent()) {
-            Fee existingFee = feeOptional.get();
-            existingFee.setAmount(fee.getAmount());
-            existingFee.setContract(fee.getContract());
-            existingFee.setType(fee.getType());
-            existingFee.setDueDate(fee.getDueDate());
-            existingFee.setPaymentStatus(fee.getPaymentStatus());
-            feeRepository.save(existingFee);
-            return "redirect:/fees";
-        } else {
-            model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
+        try {
+            Optional<Fee> feeOptional = feeRepository.findById(id);
+            if (feeOptional.isPresent()) {
+                Fee existingFee = feeOptional.get();
+                existingFee.setAmount(fee.getAmount());
+                existingFee.setContract(fee.getContract());
+                existingFee.setType(fee.getType());
+                existingFee.setDueDate(fee.getDueDate());
+                existingFee.setPaymentStatus(fee.getPaymentStatus());
+                feeRepository.save(existingFee);
+                return "redirect:/fees";
+            } else {
+                model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
+                return "error";
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi cập nhật phí: " + e.getMessage());
             return "error";
         }
     }
 
     @GetMapping("/{id}/delete")
     public String deleteFee(@PathVariable Long id, Model model) {
-        Optional<Fee> feeOptional = feeRepository.findById(id);
-        if (feeOptional.isPresent()) {
-            feeRepository.deleteById(id);
-            return "redirect:/fees";
-        } else {
-            model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
+        try {
+            Optional<Fee> feeOptional = feeRepository.findById(id);
+            if (feeOptional.isPresent()) {
+                feeRepository.deleteById(id);
+                return "redirect:/fees";
+            } else {
+                model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
+                return "error";
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi xoá phí: " + e.getMessage());
             return "error";
         }
     }
 
     @GetMapping("/search")
     public String searchFees(@RequestParam("search") String search, Model model) {
-        if (search == null || search.trim().isEmpty()) {
-            model.addAttribute("fees", feeRepository.findAll());
-        } else {
-            try {
-                Long id = Long.parseLong(search);
-                Optional<Fee> feeOptional = feeRepository.findById(id);
-                if (feeOptional.isPresent()) {
-                    model.addAttribute("fees", java.util.List.of(feeOptional.get()));
-                } else {
+        try {
+            if (search == null || search.trim().isEmpty()) {
+                model.addAttribute("fees", feeRepository.findAll());
+            } else {
+                try {
+                    Long id = Long.parseLong(search);
+                    Optional<Fee> feeOptional = feeRepository.findById(id);
+                    if (feeOptional.isPresent()) {
+                        model.addAttribute("fees", java.util.List.of(feeOptional.get()));
+                    } else {
+                        model.addAttribute("fees", java.util.Collections.emptyList());
+                        model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
+                    }
+                } catch (NumberFormatException e) {
                     model.addAttribute("fees", java.util.Collections.emptyList());
-                    model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
+                    model.addAttribute("errorMessage", "Vui lòng nhập ID hợp lệ (số).");
                 }
-            } catch (NumberFormatException e) {
-                // Nếu không phải số, trả về tất cả hoặc danh sách rỗng tùy ý bạn
-                model.addAttribute("fees", java.util.Collections.emptyList());
-                model.addAttribute("errorMessage", "Vui lòng nhập ID hợp lệ (số).");
             }
+            model.addAttribute("search", search);
+            return "fees/list";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm phí: " + e.getMessage());
+            return "error";
         }
-        model.addAttribute("search", search);
-        return "fees/list";
     }
-
 }
