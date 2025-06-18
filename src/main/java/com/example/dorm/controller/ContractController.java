@@ -25,16 +25,26 @@ public class ContractController {
 
     @GetMapping
     public String listContracts(Model model) {
-        model.addAttribute("contracts", contractRepository.findAll());
-        return "contracts/list";
+        try {
+            model.addAttribute("contracts", contractRepository.findAll());
+            return "contracts/list";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi lấy danh sách hợp đồng: " + e.getMessage());
+            return "error";
+        }
     }
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
-        model.addAttribute("contract", new Contract());
-        model.addAttribute("students", studentRepository.findAll());
-        model.addAttribute("rooms", roomRepository.findAll());
-        return "contracts/form";
+        try {
+            model.addAttribute("contract", new Contract());
+            model.addAttribute("students", studentRepository.findAll());
+            model.addAttribute("rooms", roomRepository.findAll());
+            return "contracts/form";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi hiển thị form tạo hợp đồng: " + e.getMessage());
+            return "error";
+        }
     }
 
     @PostMapping
@@ -44,32 +54,47 @@ public class ContractController {
             model.addAttribute("rooms", roomRepository.findAll());
             return "contracts/form";
         }
-        contractRepository.save(contract);
-        return "redirect:/contracts";
+        try {
+            contractRepository.save(contract);
+            return "redirect:/contracts";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi lưu hợp đồng: " + e.getMessage());
+            return "error";
+        }
     }
 
     @GetMapping("/{id}")
     public String viewContract(@PathVariable Long id, Model model) {
-        Optional<Contract> contractOptional = contractRepository.findById(id);
-        if (contractOptional.isPresent()) {
-            model.addAttribute("contract", contractOptional.get());
-            return "contracts/detail";
-        } else {
-            model.addAttribute("errorMessage", "Không tìm thấy hợp đồng với ID: " + id);
+        try {
+            Optional<Contract> contractOptional = contractRepository.findById(id);
+            if (contractOptional.isPresent()) {
+                model.addAttribute("contract", contractOptional.get());
+                return "contracts/detail";
+            } else {
+                model.addAttribute("errorMessage", "Không tìm thấy hợp đồng với ID: " + id);
+                return "error";
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi xem hợp đồng: " + e.getMessage());
             return "error";
         }
     }
 
     @GetMapping("/{id}/edit")
     public String showUpdateForm(@PathVariable Long id, Model model) {
-        Optional<Contract> contractOptional = contractRepository.findById(id);
-        if (contractOptional.isPresent()) {
-            model.addAttribute("contract", contractOptional.get());
-            model.addAttribute("students", studentRepository.findAll());
-            model.addAttribute("rooms", roomRepository.findAll());
-            return "contracts/form";
-        } else {
-            model.addAttribute("errorMessage", "Không tìm thấy hợp đồng với ID: " + id);
+        try {
+            Optional<Contract> contractOptional = contractRepository.findById(id);
+            if (contractOptional.isPresent()) {
+                model.addAttribute("contract", contractOptional.get());
+                model.addAttribute("students", studentRepository.findAll());
+                model.addAttribute("rooms", roomRepository.findAll());
+                return "contracts/form";
+            } else {
+                model.addAttribute("errorMessage", "Không tìm thấy hợp đồng với ID: " + id);
+                return "error";
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi tải form chỉnh sửa: " + e.getMessage());
             return "error";
         }
     }
@@ -81,44 +106,59 @@ public class ContractController {
             model.addAttribute("rooms", roomRepository.findAll());
             return "contracts/form";
         }
-        Optional<Contract> contractOptional = contractRepository.findById(id);
-        if (contractOptional.isPresent()) {
-            Contract existingContract = contractOptional.get();
-            existingContract.setStudent(contract.getStudent());
-            existingContract.setRoom(contract.getRoom());
-            existingContract.setStartDate(contract.getStartDate());
-            existingContract.setEndDate(contract.getEndDate());
-            existingContract.setStatus(contract.getStatus());
-            contractRepository.save(existingContract);
-            return "redirect:/contracts";
-        } else {
-            model.addAttribute("errorMessage", "Không tìm thấy hợp đồng với ID: " + id);
+        try {
+            Optional<Contract> contractOptional = contractRepository.findById(id);
+            if (contractOptional.isPresent()) {
+                Contract existingContract = contractOptional.get();
+                existingContract.setStudent(contract.getStudent());
+                existingContract.setRoom(contract.getRoom());
+                existingContract.setStartDate(contract.getStartDate());
+                existingContract.setEndDate(contract.getEndDate());
+                existingContract.setStatus(contract.getStatus());
+                contractRepository.save(existingContract);
+                return "redirect:/contracts";
+            } else {
+                model.addAttribute("errorMessage", "Không tìm thấy hợp đồng với ID: " + id);
+                return "error";
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi cập nhật hợp đồng: " + e.getMessage());
             return "error";
         }
     }
 
     @GetMapping("/{id}/delete")
     public String deleteContract(@PathVariable Long id, Model model) {
-        Optional<Contract> contractOptional = contractRepository.findById(id);
-        if (contractOptional.isPresent()) {
-            contractRepository.deleteById(id);
-            return "redirect:/contracts";
-        } else {
-            model.addAttribute("errorMessage", "Không tìm thấy hợp đồng với ID: " + id);
+        try {
+            Optional<Contract> contractOptional = contractRepository.findById(id);
+            if (contractOptional.isPresent()) {
+                contractRepository.deleteById(id);
+                return "redirect:/contracts";
+            } else {
+                model.addAttribute("errorMessage", "Không tìm thấy hợp đồng với ID: " + id);
+                return "error";
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi xoá hợp đồng: " + e.getMessage());
             return "error";
         }
     }
 
     @GetMapping("/search")
     public String searchContracts(@RequestParam("search") String search, Model model) {
-        if (search == null || search.trim().isEmpty()) {
-            model.addAttribute("contracts", contractRepository.findAll());
-        } else {
-            // Tìm kiếm theo tên sinh viên hoặc số phòng hoặc trạng thái hợp đồng
-            model.addAttribute("contracts", contractRepository.findByStudent_NameContainingIgnoreCaseOrRoom_NumberContainingIgnoreCaseOrStatusContainingIgnoreCase(search, search, search));
+        try {
+            if (search == null || search.trim().isEmpty()) {
+                model.addAttribute("contracts", contractRepository.findAll());
+            } else {
+                model.addAttribute("contracts",
+                    contractRepository.findByStudent_NameContainingIgnoreCaseOrRoom_NumberContainingIgnoreCaseOrStatusContainingIgnoreCase(
+                        search, search, search));
+            }
+            model.addAttribute("search", search);
+            return "contracts/list";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm hợp đồng: " + e.getMessage());
+            return "error";
         }
-        model.addAttribute("search", search);
-        return "contracts/list";
     }
-
 }
