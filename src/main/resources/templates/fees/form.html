@@ -45,8 +45,8 @@
     </style>
 </head>
 <body>
-    <div th:replace="fragments/header :: header"></div>
-    <div class="container">
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <div class="container content-with-sidebar">
         <h2 th:text="${fee.id} ? 'Sửa Phí' : 'Thêm Phí'"></h2>
         <form th:action="${fee.id} ? @{/fees/{id}(id=${fee.id})} : @{/fees}" th:object="${fee}" method="post">
             <div class="form-group">

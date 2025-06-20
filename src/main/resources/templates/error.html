@@ -5,9 +5,11 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+<div class="content-with-sidebar">
     <h1>Có lỗi xảy ra</h1>
     <p th:text="${errorMessage}"></p>
     <a href="/students">Quay lại danh sách</a>
+</div>
 </body>
 </html>

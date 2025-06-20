@@ -90,3 +90,28 @@ tr:nth-child(even) {
 .nav-links a:hover {
     text-decoration: underline;
 }
+
+/* Sidebar layout */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: #f8f8f8;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+.sidebar a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 8px 4px;
+    margin-bottom: 4px;
+}
+.sidebar a:hover {
+    background-color: #e2e2e2;
+}
+.content-with-sidebar {
+    margin-left: 220px;
+}

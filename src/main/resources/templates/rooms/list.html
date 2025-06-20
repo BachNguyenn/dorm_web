@@ -6,8 +6,8 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <div th:replace="fragments/header :: header"></div>
-    <div class="container">
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <div class="container content-with-sidebar">
         <h2>Danh Sách Phòng</h2>
         <div class="search-container">
             <form th:action="@{/rooms/search}" method="get">

@@ -96,8 +96,8 @@
     </script>
 </head>
 <body>
-    <div th:replace="fragments/header :: header"></div>
-    <div class="container">
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <div class="container content-with-sidebar">
         <h2 th:text="${room.id} ? 'Sửa Phòng' : 'Thêm Phòng'"></h2>
         <form th:action="${room.id} ? @{/rooms/{id}(id=${room.id})} : @{/rooms}" th:object="${room}" method="post">
             <div class="form-group">
