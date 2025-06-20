@@ -132,6 +132,7 @@ src/
 ## 📋 Yêu Cầu Hệ Thống
 
 - JDK 17 trở lên
+- Maven 3+
 - IDE hỗ trợ Java (IntelliJ, VS Code, Eclipse)
 - CSDL: H2/MySQL/PostgreSQL
 - Trình duyệt hiện đại
@@ -145,14 +146,19 @@ src/
     git clone https://github.com/BachNguyenn/quanlyktx-springboot.git
     ```
 
-2. Cấu hình database trong `src/main/resources/application.properties`
+2. Thiết lập biến môi trường `DB_USER` và `DB_PASS` cho tài khoản cơ sở dữ liệu.
 
 3. Chạy ứng dụng
     ```bash
     mvn spring-boot:run
     ```
 
-4. Truy cập: [http://localhost:8080](http://localhost:8080)
+4. Chạy kiểm thử
+    ```bash
+    mvn test
+    ```
+
+5. Truy cập: [http://localhost:8080](http://localhost:8080)
 
 ---
 

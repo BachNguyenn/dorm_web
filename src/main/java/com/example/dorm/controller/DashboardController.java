@@ -4,23 +4,20 @@ import com.example.dorm.service.StudentService;
 import com.example.dorm.service.RoomService;
 import com.example.dorm.service.ContractService;
 import com.example.dorm.service.FeeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Controller
+@RequiredArgsConstructor
 public class DashboardController {
 
-    @Autowired
-    private StudentService studentService;
-    @Autowired
-    private RoomService roomService;
-    @Autowired
-    private ContractService contractService;
-    @Autowired
-    private FeeService feeService;
+    private final StudentService studentService;
+    private final RoomService roomService;
+    private final ContractService contractService;
+    private final FeeService feeService;
 
     @GetMapping("/")
     public String showDashboard(Model model) {

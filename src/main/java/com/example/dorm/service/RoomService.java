@@ -2,17 +2,16 @@ package com.example.dorm.service;
 
 import com.example.dorm.model.Room;
 import com.example.dorm.repository.RoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@lombok.RequiredArgsConstructor
 public class RoomService {
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
     public List<Room> getAllRooms() {
         return roomRepository.findAll();

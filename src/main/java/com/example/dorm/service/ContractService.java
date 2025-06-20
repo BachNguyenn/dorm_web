@@ -4,20 +4,18 @@ import com.example.dorm.model.Contract;
 import com.example.dorm.model.Room;
 import com.example.dorm.repository.ContractRepository;
 import com.example.dorm.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@lombok.RequiredArgsConstructor
 public class ContractService {
 
-    @Autowired
-    private ContractRepository contractRepository;
+    private final ContractRepository contractRepository;
 
-    @Autowired
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
     public List<Contract> getAllContracts() {
         return contractRepository.findAll();

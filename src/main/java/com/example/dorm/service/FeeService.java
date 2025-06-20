@@ -2,17 +2,16 @@ package com.example.dorm.service;
 
 import com.example.dorm.model.Fee;
 import com.example.dorm.repository.FeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@lombok.RequiredArgsConstructor
 public class FeeService {
 
-    @Autowired
-    private FeeRepository feeRepository;
+    private final FeeRepository feeRepository;
 
     public List<Fee> getAllFees() {
         return feeRepository.findAll();

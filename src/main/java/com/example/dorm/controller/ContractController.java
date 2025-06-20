@@ -5,7 +5,7 @@ import com.example.dorm.service.ContractService;
 import com.example.dorm.service.StudentService;
 import com.example.dorm.service.RoomService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,13 +15,11 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/contracts")
+@RequiredArgsConstructor
 public class ContractController {
-    @Autowired
-    private ContractService contractService;
-    @Autowired
-    private StudentService studentService;
-    @Autowired
-    private RoomService roomService;
+    private final ContractService contractService;
+    private final StudentService studentService;
+    private final RoomService roomService;
 
     @GetMapping
     public String listContracts(Model model) {

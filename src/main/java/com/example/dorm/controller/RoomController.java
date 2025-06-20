@@ -2,7 +2,7 @@ package com.example.dorm.controller;
 
 import com.example.dorm.model.Room;
 import com.example.dorm.service.RoomService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +11,9 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/rooms")
+@RequiredArgsConstructor
 public class RoomController {
-    @Autowired
-    private RoomService roomService;
+    private final RoomService roomService;
 
     @GetMapping
     public String listRooms(Model model) {
@@ -90,7 +90,7 @@ public class RoomController {
     @PostMapping("/{id}")
     public String updateRoom(@PathVariable Long id, @ModelAttribute Room room, Model model) {
         try {
-            Optional<Room> roomOptional = roomRepository.findById(id);
+            Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {
                 roomService.updateRoom(id, room);
                 return "redirect:/rooms";
