@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title th:text="${student.id} ? 'Sửa Sinh Viên' : 'Thêm Sinh Viên'">Form</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -89,7 +90,9 @@
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
-    <div class="container">
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <div class="content-with-sidebar">
+        <div class="container">
         <h2 th:text="${student.id} ? 'Sửa Sinh Viên' : 'Thêm Sinh Viên'"></h2>
         <form th:action="${student.id} ? @{/students/{id}(id=${student.id})} : @{/students}" th:object="${student}" method="post">
             <div class="form-group">
@@ -153,6 +156,7 @@
                 <a th:href="@{/students}" class="button btn-cancel">Hủy</a>
             </div>
         </form>
+        </div>
     </div>
 </body>
 </html>

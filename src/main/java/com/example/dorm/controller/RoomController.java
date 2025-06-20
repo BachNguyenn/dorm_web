@@ -90,7 +90,7 @@ public class RoomController {
     @PostMapping("/{id}")
     public String updateRoom(@PathVariable Long id, @ModelAttribute Room room, Model model) {
         try {
-            Optional<Room> roomOptional = roomRepository.findById(id);
+            Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {
                 roomService.updateRoom(id, room);
                 return "redirect:/rooms";

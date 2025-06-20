@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Chi Tiết Sinh Viên</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,7 +45,9 @@
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
-    <div class="container">
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <div class="content-with-sidebar">
+        <div class="container">
         <h2>Chi Tiết Sinh Viên</h2>
         <div class="detail">
             <label>ID:</label> <span th:text="${student.id}"></span>
@@ -80,6 +83,7 @@
         <div>
             <a th:href="@{/students}" class="button btn-back">Quay Lại</a>
             <a th:href="@{/students/{id}/edit(id=${student.id})}" class="button btn-edit">Sửa</a>
+        </div>
         </div>
     </div>
 </body>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Chi Tiết Phòng</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f4f4f4;
@@ -81,7 +82,9 @@
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
-    <div class="container">
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <div class="content-with-sidebar">
+        <div class="container">
         <h2>Chi Tiết Phòng</h2>
         <table class="info-table">
             <tr>
@@ -124,6 +127,7 @@
             </tbody>
         </table>
         <a th:href="@{/rooms}" class="button btn-back">Quay Lại</a>
+        </div>
     </div>
 </body>
 </html>
