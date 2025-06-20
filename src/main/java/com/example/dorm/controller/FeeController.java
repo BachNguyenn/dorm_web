@@ -1,8 +1,8 @@
 package com.example.dorm.controller;
 
 import com.example.dorm.model.Fee;
-import com.example.dorm.repository.FeeRepository;
-import com.example.dorm.repository.ContractRepository;
+import com.example.dorm.service.FeeService;
+import com.example.dorm.service.ContractService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,14 +16,14 @@ import java.util.Optional;
 @RequestMapping("/fees")
 public class FeeController {
     @Autowired
-    private FeeRepository feeRepository;
+    private FeeService feeService;
     @Autowired
-    private ContractRepository contractRepository;
+    private ContractService contractService;
 
     @GetMapping
     public String listFees(Model model) {
         try {
-            model.addAttribute("fees", feeRepository.findAll());
+            model.addAttribute("fees", feeService.getAllFees());
             return "fees/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi lấy danh sách phí: " + e.getMessage());
@@ -35,7 +35,7 @@ public class FeeController {
     public String showCreateForm(Model model) {
         try {
             model.addAttribute("fee", new Fee());
-            model.addAttribute("contracts", contractRepository.findAll());
+            model.addAttribute("contracts", contractService.getAllContracts());
             return "fees/form";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi hiển thị form tạo phí: " + e.getMessage());
@@ -46,11 +46,11 @@ public class FeeController {
     @PostMapping
     public String createFee(@Valid @ModelAttribute Fee fee, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("contracts", contractRepository.findAll());
+            model.addAttribute("contracts", contractService.getAllContracts());
             return "fees/form";
         }
         try {
-            feeRepository.save(fee);
+            feeService.createFee(fee);
             return "redirect:/fees";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi lưu phí: " + e.getMessage());
@@ -61,7 +61,7 @@ public class FeeController {
     @GetMapping("/{id}")
     public String viewFee(@PathVariable Long id, Model model) {
         try {
-            Optional<Fee> feeOptional = feeRepository.findById(id);
+            Optional<Fee> feeOptional = feeService.getFee(id);
             if (feeOptional.isPresent()) {
                 model.addAttribute("fee", feeOptional.get());
                 return "fees/detail";
@@ -78,10 +78,10 @@ public class FeeController {
     @GetMapping("/{id}/edit")
     public String showUpdateForm(@PathVariable Long id, Model model) {
         try {
-            Optional<Fee> feeOptional = feeRepository.findById(id);
+            Optional<Fee> feeOptional = feeService.getFee(id);
             if (feeOptional.isPresent()) {
                 model.addAttribute("fee", feeOptional.get());
-                model.addAttribute("contracts", contractRepository.findAll());
+                model.addAttribute("contracts", contractService.getAllContracts());
                 return "fees/form";
             } else {
                 model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
@@ -96,24 +96,12 @@ public class FeeController {
     @PostMapping("/{id}")
     public String updateFee(@PathVariable Long id, @Valid @ModelAttribute Fee fee, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("contracts", contractRepository.findAll());
+            model.addAttribute("contracts", contractService.getAllContracts());
             return "fees/form";
         }
         try {
-            Optional<Fee> feeOptional = feeRepository.findById(id);
-            if (feeOptional.isPresent()) {
-                Fee existingFee = feeOptional.get();
-                existingFee.setAmount(fee.getAmount());
-                existingFee.setContract(fee.getContract());
-                existingFee.setType(fee.getType());
-                existingFee.setDueDate(fee.getDueDate());
-                existingFee.setPaymentStatus(fee.getPaymentStatus());
-                feeRepository.save(existingFee);
-                return "redirect:/fees";
-            } else {
-                model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
-                return "error";
-            }
+            feeService.updateFee(id, fee);
+            return "redirect:/fees";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi cập nhật phí: " + e.getMessage());
             return "error";
@@ -123,9 +111,9 @@ public class FeeController {
     @GetMapping("/{id}/delete")
     public String deleteFee(@PathVariable Long id, Model model) {
         try {
-            Optional<Fee> feeOptional = feeRepository.findById(id);
+            Optional<Fee> feeOptional = feeService.getFee(id);
             if (feeOptional.isPresent()) {
-                feeRepository.deleteById(id);
+                feeService.deleteFee(id);
                 return "redirect:/fees";
             } else {
                 model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
@@ -141,11 +129,11 @@ public class FeeController {
     public String searchFees(@RequestParam("search") String search, Model model) {
         try {
             if (search == null || search.trim().isEmpty()) {
-                model.addAttribute("fees", feeRepository.findAll());
+                model.addAttribute("fees", feeService.getAllFees());
             } else {
                 try {
                     Long id = Long.parseLong(search);
-                    Optional<Fee> feeOptional = feeRepository.findById(id);
+                    Optional<Fee> feeOptional = feeService.getFee(id);
                     if (feeOptional.isPresent()) {
                         model.addAttribute("fees", java.util.List.of(feeOptional.get()));
                     } else {

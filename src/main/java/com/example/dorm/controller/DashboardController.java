@@ -1,9 +1,9 @@
 package com.example.dorm.controller;
 
-import com.example.dorm.repository.StudentRepository;
-import com.example.dorm.repository.RoomRepository;
-import com.example.dorm.repository.ContractRepository;  
-import com.example.dorm.repository.FeeRepository;
+import com.example.dorm.service.StudentService;
+import com.example.dorm.service.RoomService;
+import com.example.dorm.service.ContractService;
+import com.example.dorm.service.FeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class DashboardController {
 
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentService studentService;
     @Autowired
-    private RoomRepository roomRepository;
+    private RoomService roomService;
     @Autowired
-    private ContractRepository contractRepository;
+    private ContractService contractService;
     @Autowired
-    private FeeRepository feeRepository;
+    private FeeService feeService;
 
     @GetMapping("/")
     public String showDashboard(Model model) {
-        model.addAttribute("studentCount", studentRepository.count());
-        model.addAttribute("roomCount", roomRepository.count());
-        model.addAttribute("contractCount", contractRepository.count());
-        model.addAttribute("feeCount", feeRepository.count());
+        model.addAttribute("studentCount", studentService.getAllStudents().size());
+        model.addAttribute("roomCount", roomService.getAllRooms().size());
+        model.addAttribute("contractCount", contractService.getAllContracts().size());
+        model.addAttribute("feeCount", feeService.getAllFees().size());
         return "dashboard";
     }
 }
