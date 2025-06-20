@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <td class="label">Ngày Sinh:</td>
-                <td class="value" th:text="${student.dob}"></td>
+                <td class="value" th:text="${#temporals.format(student.dob, 'dd-MM-yy')}"></td>
             </tr>
             <tr>
                 <td class="label">Giới Tính:</td>

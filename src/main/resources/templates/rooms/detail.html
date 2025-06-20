@@ -44,7 +44,7 @@
                 <tr th:each="student : ${room.students}">
                     <td th:text="${student.id}"></td>
                     <td th:text="${student.name}"></td>
-                    <td th:text="${student.dob}"></td>
+                    <td th:text="${#temporals.format(student.dob, 'dd-MM-yy')}"></td>
                     <td th:text="${student.department}"></td>
                 </tr>
                 <tr th:if="${room.students == null or #lists.isEmpty(room.students)}">
