@@ -266,11 +266,11 @@ tr.table-row:hover {
     margin-bottom: 1rem;
 }
 .search-container input[type="text"] {
-    width: 300px;
+    width: 500px;
     padding: 0.5rem;
 }
 
-.container h2 {
+h2 {
     text-align: center;
     margin-bottom: 1rem;
 }

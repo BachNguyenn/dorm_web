@@ -41,10 +41,16 @@ class StudentServiceTest {
 
     @Test
     void searchStudentsByName() {
-        List<Student> found = Arrays.asList(new Student(), new Student());
-        when(studentRepository.findByNameIgnoreCase("test")).thenReturn(found);
+        Student match1 = new Student();
+        match1.setName("test");
+        Student match2 = new Student();
+        match2.setName("Test Nguyen");
+        Student other = new Student();
+        other.setName("example");
+        List<Student> all = Arrays.asList(match1, match2, other);
+        when(studentRepository.findAll()).thenReturn(all);
         List<Student> result = studentService.searchStudents("test");
         assertEquals(2, result.size());
-        verify(studentRepository).findByNameIgnoreCase("test");
+        verify(studentRepository).findAll();
     }
 }
