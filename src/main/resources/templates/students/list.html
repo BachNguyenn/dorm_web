@@ -29,6 +29,9 @@
                     <th>Điện Thoại</th>
                     <th>Email</th>
                     <th>Khoa</th>
+                    <th>Địa Chỉ</th>
+                    <th>Năm</th>
+                    <th>Phòng</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,6 +53,9 @@
                     <td th:text="${student.phone}"></td>
                     <td th:text="${student.email}"></td>
                     <td th:text="${student.department}"></td>
+                    <td th:text="${student.address}"></td>
+                    <td th:text="${student.year}"></td>
+                    <td th:text="${student.room != null ? student.room.number : 'Chưa có'}"></td>
                 </tr>
             </tbody>
         </table>
