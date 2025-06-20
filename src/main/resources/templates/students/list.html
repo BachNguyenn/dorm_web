@@ -25,21 +25,31 @@
                     <th>ID</th>
                     <th>Tên</th>
                     <th>Ngày Sinh</th>
+                    <th>Giới Tính</th>
+                    <th>Điện Thoại</th>
+                    <th>Email</th>
                     <th>Khoa</th>
-                    <th>Hành Động</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="student : ${students}">
-                    <td th:text="${student.id}"></td>
+                <tr th:each="student : ${students}" class="table-row">
+                    <td>
+                        <span th:text="${student.id}"></span>
+                        <div class="row-menu">
+                            <i class="fas fa-ellipsis-v menu-toggle"></i>
+                            <div class="menu-content">
+                                <a th:href="@{/students/{id}(id=${student.id})}"><i class="fas fa-eye"></i> Xem</a>
+                                <a th:href="@{/students/{id}/edit(id=${student.id})}"><i class="fas fa-edit"></i> Sửa</a>
+                                <a th:href="@{/students/{id}/delete(id=${student.id})}" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fas fa-trash"></i> Xóa</a>
+                            </div>
+                        </div>
+                    </td>
                     <td th:text="${student.name}"></td>
                     <td th:text="${student.dob}"></td>
+                    <td th:text="${student.gender}"></td>
+                    <td th:text="${student.phone}"></td>
+                    <td th:text="${student.email}"></td>
                     <td th:text="${student.department}"></td>
-                    <td>
-                        <a th:href="@{/students/{id}(id=${student.id})}" class="button btn-view">Xem</a>
-                        <a th:href="@{/students/{id}/edit(id=${student.id})}" class="button btn-edit">Sửa</a>
-                        <a th:href="@{/students/{id}/delete(id=${student.id})}" class="button btn-delete" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
-                    </td>
                 </tr>
             </tbody>
         </table>
