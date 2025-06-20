@@ -81,7 +81,7 @@
             </tr>
             <tr>
                 <td class="label">Ngày Đáo Hạn:</td>
-                <td class="value" th:text="${fee.dueDate}"></td>
+                <td class="value" th:text="${#temporals.format(fee.dueDate, 'dd/MM/yyyy')}"></td>
             </tr>
             <tr>
                 <td class="label">Trạng Thái Thanh Toán:</td>

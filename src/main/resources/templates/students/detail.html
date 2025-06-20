@@ -56,7 +56,7 @@
             <label>Tên:</label> <span th:text="${student.name}"></span>
         </div>
         <div class="detail">
-            <label>Ngày Sinh:</label> <span th:text="${student.dob}"></span>
+            <label>Ngày Sinh:</label> <span th:text="${#temporals.format(student.dob, 'dd/MM/yyyy')}"></span>
         </div>
         <div class="detail">
             <label>Giới Tính:</label> <span th:text="${student.gender}"></span>

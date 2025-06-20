@@ -3,6 +3,7 @@ package com.example.dorm.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Student {
@@ -10,6 +11,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dob;
     private String gender;
     private String phone;

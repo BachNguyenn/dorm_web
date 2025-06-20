@@ -3,6 +3,7 @@ package com.example.dorm.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -17,7 +18,9 @@ public class Contract {
     @ManyToOne
     private Room room;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate startDate;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate endDate;
 
     private String status;

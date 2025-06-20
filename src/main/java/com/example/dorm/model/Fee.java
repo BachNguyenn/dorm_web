@@ -2,6 +2,7 @@ package com.example.dorm.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 import java.math.BigDecimal;
 
 @Entity
@@ -18,6 +19,7 @@ public class Fee {
     private FeeType type;
 
     private BigDecimal amount;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dueDate;
 
     @Enumerated(EnumType.STRING)

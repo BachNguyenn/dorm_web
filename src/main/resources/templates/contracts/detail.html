@@ -77,11 +77,11 @@
             </tr>
             <tr>
                 <td class="label">Ngày Bắt Đầu:</td>
-                <td class="value" th:text="${contract.startDate}"></td>
+                <td class="value" th:text="${#temporals.format(contract.startDate, 'dd/MM/yyyy')}"></td>
             </tr>
             <tr>
                 <td class="label">Ngày Kết Thúc:</td>
-                <td class="value" th:text="${contract.endDate}"></td>
+                <td class="value" th:text="${#temporals.format(contract.endDate, 'dd/MM/yyyy')}"></td>
             </tr>
             <tr>
                 <td class="label">Trạng Thái:</td>

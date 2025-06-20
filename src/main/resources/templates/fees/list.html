@@ -33,7 +33,7 @@
                     <td th:text="${fee.contract.room.number}"></td>
                     <td th:text="${fee.type}"></td>
                     <td th:text="${fee.amount.intValue()}"></td>
-                    <td th:text="${fee.dueDate}"></td>
+                    <td th:text="${#temporals.format(fee.dueDate, 'dd/MM/yyyy')}"></td>
                     <td th:text="${fee.paymentStatus}"></td>
                     <td class="action-icons">
                         <a th:href="@{/fees/{id}(id=${fee.id})}"><i class="fa-solid fa-eye"></i></a>

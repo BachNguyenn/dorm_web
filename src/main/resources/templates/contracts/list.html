@@ -30,8 +30,8 @@
                     <td th:text="${contract.id}"></td>
                     <td th:text="${contract.student.name}"></td>
                     <td th:text="${contract.room.number}"></td>
-                    <td th:text="${contract.startDate}"></td>
-                    <td th:text="${contract.endDate}"></td>
+                    <td th:text="${#temporals.format(contract.startDate, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${#temporals.format(contract.endDate, 'dd/MM/yyyy')}"></td>
                     <td th:text="${contract.status}"></td>
                     <td class="action-icons">
                         <a th:href="@{/contracts/{id}(id=${contract.id})}"><i class="fa-solid fa-eye"></i></a>
