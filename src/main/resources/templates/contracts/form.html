@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${contract.id} ? 'Sửa Hợp Đồng' : 'Thêm Hợp Đồng'">Thêm Hợp Đồng</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
         .container {
             max-width: 600px;
@@ -44,6 +45,7 @@
     </style>
 </head>
 <body>
+    <div th:replace="fragments/header :: header"></div>
     <div class="container">
         <h2 th:text="${contract.id} ? 'Sửa Hợp Đồng' : 'Thêm Hợp Đồng'"></h2>
         <form th:action="${contract.id} ? @{/contracts/{id}(id=${contract.id})} : @{/contracts}" th:object="${contract}" method="post">

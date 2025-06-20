@@ -2,8 +2,10 @@
 <html>
 <head>
     <title>Lỗi</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+    <div th:replace="fragments/header :: header"></div>
     <h1>Có lỗi xảy ra</h1>
     <p th:text="${errorMessage}"></p>
     <a href="/students">Quay lại danh sách</a>
