@@ -5,51 +5,12 @@
     <title th:text="${contract.id} ? 'Sửa Hợp Đồng' : 'Thêm Hợp Đồng'">Thêm Hợp Đồng</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h2 {
-            color: #333;
-            text-align: center;
-        }
-        .form-group {
-            margin: 10px 0;
-        }
-        .form-group label {
-            display: inline-block;
-            width: 140px;
-            font-weight: bold;
-        }
-        .form-group input, .form-group select {
-            padding: 8px;
-            width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .button {
-            padding: 8px 16px;
-            margin: 5px;
-            text-decoration: none;
-            color: #fff;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-save { background-color: #28a745; }
-        .btn-cancel { background-color: #6c757d; }
-    </style>
 </head>
 <body>
     <div th:replace="fragments/header :: header"></div>
     <div th:replace="fragments/sidebar :: sidebar"></div>
     <div class="content-with-sidebar">
-        <div class="container">
+        <div class="form-container">
         <h2 th:text="${contract.id} ? 'Sửa Hợp Đồng' : 'Thêm Hợp Đồng'"></h2>
         <form th:action="${contract.id} ? @{/contracts/{id}(id=${contract.id})} : @{/contracts}" th:object="${contract}" method="post">
             <div class="form-group">
@@ -82,8 +43,10 @@
                     <option value="TERMINATED">Đã Hủy</option>
                 </select>
             </div>
-            <button type="submit" class="button btn-save">Lưu</button>
-            <a th:href="@{/contracts}" class="button btn-cancel">Hủy</a>
+            <div class="form-actions">
+                <button type="submit" class="button btn-save">Lưu</button>
+                <a th:href="@{/contracts}" class="button btn-cancel">Hủy</a>
+            </div>
         </form>
         </div>
     </div>

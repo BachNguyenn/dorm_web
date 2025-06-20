@@ -198,18 +198,37 @@ body {
     transform: translateY(-4px);
     box-shadow: var(--shadow-xl);
 }
+/* style.css */
+
+/* style chung cho tất cả các icon */
 .stat-icon {
-    width: 3rem;
-    height: 3rem;
-    border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, var(--primary-color), var(--info-color));
-    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+    color: #fff;
+    font-size: 1.25rem; /* hoặc điều chỉnh tùy ý */
 }
+
+/* màu nền riêng cho từng loại */
+.student-icon {
+    background-color: #4dabf5; /* xanh dương nhạt */
+}
+
+.room-icon {
+    background-color: #51cf66; /* xanh lá */
+}
+
+.contract-icon {
+    background-color: #ffa94d; /* cam vàng */
+}
+
+.fee-icon {
+    background-color: #ff6b6b; /* đỏ nhạt */
+}
+
 .stat-title {
     font-size: 0.875rem;
     color: var(--text-secondary);
