@@ -279,6 +279,17 @@ tr.table-row:hover {
 .btn-edit { background: var(--warning-color); color: white; }
 .btn-delete { background: var(--danger-color); color: white; }
 
+/* ======== ACTION ICONS ======== */
+.action-icons a {
+    margin-right: 0.25rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+}
+.action-icons a.view { color: var(--info-color); }
+.action-icons a.edit { color: var(--warning-color); }
+.action-icons a.delete { color: var(--danger-color); }
+.action-icons a:last-child { margin-right: 0; }
+
 /* ======== ROW ACTION MENU ======== */
 .row-menu {
     position: relative;

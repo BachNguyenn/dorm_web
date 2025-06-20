@@ -30,23 +30,12 @@
                     <th>Email</th>
                     <th>Khoa</th>
                     <th>Địa Chỉ</th>
-                    <th>Năm</th>
-                    <th>Phòng</th>
+                    <th>Thao Tác</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="student : ${students}" class="table-row">
-                    <td>
-                        <span th:text="${student.id}"></span>
-                        <div class="row-menu">
-                            <i class="fas fa-ellipsis-v menu-toggle"></i>
-                            <div class="menu-content">
-                                <a th:href="@{/students/{id}(id=${student.id})}"><i class="fas fa-eye"></i> Xem</a>
-                                <a th:href="@{/students/{id}/edit(id=${student.id})}"><i class="fas fa-edit"></i> Sửa</a>
-                                <a th:href="@{/students/{id}/delete(id=${student.id})}" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fas fa-trash"></i> Xóa</a>
-                            </div>
-                        </div>
-                    </td>
+                    <td th:text="${student.id}"></td>
                     <td th:text="${student.name}"></td>
                     <td th:text="${student.dob}"></td>
                     <td th:text="${student.gender}"></td>
@@ -54,8 +43,11 @@
                     <td th:text="${student.email}"></td>
                     <td th:text="${student.department}"></td>
                     <td th:text="${student.address}"></td>
-                    <td th:text="${student.year}"></td>
-                    <td th:text="${student.room != null ? student.room.number : 'Chưa có'}"></td>
+                    <td class="action-icons">
+                        <a th:href="@{/students/{id}(id=${student.id})}" class="view"><i class="fas fa-eye"></i></a>
+                        <a th:href="@{/students/{id}/edit(id=${student.id})}" class="edit"><i class="fas fa-edit"></i></a>
+                        <a th:href="@{/students/{id}/delete(id=${student.id})}" class="delete" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fas fa-trash"></i></a>
+                    </td>
                 </tr>
             </tbody>
         </table>
