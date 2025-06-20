@@ -1,7 +1,7 @@
 package com.example.dorm.controller;
 
 import com.example.dorm.model.Room;
-import com.example.dorm.repository.RoomRepository;
+import com.example.dorm.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +13,12 @@ import java.util.Optional;
 @RequestMapping("/rooms")
 public class RoomController {
     @Autowired
-    private RoomRepository roomRepository;
+    private RoomService roomService;
 
     @GetMapping
     public String listRooms(Model model) {
         try {
-            model.addAttribute("rooms", roomRepository.findAll());
+            model.addAttribute("rooms", roomService.getAllRooms());
             return "rooms/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tải danh sách phòng: " + e.getMessage());
@@ -45,7 +45,7 @@ public class RoomController {
             } else if ("Phòng tám".equals(room.getType())) {
                 room.setPrice(1200000);
             }
-            roomRepository.save(room);
+            roomService.createRoom(room);
             return "redirect:/rooms";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tạo phòng: " + e.getMessage());
@@ -56,7 +56,7 @@ public class RoomController {
     @GetMapping("/{id}")
     public String viewRoom(@PathVariable Long id, Model model) {
         try {
-            Optional<Room> roomOptional = roomRepository.findById(id);
+            Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {
                 model.addAttribute("room", roomOptional.get());
                 return "rooms/detail";
@@ -73,7 +73,7 @@ public class RoomController {
     @GetMapping("/{id}/edit")
     public String showUpdateForm(@PathVariable Long id, Model model) {
         try {
-            Optional<Room> roomOptional = roomRepository.findById(id);
+            Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {
                 model.addAttribute("room", roomOptional.get());
                 return "rooms/form";
@@ -92,11 +92,7 @@ public class RoomController {
         try {
             Optional<Room> roomOptional = roomRepository.findById(id);
             if (roomOptional.isPresent()) {
-                Room existingRoom = roomOptional.get();
-                room.setId(id);
-                room.setType(existingRoom.getType()); // Không cho sửa loại phòng
-                room.setPrice(existingRoom.getPrice()); // Không cho sửa giá
-                roomRepository.save(room);
+                roomService.updateRoom(id, room);
                 return "redirect:/rooms";
             } else {
                 model.addAttribute("errorMessage", "Không tìm thấy phòng với ID: " + id);
@@ -111,9 +107,9 @@ public class RoomController {
     @GetMapping("/{id}/delete")
     public String deleteRoom(@PathVariable Long id, Model model) {
         try {
-            Optional<Room> roomOptional = roomRepository.findById(id);
+            Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {
-                roomRepository.deleteById(id);
+                roomService.deleteRoom(id);
                 return "redirect:/rooms";
             } else {
                 model.addAttribute("errorMessage", "Không tìm thấy phòng với ID: " + id);
@@ -128,11 +124,7 @@ public class RoomController {
     @GetMapping("/search")
     public String searchRooms(@RequestParam("search") String search, Model model) {
         try {
-            if (search == null || search.trim().isEmpty()) {
-                model.addAttribute("rooms", roomRepository.findAll());
-            } else {
-                model.addAttribute("rooms", roomRepository.findByNumberContainingIgnoreCaseOrTypeContainingIgnoreCase(search, search));
-            }
+            model.addAttribute("rooms", roomService.searchRooms(search));
             model.addAttribute("search", search);
             return "rooms/list";
         } catch (Exception e) {

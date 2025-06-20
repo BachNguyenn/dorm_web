@@ -1,8 +1,8 @@
 package com.example.dorm.controller;
 
 import com.example.dorm.model.Student;
-import com.example.dorm.repository.RoomRepository;
-import com.example.dorm.repository.StudentRepository;
+import com.example.dorm.service.RoomService;
+import com.example.dorm.service.StudentService;
 
 import java.util.Optional;
 
@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/students")
 public class StudentController {
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentService studentService;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private RoomService roomService;
 
     @GetMapping
     public String listStudents(Model model) {
         try {
-            model.addAttribute("students", studentRepository.findAll());
+            model.addAttribute("students", studentService.getAllStudents());
             return "students/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tải danh sách sinh viên: " + e.getMessage());
@@ -35,7 +35,7 @@ public class StudentController {
     public String showCreateForm(Model model) {
         try {
             model.addAttribute("student", new Student());
-            model.addAttribute("rooms", roomRepository.findAll());
+            model.addAttribute("rooms", roomService.getAllRooms());
             return "students/form";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi hiển thị form tạo sinh viên: " + e.getMessage());
@@ -46,7 +46,7 @@ public class StudentController {
     @PostMapping
     public String createStudent(@ModelAttribute Student student, Model model) {
         try {
-            studentRepository.save(student);
+            studentService.saveStudent(student);
             return "redirect:/students";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tạo sinh viên: " + e.getMessage());
@@ -57,7 +57,7 @@ public class StudentController {
     @GetMapping("/{id}")
     public String viewStudent(@PathVariable Long id, Model model) {
         try {
-            Optional<Student> studentOptional = studentRepository.findById(id);
+            Optional<Student> studentOptional = studentService.getStudent(id);
             if (studentOptional.isPresent()) {
                 model.addAttribute("student", studentOptional.get());
                 return "students/detail";
@@ -74,10 +74,10 @@ public class StudentController {
     @GetMapping("/{id}/edit")
     public String showUpdateForm(@PathVariable Long id, Model model) {
         try {
-            Optional<Student> studentOptional = studentRepository.findById(id);
+            Optional<Student> studentOptional = studentService.getStudent(id);
             if (studentOptional.isPresent()) {
                 model.addAttribute("student", studentOptional.get());
-                model.addAttribute("rooms", roomRepository.findAll());
+                model.addAttribute("rooms", roomService.getAllRooms());
                 return "students/form";
             } else {
                 model.addAttribute("errorMessage", "Không tìm thấy sinh viên với ID: " + id);
@@ -92,10 +92,10 @@ public class StudentController {
     @PostMapping("/{id}")
     public String updateStudent(@PathVariable Long id, @ModelAttribute Student student, Model model) {
         try {
-            Optional<Student> studentOptional = studentRepository.findById(id);
+            Optional<Student> studentOptional = studentService.getStudent(id);
             if (studentOptional.isPresent()) {
                 student.setId(id);
-                studentRepository.save(student);
+                studentService.saveStudent(student);
                 return "redirect:/students";
             } else {
                 model.addAttribute("errorMessage", "Không tìm thấy sinh viên với ID: " + id);
@@ -110,9 +110,9 @@ public class StudentController {
     @GetMapping("/{id}/delete")
     public String deleteStudent(@PathVariable Long id, Model model) {
         try {
-            Optional<Student> studentOptional = studentRepository.findById(id);
+            Optional<Student> studentOptional = studentService.getStudent(id);
             if (studentOptional.isPresent()) {
-                studentRepository.deleteById(id);
+                studentService.deleteStudent(id);
                 return "redirect:/students";
             } else {
                 model.addAttribute("errorMessage", "Không tìm thấy sinh viên với ID: " + id);
@@ -127,11 +127,7 @@ public class StudentController {
     @GetMapping("/search")
     public String searchStudents(@RequestParam("search") String search, Model model) {
         try {
-            if (search == null || search.trim().isEmpty()) {
-                model.addAttribute("students", studentRepository.findAll());
-            } else {
-                model.addAttribute("students", studentRepository.findByNameContainingIgnoreCase(search));
-            }
+            model.addAttribute("students", studentService.searchStudents(search));
             model.addAttribute("search", search);
             return "students/list";
         } catch (Exception e) {
