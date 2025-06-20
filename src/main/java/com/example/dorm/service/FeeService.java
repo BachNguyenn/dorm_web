@@ -1,6 +1,7 @@
 package com.example.dorm.service;
 
 import com.example.dorm.model.Fee;
+import com.example.dorm.model.FeeType;
 import com.example.dorm.repository.FeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,9 +56,27 @@ public class FeeService {
                     .orElse(java.util.Collections.emptyList());
         } catch (NumberFormatException e) {
             String term = search.trim();
-            return feeRepository
-                    .findByContract_Student_NameContainingIgnoreCaseOrContract_Room_NumberContainingIgnoreCaseOrTypeContainingIgnoreCase(
-                            term, term, term);
+            java.util.List<Fee> results = feeRepository
+                    .findByContract_Student_NameContainingIgnoreCaseOrContract_Room_NumberContainingIgnoreCase(
+                            term, term);
+
+            // attempt to match fee type
+            FeeType type = null;
+            try {
+                type = FeeType.valueOf(term.toUpperCase());
+            } catch (IllegalArgumentException ignored) {
+                // not an exact enum value
+            }
+
+            if (type != null) {
+                results.addAll(feeRepository.findByType(type));
+            } else {
+                results = results.stream()
+                        .filter(f -> f.getType().name().toLowerCase().contains(term.toLowerCase()))
+                        .collect(java.util.stream.Collectors.toList());
+            }
+
+            return results.stream().distinct().collect(java.util.stream.Collectors.toList());
         }
     }
 }
