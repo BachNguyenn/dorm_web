@@ -133,7 +133,8 @@ public class ContractController {
     }
 
     @GetMapping("/search")
-    public String searchContracts(@RequestParam("search") String search, Model model) {
+    public String searchContracts(@RequestParam(value = "search", required = false, defaultValue = "") String search,
+                                  Model model) {
         try {
             model.addAttribute("contracts", contractService.searchContracts(search));
             model.addAttribute("search", search);

@@ -125,7 +125,8 @@ public class StudentController {
     }
 
     @GetMapping("/search")
-    public String searchStudents(@RequestParam("search") String search, Model model) {
+    public String searchStudents(@RequestParam(value = "search", required = false, defaultValue = "") String search,
+                                 Model model) {
         try {
             model.addAttribute("students", studentService.searchStudents(search));
             model.addAttribute("search", search);

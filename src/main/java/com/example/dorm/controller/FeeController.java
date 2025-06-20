@@ -126,7 +126,8 @@ public class FeeController {
     }
 
     @GetMapping("/search")
-    public String searchFees(@RequestParam("search") String search, Model model) {
+    public String searchFees(@RequestParam(value = "search", required = false, defaultValue = "") String search,
+                             Model model) {
         try {
             model.addAttribute("fees", feeService.searchFees(search));
             model.addAttribute("search", search);

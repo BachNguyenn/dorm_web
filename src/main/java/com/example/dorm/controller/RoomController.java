@@ -122,7 +122,8 @@ public class RoomController {
     }
 
     @GetMapping("/search")
-    public String searchRooms(@RequestParam("search") String search, Model model) {
+    public String searchRooms(@RequestParam(value = "search", required = false, defaultValue = "") String search,
+                              Model model) {
         try {
             model.addAttribute("rooms", roomService.searchRooms(search));
             model.addAttribute("search", search);

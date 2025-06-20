@@ -1,8 +1,8 @@
 <div th:fragment="search(actionUrl, placeholder, searchTerm, count, addUrl, addLabel)">
     <div class="search-container">
         <form th:action="${actionUrl}" method="get">
-            <input type="text" name="search" th:placeholder="${placeholder}" th:value="${searchTerm}">
-            <button type="submit">Tìm kiếm</button>
+            <input type="text" name="search" class="search-input" th:placeholder="${placeholder}" th:value="${searchTerm}">
+            <button type="submit" class="button btn-search">Tìm kiếm</button>
         </form>
         <span class="result-count" th:text="${count} + ' kết quả'"></span>
         <a th:href="${addUrl}" class="button btn-add" th:text="${addLabel}"></a>
