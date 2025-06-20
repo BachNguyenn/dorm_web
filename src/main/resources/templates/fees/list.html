@@ -29,31 +29,23 @@
                     <th>SĐT</th>
                     <th>Loại Phí</th>
                     <th>Số Tiền</th>
-                    <th>Ngày Đáo Hạn</th>
-                    <th>Trạng Thái</th>
+                    <th>Thao Tác</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="fee : ${fees}" class="table-row">
-                    <td>
-                        <span th:text="${fee.id}"></span>
-                        <div class="row-menu">
-                            <i class="fas fa-ellipsis-v menu-toggle"></i>
-                            <div class="menu-content">
-                                <a th:href="@{/fees/{id}(id=${fee.id})}"><i class="fas fa-eye"></i> Xem</a>
-                                <a th:href="@{/fees/{id}/edit(id=${fee.id})}"><i class="fas fa-edit"></i> Sửa</a>
-                                <a th:href="@{/fees/{id}/delete(id=${fee.id})}" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fas fa-trash"></i> Xóa</a>
-                            </div>
-                        </div>
-                    </td>
+                    <td th:text="${fee.id}"></td>
                     <td th:text="${fee.contract.id}"></td>
                     <td th:text="${fee.contract.student.name}"></td>
                     <td th:text="${fee.contract.room.number}"></td>
                     <td th:text="${fee.contract.student.phone}"></td>
                     <td th:text="${fee.type}"></td>
                     <td th:text="${fee.amount.intValue()}"></td>
-                    <td th:text="${fee.dueDate}"></td>
-                    <td th:text="${fee.paymentStatus}"></td>
+                    <td class="action-icons">
+                        <a th:href="@{/fees/{id}(id=${fee.id})}" class="view"><i class="fas fa-eye"></i></a>
+                        <a th:href="@{/fees/{id}/edit(id=${fee.id})}" class="edit"><i class="fas fa-edit"></i></a>
+                        <a th:href="@{/fees/{id}/delete(id=${fee.id})}" class="delete" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fas fa-trash"></i></a>
+                    </td>
                 </tr>
             </tbody>
         </table>
