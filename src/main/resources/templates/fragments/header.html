@@ -1,7 +1,12 @@
 <div th:fragment="header">
     <header class="header">
         <div class="header-left">
-            <div>
+            <!-- thêm logo -->
+            <img th:src="@{/images/logo-phenikaa.png}"
+                 alt="Phenikaa Logo"
+                 class="header-logo" />
+
+            <div class="header-text">
                 <h1 class="header-title">Phenikaa University</h1>
                 <p class="header-subtitle">Hệ thống quản lý ký túc xá</p>
             </div>
