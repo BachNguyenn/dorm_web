@@ -265,6 +265,15 @@ tr.table-row:hover {
     justify-content: space-between;
     margin-bottom: 1rem;
 }
+.search-container input[type="text"] {
+    width: 500px;
+    padding: 0.5rem;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
 
 .button {
     padding: 0.5rem 0.75rem;

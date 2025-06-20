@@ -39,7 +39,11 @@ public class StudentService {
         if (search == null || search.trim().isEmpty()) {
             return studentRepository.findAll();
         }
-        return studentRepository.findByNameContainingIgnoreCase(search);
+        String term = search.trim().toLowerCase();
+        return studentRepository.findAll().stream()
+                .filter(s -> java.util.Arrays.stream(s.getName().split("\\s+"))
+                        .anyMatch(w -> w.equalsIgnoreCase(term)))
+                .collect(java.util.stream.Collectors.toList());
     }
 
     public List<Room> getAllRooms() {

@@ -1,6 +1,7 @@
 package com.example.dorm.service;
 
 import com.example.dorm.model.Fee;
+import com.example.dorm.model.FeeType;
 import com.example.dorm.repository.FeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,22 @@ public class FeeService {
 
     public void deleteFee(Long id) {
         feeRepository.deleteById(id);
+    }
+
+    public List<Fee> searchFees(String search) {
+        if (search == null || search.trim().isEmpty()) {
+            return feeRepository.findAll();
+        }
+        try {
+            Long id = Long.parseLong(search.trim());
+            return feeRepository.findById(id).map(java.util.List::of).orElse(java.util.List.of());
+        } catch (NumberFormatException e) {
+            try {
+                FeeType type = FeeType.valueOf(search.trim().toUpperCase());
+                return feeRepository.findByType(type);
+            } catch (IllegalArgumentException ex) {
+                return java.util.List.of();
+            }
+        }
     }
 }
