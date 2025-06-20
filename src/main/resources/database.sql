@@ -64,7 +64,9 @@ INSERT INTO student (name, dob, gender, phone, address, email, department, year)
 ('Trần Thị Lan', '2003-10-10', 'Nữ', '0988776655', 'Đà Nẵng', 'lan.tran@example.com', 'Kỹ thuật phần mềm', 4),
 ('Lê Văn Nam', '2005-04-20', 'Nam', '0977665544', 'Hồ Chí Minh', 'nam.le@example.com', 'Khoa học Máy tính', 2),
 ('Phạm Thị Oanh', '2004-09-30', 'Nữ', '0966544433', 'Cần Thơ', 'oanh.pham@example.com', 'Ngôn ngữ Anh', 3),
-('Nguyễn Văn Quân', '2003-10-10', 'Nam', '0955443322', 'Bắc Ninh', 'quan.nguyen@example.com', 'Quản trị Kinh doanh', 4);
+('Nguyễn Văn Quân', '2003-10-10', 'Nam', '0955443322', 'Bắc Ninh', 'quan.nguyen@example.com', 'Quản trị Kinh doanh', 4),
+('Nguyễn Thị Hương', '2005-12-01', 'Nữ', '0944332211', 'Hải Dương','huong.nguyen@example.com', 'Luật Kinh tế', 2),
+('Trần Văn Phúc', '2004-06-15', 'Nam', '0933221100', 'Quảng Ninh','phuc.tran@example.com', 'Kỹ thuật Xây dựng', 3);
 
 -- Insert sample data into Room table
 INSERT INTO room (number, type, capacity, price) VALUES
@@ -77,7 +79,9 @@ INSERT INTO room (number, type, capacity, price) VALUES
 ('202', 'Phòng bốn', 4, 2000000.00),
 ('203', 'Phòng bốn', 4, 2000000.00),
 ('204', 'Phòng bốn', 4, 2000000.00),
-('205', 'Phòng bốn', 4, 2000000.00);
+('205', 'Phòng bốn', 4, 2000000.00),
+('301', 'Phòng hai', 2, 3000000.00),
+('302', 'Phòng hai', 2, 3000000.00);
 
 -- Insert sample data into Contract table
 INSERT INTO contract (student_id, room_id, start_date, end_date, status) VALUES
@@ -90,7 +94,9 @@ INSERT INTO contract (student_id, room_id, start_date, end_date, status) VALUES
 (7, 6, '2025-06-01', '2025-12-31', 'ACTIVE'),
 (8, 7, '2025-07-01', '2025-12-31', 'ACTIVE'),
 (9, 8, '2025-08-01', '2025-12-31', 'ACTIVE'),
-(10, 9, '2025-09-01', '2025-12-31', 'ACTIVE');
+(10, 9, '2025-09-01', '2025-12-31', 'ACTIVE'),
+(11, 10, '2025-10-01', '2025-12-31', 'ACTIVE'),
+(12, 11, '2025-11-01', '2025-12-31', 'ACTIVE');
 
 -- Insert sample data into Fee table
 INSERT INTO fee (contract_id, type, amount, due_date, payment_status) VALUES
@@ -106,7 +112,3 @@ INSERT INTO fee (contract_id, type, amount, due_date, payment_status) VALUES
 (8, 'MAINTENANCE', 200000, '2025-06-20', 'PAID'),
 (9, 'ELECTRICITY', 220000, '2025-06-15', 'UNPAID'),
 (10, 'WATER', 130000, '2025-06-30', 'PAID');
-
-
-
-
