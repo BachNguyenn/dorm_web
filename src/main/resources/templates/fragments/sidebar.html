@@ -1,9 +1,38 @@
 <div th:fragment="sidebar">
-    <nav class="sidebar">
-        <a th:href="@{/}">Trang chủ</a>
-        <a th:href="@{/students}">Sinh Viên</a>
-        <a th:href="@{/rooms}">Phòng</a>
-        <a th:href="@{/contracts}">Hợp Đồng</a>
-        <a th:href="@{/fees}">Phí</a>
-    </nav>
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Quản lý chính</h3>
+            <nav class="sidebar-nav">
+                <a th:href="@{/}" class="sidebar-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Trang chủ</span>
+                </a>
+                <a th:href="@{/students}" class="sidebar-link">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Sinh Viên</span>
+                </a>
+                <a th:href="@{/rooms}" class="sidebar-link">
+                    <i class="fas fa-bed"></i>
+                    <span>Phòng</span>
+                </a>
+                <a th:href="@{/contracts}" class="sidebar-link">
+                    <i class="fas fa-file-contract"></i>
+                    <span>Hợp Đồng</span>
+                </a>
+                <a th:href="@{/fees}" class="sidebar-link">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Phí</span>
+                </a>
+            </nav>
+        </div>
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Khác</h3>
+            <nav class="sidebar-nav">
+                <a href="javascript:void(0)" class="sidebar-link special" id="aboutBtn">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Giới thiệu</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
 </div>
