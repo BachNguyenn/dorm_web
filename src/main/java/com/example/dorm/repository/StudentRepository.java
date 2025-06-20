@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    List<Student> findByNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneContainingIgnoreCase(
-            String name, String email, String phone);
+    List<Student> findByNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneContainingIgnoreCaseOrDepartmentContainingIgnoreCase(
+            String name, String email, String phone, String department);
     List<Student> findByRoom_Id(Long roomId);
 }

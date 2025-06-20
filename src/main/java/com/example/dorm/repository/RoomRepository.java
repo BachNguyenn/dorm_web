@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findByNumberContainingIgnoreCaseOrTypeContainingIgnoreCase(String number, String type);
+    List<Room> findByCapacity(int capacity);
 }

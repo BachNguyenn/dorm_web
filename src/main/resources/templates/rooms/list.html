@@ -12,14 +12,7 @@
     <div class="content-with-sidebar">
         <div class="container">
         <h2>Danh Sách Phòng</h2>
-        <div class="search-container">
-            <form th:action="@{/rooms/search}" method="get">
-                <input type="text" name="search" placeholder="Tìm kiếm phòng..." th:value="${search}">
-                <button type="submit">Tìm kiếm</button>
-            </form>
-            <span class="result-count" th:text="${rooms.size()} + ' kết quả'"></span>
-            <a th:href="@{/rooms/new}" class="button btn-add">Thêm Phòng</a>
-        </div>
+        <div th:replace="fragments/search :: search(@{/rooms/search}, 'Tìm kiếm phòng...', ${search}, ${rooms.size()}, @{/rooms/new}, 'Thêm Phòng')"></div>
         <table>
             <thead>
                 <tr>

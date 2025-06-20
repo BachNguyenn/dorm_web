@@ -48,6 +48,19 @@ public class RoomService {
         if (search == null || search.trim().isEmpty()) {
             return roomRepository.findAll();
         }
-        return roomRepository.findByNumberContainingIgnoreCaseOrTypeContainingIgnoreCase(search, search);
+        try {
+            Long id = Long.parseLong(search);
+            return roomRepository.findById(id)
+                    .map(java.util.List::of)
+                    .orElse(java.util.Collections.emptyList());
+        } catch (NumberFormatException e) {
+            try {
+                int capacity = Integer.parseInt(search);
+                return roomRepository.findByCapacity(capacity);
+            } catch (NumberFormatException ex) {
+                String term = search.trim();
+                return roomRepository.findByNumberContainingIgnoreCaseOrTypeContainingIgnoreCase(term, term);
+            }
+        }
     }
 }

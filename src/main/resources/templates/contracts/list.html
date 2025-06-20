@@ -12,14 +12,7 @@
     <div class="content-with-sidebar">
         <div class="container">
         <h2>Danh Sách Hợp Đồng</h2>
-        <div class="search-container">
-            <form th:action="@{/contracts/search}" method="get">
-                <input type="text" name="search" placeholder="Tìm kiếm hợp đồng..." th:value="${search}">
-                <button type="submit">Tìm kiếm</button>
-            </form>
-            <span class="result-count" th:text="${contracts.size()} + ' kết quả'"></span>
-            <a th:href="@{/contracts/new}" class="button btn-add">Thêm Hợp Đồng</a>
-        </div>
+        <div th:replace="fragments/search :: search(@{/contracts/search}, 'Tìm kiếm hợp đồng...', ${search}, ${contracts.size()}, @{/contracts/new}, 'Thêm Hợp Đồng')"></div>
         <table>
             <thead>
                 <tr>

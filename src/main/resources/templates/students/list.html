@@ -12,14 +12,7 @@
     <div class="content-with-sidebar">
         <div class="container">
         <h2>Danh Sách Sinh Viên</h2>
-        <div class="search-container">
-            <form th:action="@{/students/search}" method="get">
-                <input type="text" name="search" placeholder="Tìm kiếm sinh viên..." th:value="${search}">
-                <button type="submit">Tìm kiếm</button>
-            </form>
-            <span class="result-count" th:text="${students.size()} + ' kết quả'"></span>
-            <a th:href="@{/students/new}" class="button btn-add">Thêm Sinh Viên</a>
-        </div>
+        <div th:replace="fragments/search :: search(@{/students/search}, 'Tìm kiếm sinh viên...', ${search}, ${students.size()}, @{/students/new}, 'Thêm Sinh Viên')"></div>
         <table>
             <thead>
                 <tr>

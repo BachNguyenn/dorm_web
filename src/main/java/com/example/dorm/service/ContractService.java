@@ -61,8 +61,16 @@ public class ContractService {
         if (search == null || search.trim().isEmpty()) {
             return contractRepository.findAll();
         }
-        return contractRepository
-                .findByStudent_NameContainingIgnoreCaseOrRoom_NumberContainingIgnoreCaseOrStatusContainingIgnoreCase(
-                        search, search, search);
+        try {
+            Long id = Long.parseLong(search);
+            return contractRepository.findById(id)
+                    .map(java.util.List::of)
+                    .orElse(java.util.Collections.emptyList());
+        } catch (NumberFormatException e) {
+            String term = search.trim();
+            return contractRepository
+                    .findByStudent_NameContainingIgnoreCaseOrRoom_NumberContainingIgnoreCaseOrStatusContainingIgnoreCase(
+                            term, term, term);
+        }
     }
 }

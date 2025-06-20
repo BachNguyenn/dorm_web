@@ -39,10 +39,17 @@ public class StudentService {
         if (search == null || search.trim().isEmpty()) {
             return studentRepository.findAll();
         }
-        String term = search.trim();
-        return studentRepository
-                .findByNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneContainingIgnoreCase(
-                        term, term, term);
+        try {
+            Long id = Long.parseLong(search);
+            return studentRepository.findById(id)
+                    .map(java.util.List::of)
+                    .orElse(java.util.Collections.emptyList());
+        } catch (NumberFormatException e) {
+            String term = search.trim();
+            return studentRepository
+                    .findByNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneContainingIgnoreCaseOrDepartmentContainingIgnoreCase(
+                            term, term, term, term);
+        }
     }
 
     public List<Room> getAllRooms() {
