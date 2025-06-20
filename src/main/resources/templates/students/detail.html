@@ -44,8 +44,10 @@
     </style>
 </head>
 <body>
+    <div th:replace="fragments/header :: header"></div>
     <div th:replace="fragments/sidebar :: sidebar"></div>
-    <div class="container content-with-sidebar">
+    <div class="content-with-sidebar">
+        <div class="container">
         <h2>Chi Tiết Sinh Viên</h2>
         <div class="detail">
             <label>ID:</label> <span th:text="${student.id}"></span>
@@ -81,6 +83,7 @@
         <div>
             <a th:href="@{/students}" class="button btn-back">Quay Lại</a>
             <a th:href="@{/students/{id}/edit(id=${student.id})}" class="button btn-edit">Sửa</a>
+        </div>
         </div>
     </div>
 </body>

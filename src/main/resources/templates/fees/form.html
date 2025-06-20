@@ -46,8 +46,10 @@
     </style>
 </head>
 <body>
+    <div th:replace="fragments/header :: header"></div>
     <div th:replace="fragments/sidebar :: sidebar"></div>
-    <div class="container content-with-sidebar">
+    <div class="content-with-sidebar">
+        <div class="container">
         <h2 th:text="${fee.id} ? 'Sửa Phí' : 'Thêm Phí'"></h2>
         <form th:action="${fee.id} ? @{/fees/{id}(id=${fee.id})} : @{/fees}" th:object="${fee}" method="post">
             <div class="form-group">
@@ -86,6 +88,7 @@
             <button type="submit" class="button btn-save">Lưu</button>
             <a th:href="@{/fees}" class="button btn-cancel">Hủy</a>
         </form>
+        </div>
     </div>
 </body>
 </html>

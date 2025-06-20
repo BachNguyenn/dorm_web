@@ -89,8 +89,10 @@
     </style>
 </head>
 <body>
+    <div th:replace="fragments/header :: header"></div>
     <div th:replace="fragments/sidebar :: sidebar"></div>
-    <div class="container content-with-sidebar">
+    <div class="content-with-sidebar">
+        <div class="container">
         <h2 th:text="${student.id} ? 'Sửa Sinh Viên' : 'Thêm Sinh Viên'"></h2>
         <form th:action="${student.id} ? @{/students/{id}(id=${student.id})} : @{/students}" th:object="${student}" method="post">
             <div class="form-group">
@@ -154,6 +156,7 @@
                 <a th:href="@{/students}" class="button btn-cancel">Hủy</a>
             </div>
         </form>
+        </div>
     </div>
 </body>
 </html>

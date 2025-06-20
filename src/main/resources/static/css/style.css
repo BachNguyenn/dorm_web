@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background-color: #f4f4f4;
 }
 .container {
@@ -91,13 +94,80 @@ tr:nth-child(even) {
     text-decoration: underline;
 }
 
-/* Sidebar layout */
-.sidebar {
+/* Header layout */
+.header {
+    background: linear-gradient(135deg, #fff 0%, #f1f5f9 100%);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #e2e8f0;
+    padding: 0 2rem;
+    height: 4.5rem;
     position: fixed;
     top: 0;
     left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-subtitle {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    background: #fff;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+}
+
+.user-avatar {
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+/* Sidebar layout */
+.sidebar {
+    position: fixed;
+    top: 4.5rem;
+    left: 0;
     width: 16rem;
-    height: 100vh;
+    height: calc(100vh - 4.5rem);
     background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
     border-right: 1px solid #e2e8f0;
     padding: 1.5rem 1rem;
@@ -159,6 +229,7 @@ tr:nth-child(even) {
     transform: translateX(6px) scale(1.02);
 }
 .content-with-sidebar {
+    margin-top: 4.5rem;
     margin-left: 16rem;
     padding: 2rem;
 }

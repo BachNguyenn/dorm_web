@@ -81,8 +81,10 @@
     </style>
 </head>
 <body>
+    <div th:replace="fragments/header :: header"></div>
     <div th:replace="fragments/sidebar :: sidebar"></div>
-    <div class="container content-with-sidebar">
+    <div class="content-with-sidebar">
+        <div class="container">
         <h2>Chi Tiết Phòng</h2>
         <table class="info-table">
             <tr>
@@ -125,6 +127,7 @@
             </tbody>
         </table>
         <a th:href="@{/rooms}" class="button btn-back">Quay Lại</a>
+        </div>
     </div>
 </body>
 </html>
