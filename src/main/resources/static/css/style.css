@@ -266,8 +266,14 @@ tr.table-row:hover {
     margin-bottom: 1rem;
 }
 .search-container input[type="text"] {
-    width: 500px;
+    width: 600px;
     padding: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.search-container button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
 }
 
 h2 {
