@@ -35,4 +35,29 @@
             </nav>
         </div>
     </aside>
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Giới thiệu</h2>
+            <p>Hệ thống quản lý ký túc xá Phenikaa University được phát triển nhằm hỗ trợ công tác quản lý sinh viên và phòng ở.</p>
+        </div>
+    </div>
+    <script>
+        const aboutBtn = document.getElementById('aboutBtn');
+        const aboutModal = document.getElementById('aboutModal');
+        const closeBtn = aboutModal.querySelector('.modal-close');
+        if (aboutBtn && aboutModal && closeBtn) {
+            aboutBtn.addEventListener('click', () => {
+                aboutModal.style.display = 'flex';
+            });
+            closeBtn.addEventListener('click', () => {
+                aboutModal.style.display = 'none';
+            });
+            window.addEventListener('click', (e) => {
+                if (e.target === aboutModal) {
+                    aboutModal.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </div>
