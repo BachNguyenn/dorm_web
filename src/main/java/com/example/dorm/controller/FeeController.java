@@ -21,9 +21,11 @@ public class FeeController {
     private ContractService contractService;
 
     @GetMapping
-    public String listFees(Model model) {
+    public String listFees(@RequestParam(value = "search", required = false, defaultValue = "") String search,
+                           Model model) {
         try {
-            model.addAttribute("fees", feeService.getAllFees());
+            model.addAttribute("fees", feeService.searchFees(search));
+            model.addAttribute("search", search);
             return "fees/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi lấy danh sách phí: " + e.getMessage());
@@ -125,16 +127,4 @@ public class FeeController {
         }
     }
 
-    @GetMapping("/search")
-    public String searchFees(@RequestParam(value = "search", required = false, defaultValue = "") String search,
-                             Model model) {
-        try {
-            model.addAttribute("fees", feeService.searchFees(search));
-            model.addAttribute("search", search);
-            return "fees/list";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm phí: " + e.getMessage());
-            return "error";
-        }
-    }
 }

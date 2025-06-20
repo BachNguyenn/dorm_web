@@ -21,9 +21,11 @@ public class StudentController {
     private RoomService roomService;
 
     @GetMapping
-    public String listStudents(Model model) {
+    public String listStudents(@RequestParam(value = "search", required = false, defaultValue = "") String search,
+                               Model model) {
         try {
-            model.addAttribute("students", studentService.getAllStudents());
+            model.addAttribute("students", studentService.searchStudents(search));
+            model.addAttribute("search", search);
             return "students/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tải danh sách sinh viên: " + e.getMessage());
@@ -124,16 +126,4 @@ public class StudentController {
         }
     }
 
-    @GetMapping("/search")
-    public String searchStudents(@RequestParam(value = "search", required = false, defaultValue = "") String search,
-                                 Model model) {
-        try {
-            model.addAttribute("students", studentService.searchStudents(search));
-            model.addAttribute("search", search);
-            return "students/list";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm sinh viên: " + e.getMessage());
-            return "error";
-        }
-    }
 }

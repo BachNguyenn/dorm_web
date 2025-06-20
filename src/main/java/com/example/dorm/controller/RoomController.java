@@ -16,9 +16,11 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping
-    public String listRooms(Model model) {
+    public String listRooms(@RequestParam(value = "search", required = false, defaultValue = "") String search,
+                            Model model) {
         try {
-            model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("rooms", roomService.searchRooms(search));
+            model.addAttribute("search", search);
             return "rooms/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tải danh sách phòng: " + e.getMessage());
@@ -121,16 +123,4 @@ public class RoomController {
         }
     }
 
-    @GetMapping("/search")
-    public String searchRooms(@RequestParam(value = "search", required = false, defaultValue = "") String search,
-                              Model model) {
-        try {
-            model.addAttribute("rooms", roomService.searchRooms(search));
-            model.addAttribute("search", search);
-            return "rooms/list";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm phòng: " + e.getMessage());
-            return "error";
-        }
-    }
 }

@@ -24,9 +24,11 @@ public class ContractController {
     private RoomService roomService;
 
     @GetMapping
-    public String listContracts(Model model) {
+    public String listContracts(@RequestParam(value = "search", required = false, defaultValue = "") String search,
+                                Model model) {
         try {
-            model.addAttribute("contracts", contractService.getAllContracts());
+            model.addAttribute("contracts", contractService.searchContracts(search));
+            model.addAttribute("search", search);
             return "contracts/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi lấy danh sách hợp đồng: " + e.getMessage());
@@ -132,16 +134,4 @@ public class ContractController {
         }
     }
 
-    @GetMapping("/search")
-    public String searchContracts(@RequestParam(value = "search", required = false, defaultValue = "") String search,
-                                  Model model) {
-        try {
-            model.addAttribute("contracts", contractService.searchContracts(search));
-            model.addAttribute("search", search);
-            return "contracts/list";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm hợp đồng: " + e.getMessage());
-            return "error";
-        }
-    }
 }

@@ -12,7 +12,7 @@
     <div class="content-with-sidebar">
         <div class="container">
         <h2>Danh Sách Hợp Đồng</h2>
-        <div th:replace="fragments/search :: search(@{/contracts/search}, 'Tìm kiếm hợp đồng...', ${search}, ${contracts.size()}, @{/contracts/new}, 'Thêm Hợp Đồng')"></div>
+        <div th:replace="fragments/search :: search(@{/contracts}, 'Tìm kiếm hợp đồng...', ${search}, ${contracts.size()}, @{/contracts/new}, 'Thêm Hợp Đồng')"></div>
         <table>
             <thead>
                 <tr>
