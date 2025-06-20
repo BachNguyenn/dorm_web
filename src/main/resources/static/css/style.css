@@ -315,3 +315,71 @@ tr.table-row:hover {
     background: var(--primary-color);
     color: white;
 }
+
+/* ======== FORM & DETAIL STYLES ======== */
+.form-container, .detail-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.form-container h2, .detail-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin: 0.75rem 0;
+}
+
+.form-group label {
+    width: 120px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-right: 0.5rem;
+}
+
+.form-group input,
+.form-group select {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.form-actions .button {
+    margin-right: 0.5rem;
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.info-table td {
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-table td.label {
+    font-weight: 600;
+    color: var(--text-secondary);
+    width: 150px;
+    text-align: right;
+}
+
+.info-table td.value {
+    color: var(--text-primary);
+}
