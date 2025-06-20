@@ -128,23 +128,7 @@ public class FeeController {
     @GetMapping("/search")
     public String searchFees(@RequestParam("search") String search, Model model) {
         try {
-            if (search == null || search.trim().isEmpty()) {
-                model.addAttribute("fees", feeService.getAllFees());
-            } else {
-                try {
-                    Long id = Long.parseLong(search);
-                    Optional<Fee> feeOptional = feeService.getFee(id);
-                    if (feeOptional.isPresent()) {
-                        model.addAttribute("fees", java.util.List.of(feeOptional.get()));
-                    } else {
-                        model.addAttribute("fees", java.util.Collections.emptyList());
-                        model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
-                    }
-                } catch (NumberFormatException e) {
-                    model.addAttribute("fees", java.util.Collections.emptyList());
-                    model.addAttribute("errorMessage", "Vui lòng nhập ID hợp lệ (số).");
-                }
-            }
+            model.addAttribute("fees", feeService.searchFees(search));
             model.addAttribute("search", search);
             return "fees/list";
         } catch (Exception e) {

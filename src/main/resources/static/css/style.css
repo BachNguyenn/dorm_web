@@ -247,6 +247,11 @@ body {
     margin-bottom: 1rem;
 }
 
+.result-count {
+    margin-left: 1rem;
+    color: var(--text-secondary);
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -284,6 +289,17 @@ th {
 .btn-view:hover { background: var(--primary-dark); }
 .btn-edit:hover { background: var(--primary-dark); }
 .btn-delete:hover { background: var(--primary-dark); }
+
+/* ======== ACTION ICONS ======== */
+.action-icons a {
+    margin-right: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.action-icons a:hover {
+    color: var(--primary-color);
+}
 
 /* ======== MODAL ======== */
 .modal {

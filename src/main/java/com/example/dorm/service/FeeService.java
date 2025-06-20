@@ -40,4 +40,24 @@ public class FeeService {
     public void deleteFee(Long id) {
         feeRepository.deleteById(id);
     }
+
+    /**
+     * Search fees by id, student name, room number or fee type.
+     */
+    public List<Fee> searchFees(String search) {
+        if (search == null || search.trim().isEmpty()) {
+            return feeRepository.findAll();
+        }
+        try {
+            Long id = Long.parseLong(search);
+            return feeRepository.findById(id)
+                    .map(java.util.List::of)
+                    .orElse(java.util.Collections.emptyList());
+        } catch (NumberFormatException e) {
+            String term = search.trim();
+            return feeRepository
+                    .findByContract_Student_NameContainingIgnoreCaseOrContract_Room_NumberContainingIgnoreCaseOrTypeContainingIgnoreCase(
+                            term, term, term);
+        }
+    }
 }

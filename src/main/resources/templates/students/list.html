@@ -17,6 +17,7 @@
                 <input type="text" name="search" placeholder="Tìm kiếm sinh viên..." th:value="${search}">
                 <button type="submit">Tìm kiếm</button>
             </form>
+            <span class="result-count" th:text="${students.size()} + ' kết quả'"></span>
             <a th:href="@{/students/new}" class="button btn-add">Thêm Sinh Viên</a>
         </div>
         <table>
@@ -26,7 +27,9 @@
                     <th>Tên</th>
                     <th>Ngày Sinh</th>
                     <th>Khoa</th>
-                    <th>Hành Động</th>
+                    <th>Email</th>
+                    <th>SĐT</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -35,10 +38,12 @@
                     <td th:text="${student.name}"></td>
                     <td th:text="${student.dob}"></td>
                     <td th:text="${student.department}"></td>
-                    <td>
-                        <a th:href="@{/students/{id}(id=${student.id})}" class="button btn-view">Xem</a>
-                        <a th:href="@{/students/{id}/edit(id=${student.id})}" class="button btn-edit">Sửa</a>
-                        <a th:href="@{/students/{id}/delete(id=${student.id})}" class="button btn-delete" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                    <td th:text="${student.email}"></td>
+                    <td th:text="${student.phone}"></td>
+                    <td class="action-icons">
+                        <a th:href="@{/students/{id}(id=${student.id})}"><i class="fa-solid fa-eye"></i></a>
+                        <a th:href="@{/students/{id}/edit(id=${student.id})}"><i class="fa-solid fa-pen"></i></a>
+                        <a th:href="@{/students/{id}/delete(id=${student.id})}" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
             </tbody>

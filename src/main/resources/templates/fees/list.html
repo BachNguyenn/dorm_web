@@ -17,6 +17,7 @@
                 <input type="text" name="search" placeholder="Tìm kiếm phí..." th:value="${search}">
                 <button type="submit">Tìm kiếm</button>
             </form>
+            <span class="result-count" th:text="${fees.size()} + ' kết quả'"></span>
             <a th:href="@{/fees/new}" class="button btn-add">Thêm Phí</a>
         </div>
         <table>
@@ -29,7 +30,7 @@
                     <th>Số Tiền</th>
                     <th>Ngày Đáo Hạn</th>
                     <th>Trạng Thái Thanh Toán</th>
-                    <th>Hành Động</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -41,10 +42,10 @@
                     <td th:text="${fee.amount.intValue()}"></td>
                     <td th:text="${fee.dueDate}"></td>
                     <td th:text="${fee.paymentStatus}"></td>
-                    <td>
-                        <a th:href="@{/fees/{id}(id=${fee.id})}" class="button btn-view">Xem</a>
-                        <a th:href="@{/fees/{id}/edit(id=${fee.id})}" class="button btn-edit">Sửa</a>
-                        <a th:href="@{/fees/{id}/delete(id=${fee.id})}" class="button btn-delete" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                    <td class="action-icons">
+                        <a th:href="@{/fees/{id}(id=${fee.id})}"><i class="fa-solid fa-eye"></i></a>
+                        <a th:href="@{/fees/{id}/edit(id=${fee.id})}"><i class="fa-solid fa-pen"></i></a>
+                        <a th:href="@{/fees/{id}/delete(id=${fee.id})}" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
             </tbody>
