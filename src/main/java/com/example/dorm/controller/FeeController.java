@@ -24,6 +24,8 @@ public class FeeController {
     public String listFees(Model model) {
         try {
             model.addAttribute("fees", feeService.getAllFees());
+            // ensure search input retains value when not searching
+            model.addAttribute("search", "");
             return "fees/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi lấy danh sách phí: " + e.getMessage());

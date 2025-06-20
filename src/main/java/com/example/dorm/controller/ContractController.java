@@ -27,6 +27,7 @@ public class ContractController {
     public String listContracts(Model model) {
         try {
             model.addAttribute("contracts", contractService.getAllContracts());
+            model.addAttribute("search", "");
             return "contracts/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi lấy danh sách hợp đồng: " + e.getMessage());

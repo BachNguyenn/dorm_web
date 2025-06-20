@@ -19,6 +19,7 @@ public class RoomController {
     public String listRooms(Model model) {
         try {
             model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("search", "");
             return "rooms/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tải danh sách phòng: " + e.getMessage());

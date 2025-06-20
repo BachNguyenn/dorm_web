@@ -24,6 +24,7 @@ public class StudentController {
     public String listStudents(Model model) {
         try {
             model.addAttribute("students", studentService.getAllStudents());
+            model.addAttribute("search", "");
             return "students/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tải danh sách sinh viên: " + e.getMessage());
