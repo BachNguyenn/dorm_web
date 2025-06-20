@@ -241,7 +241,7 @@ body {
 }
 .stat-action {
     display: inline-flex;
-    align-items: center;
+    width: 800px;
     gap: 0.5rem;
     margin-top: 1rem;
     padding: 0.5rem 1rem;
@@ -319,7 +319,7 @@ h2 {
     text-decoration: none;
     color: var(--text-secondary);
 }
-.action-icons a.view { color: var(--info-color); }
+    max-width: 800px;
 .action-icons a.edit { color: var(--warning-color); }
 .action-icons a.delete { color: var(--danger-color); }
 .action-icons a:last-child { margin-right: 0; }
