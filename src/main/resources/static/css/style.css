@@ -149,15 +149,8 @@ body {
     font-weight: 600;
 }
 
-/* ======== DASHBOARD ======== */
-.main-content {
-    margin-top: 4.5rem;
-    margin-left: 16rem;
-    padding: 2rem;
-}
-
-
-/* ======== GENERIC PAGE CONTENT ======== */
+/* ======== PAGE LAYOUT ======== */
+.main-content,
 .content-with-sidebar {
     margin-top: 4.5rem;
     margin-left: 16rem;
@@ -240,6 +233,57 @@ body {
     border-color: var(--primary-color);
     transform: translateY(-1px);
 }
+
+/* ======== GENERIC TABLES & FORMS ======== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-secondary);
+}
+
+th, td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+}
+
+th {
+    background: var(--bg-primary);
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    color: white;
+}
+
+.btn-add { background: var(--success-color); }
+.btn-view { background: var(--info-color); }
+.btn-edit { background: var(--warning-color); }
+.btn-delete { background: var(--danger-color); }
+
+.btn-add:hover { background: var(--primary-dark); }
+.btn-view:hover { background: var(--primary-dark); }
+.btn-edit:hover { background: var(--primary-dark); }
+.btn-delete:hover { background: var(--primary-dark); }
 
 /* ======== MODAL ======== */
 .modal {
