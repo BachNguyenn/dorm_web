@@ -202,12 +202,12 @@ body {
     transform: translateY(-4px);
     box-shadow: var(--shadow-xl);
 }
-    padding: 0.25rem 0.75rem;
-    width: fit-content;
-    align-self: center;
-
-/* style chung cho tất cả các icon */
-.stat-icon {
+    width: 4rem;
+    height: 4rem;
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
     width: 48px;
     height: 48px;
     border-radius: 8px;
