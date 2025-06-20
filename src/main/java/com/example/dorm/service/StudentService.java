@@ -4,7 +4,6 @@ import com.example.dorm.model.Student;
 import com.example.dorm.repository.StudentRepository;
 import com.example.dorm.repository.RoomRepository;
 import com.example.dorm.model.Room;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
