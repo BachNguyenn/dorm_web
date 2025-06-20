@@ -186,6 +186,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1.5rem;
 }
+
 .stat-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
@@ -194,71 +195,53 @@ body {
     box-shadow: var(--shadow-sm);
     transition: 0.3s ease;
     text-align: center;
+
+    /* flex để đẩy nội dung + nút */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .stat-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-xl);
 }
-    width: 4rem;
-    height: 4rem;
-    font-size: 1.5rem;
-    margin-top: 0.5rem;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
-    display: flex;
+
+/* ===== ICON SIZE + COLORS ===== */
+.stat-icon i {
+    display: inline-flex;
+    width: 64px;
+    height: 64px;
+    font-size: 2rem;
+    border-radius: 0.5rem;
     align-items: center;
     justify-content: center;
     color: #fff;
-    font-size: 1.25rem; /* hoặc điều chỉnh tùy ý */
+    margin-bottom: 1rem;
 }
 
-/* màu nền riêng cho từng loại */
-.student-icon {
-    background-color: #4dabf5; /* xanh dương nhạt */
-}
+.stat-icon i.fa-user-graduate   { background-color: #4dabf5; }  /* Sinh viên */
+.stat-icon i.fa-bed             { background-color: #51cf66; }  /* Phòng */
+.stat-icon i.fa-file-contract   { background-color: #ffa94d; }  /* Hợp đồng */
+.stat-icon i.fa-money-bill-wave { background-color: #ef4444; }  /* Phí */
 
-.room-icon {
-    background-color: #51cf66; /* xanh lá */
-}
-
-.contract-icon {
-    background-color: #ffa94d; /* cam vàng */
-}
-
-.fee-icon {
-    background-color: #ff6b6b; /* đỏ nhạt */
-}
-
-.stat-title {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-}
-.stat-value {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--text-primary);
-}
+/* ===== NÚT XEM CHI TIẾT ===== */
 .stat-action {
     display: inline-flex;
-    width: 800px;
+    width: auto;
+    align-items: center;
     gap: 0.5rem;
     margin-top: 1rem;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    text-decoration: none;
-    color: var(--text-secondary);
     background: var(--bg-primary);
+    color: var(--text-secondary);
+    text-decoration: none;
     transition: 0.2s ease;
 }
+
 .stat-action:hover {
     background: var(--primary-color);
     color: white;
