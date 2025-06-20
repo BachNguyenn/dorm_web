@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label for="dob">Ngày Sinh:</label>
                 <input type="date" id="dob" th:field="*{dob}"
-                       th:value="${student.dob != null ? #temporals.format(student.dob, 'yyyy-MM-dd') : ''}" required>
+                       th:value="${student.dob != null ? #temporals.format(student.dob, 'dd-MM-yyyy') : ''}" required>
                 <span class="error" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></span>
             </div>
             <div class="form-group">

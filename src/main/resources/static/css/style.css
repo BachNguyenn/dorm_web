@@ -174,10 +174,21 @@ body {
 
 /* ======== GENERIC PAGE CONTENT ======== */
 .content-with-sidebar {
-    margin-top: 4.5rem;
-    margin-left: 16rem;
-    padding: 2rem;
+    margin-top: 1.5rem;
+    margin-left: 13rem;
+    padding: 0.5rem;
 }
+
+/* ======== CONTAINER CARD ======== */
+.container {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
+}
+
 
 dashboard-header {
     text-align: center;
@@ -278,6 +289,8 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
+    border-radius: var(--radius-md);
+    overflow: hidden;
 }
 thead {
     background: var(--bg-secondary);
