@@ -3,316 +3,748 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Quản Lý Kí Túc Xá</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --danger-color: #ef4444;
+            --warning-color: #f97316;
+            --info-color: #06b6d4;
+            --success-color: #22c55e;
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', Arial, sans-serif;
         }
+
         body {
-            background: linear-gradient(135deg, #f0f4f8, #e6e9ef);
-            color: #2d3748;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #e2e8f0 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
         }
-        /* Nút giới thiệu nổi bật */
-        #aboutPhenikaaBtn {
-            background: #ffb703 !important;
-            color: #2d3748 !important;
-            font-weight: 700 !important;
-            border: 2px solid #219ebc;
-            box-shadow: 0 2px 8px rgba(255,183,3,0.12);
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, #f1f5f9 100%);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 2rem;
+            height: 4.5rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
         }
-        #aboutPhenikaaBtn:hover {
-            background: #219ebc !important;
-            color: #fff !important;
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
-        .hero {
-            text-align: center;
-            padding: 80px 20px 40px;
-            background: linear-gradient(180deg, #ffffff, #f7fafc);
-        }
-        .hero h2 {
-            font-size: 2.3em;
-            color: #2d3748;
-            margin-bottom: 10px;
+
+        .header-title {
+            font-size: 1.5rem;
             font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .hero p {
-            font-size: 1.1em;
-            color: #718096;
-            font-weight: 300;
+
+        .header-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
         }
-        .stats-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
-        .stat-card {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            opacity: 0;
-            animation: fadeIn 0.5s ease-in forwards;
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
-        .stat-card:nth-child(1) { animation-delay: 0.1s; }
-        .stat-card:nth-child(2) { animation-delay: 0.2s; }
-        .stat-card:nth-child(3) { animation-delay: 0.3s; }
-        .stat-card:nth-child(4) { animation-delay: 0.4s; }
-        .stat-card h3 {
-            font-size: 1.2em;
-            color: #4a5568;
-            margin-bottom: 10px;
-            font-weight: 400;
+
+        .user-profile:hover {
+            background: var(--bg-primary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .user-avatar {
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 4.5rem;
+            left: 0;
+            width: 16rem;
+            height: calc(100vh - 4.5rem);
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, #f8fafc 100%);
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding: 0 0.75rem;
         }
-        .stat-card .count {
-            font-size: 2.8em;
-            font-weight: 700;
-            color: #2b6cb0;
-            margin-bottom: 10px;
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
         }
-        .stat-card a {
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
             text-decoration: none;
-            color: #38a169;
-            font-size: 0.9em;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .sidebar-link:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+            color: white;
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .sidebar-link.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .sidebar-link i {
+            width: 1.25rem;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .sidebar-link.special {
+            background: linear-gradient(135deg, var(--accent-color), var(--warning-color));
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar-link.special:hover {
+            background: linear-gradient(135deg, var(--warning-color), var(--danger-color));
+            transform: translateX(6px) scale(1.02);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 16rem;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
             font-weight: 400;
-            border: 1px solid #38a169;
-            padding: 8px 16px;
-            border-radius: 20px;
-            transition: background-color 0.3s, color 0.3s;
         }
-        .stat-card a:hover {
-            background-color: #38a169;
-            color: #ffffff;
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
-        @media (max-width: 768px) {
-            .hero h2 {
-                font-size: 1.9em;
-            }
-            .stats-container {
-                grid-template-columns: 1fr;
-            }
-            .stat-card {
-                padding: 20px;
-            }
-            .stat-card .count {
-                font-size: 2.2em;
-            }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        /* Popup giới thiệu Phenikaa khác biệt */
-        #phenikaaAboutModal {
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:nth-child(1) { animation: slideInUp 0.6s ease 0.1s both; }
+        .stat-card:nth-child(2) { animation: slideInUp 0.6s ease 0.2s both; }
+        .stat-card:nth-child(3) { animation: slideInUp 0.6s ease 0.3s both; }
+        .stat-card:nth-child(4) { animation: slideInUp 0.6s ease 0.4s both; }
+
+        .stat-card:nth-child(1)::before { background: linear-gradient(90deg, var(--primary-color), var(--info-color)); }
+        .stat-card:nth-child(2)::before { background: linear-gradient(90deg, var(--secondary-color), var(--success-color)); }
+        .stat-card:nth-child(3)::before { background: linear-gradient(90deg, var(--accent-color), var(--warning-color)); }
+        .stat-card:nth-child(4)::before { background: linear-gradient(90deg, var(--danger-color), #dc2626); }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: white;
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+        }
+
+        .stat-card:nth-child(1) .stat-icon { background: linear-gradient(135deg, var(--primary-color), var(--info-color)); }
+        .stat-card:nth-child(2) .stat-icon { background: linear-gradient(135deg, var(--secondary-color), var(--success-color)); }
+        .stat-card:nth-child(3) .stat-icon { background: linear-gradient(135deg, var(--accent-color), var(--warning-color)); }
+        .stat-card:nth-child(4) .stat-icon { background: linear-gradient(135deg, var(--danger-color), #dc2626); }
+
+        .stat-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+        .stat-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .stat-action:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Chart Section */
+        .chart-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .chart-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chart-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .chart-select:hover {
+            border-color: var(--primary-color);
+        }
+
+        .chart-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
+        }
+
+        .chart-button {
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+        }
+
+        /* Modal */
+        .modal {
             display: none;
             position: fixed;
-            z-index: 3000;
-            left: 0;
             top: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(34, 49, 63, 0.22);
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
         }
-        #phenikaaAboutModal .about-content {
-            background: linear-gradient(135deg, #ffb703 60%, #219ebc 100%);
-            max-width: 420px;
-            margin: 90px auto;
-            padding: 32px 36px 24px;
-            border-radius: 32px 8px 32px 8px;
-            box-shadow: 0 8px 40px rgba(44,62,80,0.18);
-            position:relative;
-            color: #22223b;
-            border: 3px solid #219ebc;
-            font-family: 'Roboto', Arial, sans-serif;
-            animation: fadeIn 0.4s;
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-color);
         }
-        #phenikaaAboutModal .about-content h2 {
-            color: #023047;
-            margin-bottom: 14px;
-            text-align: center;
-            font-weight: 900;
-            letter-spacing: 1px;
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
         }
-        #phenikaaAboutModal .about-content ul {
-            margin: 16px 0 0 18px;
-            color: #023047;
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
         }
-        #phenikaaAboutModal .about-content a {
-            color: #023047;
+
+        .modal-close {
+            width: 2rem;
+            height: 2rem;
+            border: none;
+            background: var(--bg-primary);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .modal-body {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .modal-body ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .modal-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .modal-body a:hover {
             text-decoration: underline;
         }
-        #closePhenikaaAbout {
-            position:absolute;
-            top:10px;
-            right:18px;
-            background:none;
-            border:none;
-            font-size:2em;
-            color:#22223b;
-            cursor:pointer;
-            line-height:1;
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 14rem;
+            }
+            .main-content {
+                margin-left: 14rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 1rem;
+            }
+            .header-title {
+                font-size: 1.25rem;
+            }
+            .header-subtitle {
+                display: none;
+            }
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                width: 16rem;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 5rem 1rem 1rem;
+            }
+            .dashboard-title {
+                font-size: 2rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .chart-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .chart-controls {
+                justify-content: center;
+            }
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            width: 2.5rem;
+            height: 2.5rem;
+            border: none;
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
         }
     </style>
 </head>
 <body>
-    <div th:replace="fragments/header :: header"></div>
-    <div class="hero">
-        <h2>Dashboard</h2>
-        <p>Quản lý thông tin kí túc xá một cách dễ dàng và hiệu quả</p>
-    </div>
-    <div class="stats-container">
-        <div class="stat-card">
-            <h3>Tổng Sinh Viên</h3>
-            <div class="count" th:text="${studentCount} ?: '0'"></div>
-            <a th:href="@{/students}">Xem Chi Tiết</a>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div>
+                <h1 class="header-title">Phenikaa University</h1>
+                <p class="header-subtitle">Hệ thống quản lý ký túc xá</p>
+            </div>
         </div>
-        <div class="stat-card">
-            <h3>Tổng Phòng</h3>
-            <div class="count" th:text="${roomCount} ?: '0'"></div>
-            <a th:href="@{/rooms}">Xem Chi Tiết</a>
+        <div class="header-right">
+            <div class="user-profile">
+                <div class="user-avatar">A</div>
+                <span></span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
         </div>
-        <div class="stat-card">
-            <h3>Tổng Hợp Đồng</h3>
-            <div class="count" th:text="${contractCount} ?: '0'"></div>
-            <a th:href="@{/contracts}">Xem Chi Tiết</a>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Quản lý chính</h3>
+            <nav class="sidebar-nav">
+                <a href="javascript:void(0)" class="sidebar-link active">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Trang chủ</span>
+                </a>
+                <a th:href="@{/students}" class="sidebar-link">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Sinh Viên</span>
+                </a>
+                <a th:href="@{/rooms}" class="sidebar-link">
+                    <i class="fas fa-bed"></i>
+                    <span>Phòng</span>
+                </a>
+                <a th:href="@{/contracts}" class="sidebar-link">
+                    <i class="fas fa-file-contract"></i>
+                    <span>Hợp Đồng</span>
+                </a>
+                <a th:href="@{/fees}" class="sidebar-link">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Phí</span>
+                </a>
+            </nav>
         </div>
-        <div class="stat-card">
-            <h3>Tổng Phí</h3>
-            <div class="count" th:text="${feeCount} ?: '0'"></div>
-            <a th:href="@{/fees}">Xem Chi Tiết</a>
+        
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Khác</h3>
+            <nav class="sidebar-nav">
+                <a href="javascript:void(0)" class="sidebar-link special" id="aboutBtn">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Giới thiệu</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Dashboard</h1>
+            <p class="dashboard-subtitle">Quản lý thông tin ký túc xá một cách dễ dàng và hiệu quả</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                </div>
+                <h3 class="stat-title">Tổng Sinh Viên</h3>
+                <div class="stat-value" th:text="${studentCount} ?: '0'">150</div>
+                <a th:href="@{/students}" class="stat-action">
+                    <span>Xem Chi Tiết</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                </div>
+                <h3 class="stat-title">Tổng Phòng</h3>
+                <div class="stat-value" th:text="${roomCount} ?: '0'">75</div>
+                <a th:href="@{/rooms}" class="stat-action">
+                    <span>Xem Chi Tiết</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                </div>
+                <h3 class="stat-title">Tổng Hợp Đồng</h3>
+                <div class="stat-value" th:text="${contractCount} ?: '0'">120</div>
+                <a th:href="@{/contracts}" class="stat-action">
+                    <span>Xem Chi Tiết</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                </div>
+                <h3 class="stat-title">Tổng Phí</h3>
+                <div class="stat-value" th:text="${feeCount} ?: '0'">85</div>
+                <a th:href="@{/fees}" class="stat-action">
+                    <span>Xem Chi Tiết</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    <!-- Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-university" style="margin-right: 0.5rem; color: var(--primary-color);"></i>
+                    Đại học Phenikaa
+                </h2>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Phenikaa University</strong> là trường đại học đa ngành, hiện đại và hướng tới nghiên cứu, đổi mới sáng tạo. Trường cung cấp môi trường học tập năng động với hệ thống ký túc xá tiện nghi, an toàn.</p>
+                
+                <h4 style="margin: 1.5rem 0 1rem 0; color: var(--text-primary);">Điểm nổi bật:</h4>
+                <ul>
+                    <li>Chương trình đào tạo đa dạng, quốc tế hóa</li>
+                    <li>Đội ngũ giảng viên giàu kinh nghiệm</li>
+                    <li>Cơ sở vật chất hiện đại, trang thiết bị tiên tiến</li>
+                    <li>Hỗ trợ phát triển toàn diện cho sinh viên</li>
+                    <li>Môi trường học tập quốc tế và sáng tạo</li>
+                </ul>
+                
+                <p style="margin-top: 1.5rem;">
+                    <strong>Website:</strong> 
+                    <a href="https://phenikaa-uni.edu.vn" target="_blank">phenikaa-uni.edu.vn</a>
+                </p>
+            </div>
         </div>
     </div>
-
-    <!-- Thêm biểu đồ thống kê -->
-    <div style="max-width:700px;margin:40px auto 0;background:#fff;padding:24px;border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,0.08);">
-        <h3 style="text-align:center;color:#2b6cb0;margin-bottom:20px;">Biểu Đồ Thống Kê Tổng Quan</h3>
-        <canvas id="dashboardChart" height="120"></canvas>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-    <div style="text-align:center;margin:16px 0;">
-        <label for="chartType">Kiểu biểu đồ:</label>
-        <select id="chartType">
-            <option value="bar">Cột</option>
-            <option value="line">Đường</option>
-        </select>
-        <button id="refreshChart" style="margin-left:12px;padding:4px 12px;">Tải lại</button>
-    </div>
-    <script th:inline="javascript">
-        // Dữ liệu mẫu, thực tế lấy từ Thymeleaf
-        const chartLabels = ['Sinh Viên', 'Phòng', 'Hợp Đồng', 'Phí'];
-        const chartData = [
-            /*[[${studentCount}]]*/,
-            /*[[${roomCount}]]*/,
-            /*[[${contractCount}]]*/,
-            /*[[${feeCount}]]*/
-        ];
-        const chartColors = ['#2b6cb0', '#38a169', '#ed8936', '#e53e3e'];
-
-        let chartType = 'bar';
-        let dashboardChart;
-
-        function renderChart(type) {
-            if (dashboardChart) dashboardChart.destroy();
-            const ctx = document.getElementById('dashboardChart').getContext('2d');
-            dashboardChart = new Chart(ctx, {
-                type: type,
-                data: {
-                    labels: chartLabels,
-                    datasets: [{
-                        label: 'Số lượng',
-                        data: chartData,
-                        backgroundColor: chartColors,
-                        borderRadius: type === 'bar' ? 10 : 0,
-                        fill: false,
-                        borderColor: chartColors,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    animation: { duration: 800 },
-                    plugins: {
-                        legend: { display: type !== 'bar', position: 'bottom' },
-                        tooltip: {
-                            enabled: true,
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': ' + context.parsed.y;
-                                }
-                            }
-                        },
-                        datalabels: {
-                            display: true,
-                            anchor: type === 'bar' ? 'end' : 'center',
-                            align: type === 'bar' ? 'top' : 'center',
-                            color: '#2d3748',
-                            font: { weight: 'bold', size: 16 },
-                            formatter: Math.round
-                        }
-                    },
-                    scales: type === 'bar' || type === 'line' ? {
-                        y: { beginAtZero: true, ticks: { stepSize: 1 } }
-                    } : {}
-                },
-                plugins: [ChartDataLabels]
-            });
-        }
-
-        // Sự kiện đổi loại biểu đồ
-        document.getElementById('chartType').addEventListener('change', function() {
-            chartType = this.value;
-            renderChart(chartType);
-        });
-
-        // Sự kiện tải lại dữ liệu (có thể thay bằng fetch API nếu muốn lấy dữ liệu động)
-        document.getElementById('refreshChart').addEventListener('click', function() {
-            renderChart(chartType);
-        });
-
-        // Khởi tạo lần đầu
-        renderChart(chartType);
-    </script>
-
-    <!-- Popup Giới thiệu Đại học Phenikaa -->
-    <div id="phenikaaAboutModal">
-        <div class="about-content">
-            <button id="closePhenikaaAbout">&times;</button>
-            <h2>Đại học Phenikaa</h2>
-            <p style="font-size:1.08em;line-height:1.7;margin-bottom:10px;">
-                <strong>Phenikaa University</strong> là trường đại học đa ngành, định hướng nghiên cứu, đổi mới sáng tạo và hội nhập quốc tế. Trường cung cấp môi trường học tập hiện đại, năng động với hệ thống ký túc xá tiện nghi, an toàn, đáp ứng nhu cầu học tập và sinh hoạt của sinh viên.
-            </p>
-            <ul>
-                <li>Chương trình đào tạo đa dạng, cập nhật theo xu hướng quốc tế</li>
-                <li>Đội ngũ giảng viên giàu kinh nghiệm, tận tâm</li>
-                <li>Cơ sở vật chất hiện đại, khuôn viên xanh, thân thiện</li>
-                <li>Hỗ trợ sinh viên phát triển toàn diện về học thuật, kỹ năng và thể chất</li>
-            </ul>
-            <p style="margin-top:14px;">
-                <b>Địa chỉ:</b> Đường Nguyễn Văn Trác, Yên Nghĩa, Hà Đông, Hà Nội<br>
-                <b>Website:</b> <a href="https://phenikaa-uni.edu.vn" target="_blank">phenikaa-uni.edu.vn</a>
-            </p>
-        </div>
-    </div>
-    <script>
-        document.getElementById('aboutPhenikaaBtn').onclick = function() {
-            document.getElementById('phenikaaAboutModal').style.display = 'block';
-        };
-        document.getElementById('closePhenikaaAbout').onclick = function() {
-            document.getElementById('phenikaaAboutModal').style.display = 'none';
-        };
-        window.addEventListener('click', function(event) {
-            const modal = document.getElementById('phenikaaAboutModal');
-            if (event.target === modal) modal.style.display = 'none';
-        });
-    </script>
 </body>
 </html>
