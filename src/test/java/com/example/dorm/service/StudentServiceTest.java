@@ -42,9 +42,9 @@ class StudentServiceTest {
     @Test
     void searchStudentsByName() {
         List<Student> found = Arrays.asList(new Student(), new Student());
-        when(studentRepository.findByNameContainingIgnoreCase("test")).thenReturn(found);
+        when(studentRepository.findByNameIgnoreCase("test")).thenReturn(found);
         List<Student> result = studentService.searchStudents("test");
         assertEquals(2, result.size());
-        verify(studentRepository).findByNameContainingIgnoreCase("test");
+        verify(studentRepository).findByNameIgnoreCase("test");
     }
 }
