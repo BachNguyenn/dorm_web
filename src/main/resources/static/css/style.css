@@ -193,12 +193,18 @@ body {
     padding: 2rem;
     box-shadow: var(--shadow-sm);
     transition: 0.3s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .stat-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-xl);
 }
-/* style.css */
+    padding: 0.25rem 0.75rem;
+    width: fit-content;
+    align-self: center;
 
 /* style chung cho tất cả các icon */
 .stat-icon {
