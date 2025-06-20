@@ -23,7 +23,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Hợp Đồng</th>
+                    <th>Sinh Viên</th>
+                    <th>Phòng</th>
                     <th>Loại Phí</th>
                     <th>Số Tiền</th>
                     <th>Ngày Đáo Hạn</th>
@@ -34,7 +35,8 @@
             <tbody>
                 <tr th:each="fee : ${fees}">
                     <td th:text="${fee.id}"></td>
-                    <td th:text="${fee.contract.id}"></td>
+                    <td th:text="${fee.contract.student.name}"></td>
+                    <td th:text="${fee.contract.room.number}"></td>
                     <td th:text="${fee.type}"></td>
                     <td th:text="${fee.amount.intValue()}"></td>
                     <td th:text="${fee.dueDate}"></td>
