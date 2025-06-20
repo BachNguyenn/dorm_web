@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Chi Tiết Hợp Đồng</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
         body {
             background-color: #f4f4f4;
@@ -55,6 +56,7 @@
     </style>
 </head>
 <body>
+    <div th:replace="fragments/header :: header"></div>
     <div class="container">
         <h2>Chi Tiết Hợp Đồng</h2>
         <table class="info-table">

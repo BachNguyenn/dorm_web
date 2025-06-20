@@ -70,3 +70,23 @@ tr:nth-child(even) {
     font-size: 16px;
     cursor: pointer;
 }
+.navbar {
+    background-color: #2b6cb0;
+    padding: 10px 20px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar h1 {
+    font-size: 1.5em;
+    margin: 0;
+}
+.nav-links a {
+    color: #fff;
+    margin-left: 15px;
+    text-decoration: none;
+}
+.nav-links a:hover {
+    text-decoration: underline;
+}
