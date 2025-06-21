@@ -159,7 +159,7 @@ public class StudentController {
         var pageable = org.springframework.data.domain.PageRequest.of(0, 10);
         var studentsPage = studentService.searchStudents(term, pageable);
         return studentsPage.getContent().stream().map(s -> {
-            var map = new java.util.HashMap<String, Object>();
+            java.util.Map<String, Object> map = new java.util.HashMap<>();
             map.put("id", s.getId());
             map.put("label", s.getCode() + " - " + s.getName());
             return map;
