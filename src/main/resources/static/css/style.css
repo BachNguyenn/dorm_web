@@ -479,3 +479,8 @@ h2 {
     font-size: 1.25rem;
 }
 
+.error {
+    color: var(--danger-color);
+    margin-bottom: 1rem;
+}
+

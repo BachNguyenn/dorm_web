@@ -58,6 +58,11 @@ public class ContractController {
             model.addAttribute("rooms", roomService.getAllRooms());
             return "contracts/form";
         }
+        if (contract.getStudent() == null || contract.getStudent().getId() == null) {
+            model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("errorMessage", "Vui lòng chọn sinh viên hợp lệ");
+            return "contracts/form";
+        }
         try {
             contractService.createContract(contract);
             return "redirect:/contracts";
@@ -106,6 +111,11 @@ public class ContractController {
     public String updateContract(@PathVariable("id") Long id, @Valid @ModelAttribute Contract contract, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("rooms", roomService.getAllRooms());
+            return "contracts/form";
+        }
+        if (contract.getStudent() == null || contract.getStudent().getId() == null) {
+            model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("errorMessage", "Vui lòng chọn sinh viên hợp lệ");
             return "contracts/form";
         }
         try {
