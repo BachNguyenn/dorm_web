@@ -51,10 +51,10 @@ class StudentServiceTest {
         match2.setName("Test Nguyen");
         List<Student> list = Arrays.asList(match1, match2);
         Page<Student> page = new PageImpl<>(list);
-        when(studentRepository.findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(eq("test"), eq("test"), any(Pageable.class)))
+        when(studentRepository.searchByCodeOrNameWord(eq("test"), any(Pageable.class)))
                 .thenReturn(page);
         Page<Student> result = studentService.searchStudents("test", Pageable.unpaged());
         assertEquals(2, result.getContent().size());
-        verify(studentRepository).findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(eq("test"), eq("test"), any(Pageable.class));
+        verify(studentRepository).searchByCodeOrNameWord(eq("test"), any(Pageable.class));
     }
 }

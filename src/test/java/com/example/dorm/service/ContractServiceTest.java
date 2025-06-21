@@ -42,7 +42,7 @@ class ContractServiceTest {
         room.setId(1L);
         room.setCapacity(1);
         when(roomRepository.findById(1L)).thenReturn(Optional.of(room));
-        when(contractRepository.countByRoom_IdAndStatus(1L, "ACTIVE")).thenReturn(1L);
+        when(studentRepository.countByRoom_Id(1L)).thenReturn(1L);
         Contract contract = new Contract();
         contract.setRoom(room);
         Student s = new Student();
@@ -62,7 +62,7 @@ class ContractServiceTest {
         existing.setRoom(oldRoom);
         when(contractRepository.findById(10L)).thenReturn(Optional.of(existing));
         when(roomRepository.findById(2L)).thenReturn(Optional.of(newRoom));
-        when(contractRepository.countByRoom_IdAndStatus(2L, "ACTIVE")).thenReturn(1L);
+        when(studentRepository.countByRoom_Id(2L)).thenReturn(1L);
 
         Contract update = new Contract();
         update.setRoom(newRoom);

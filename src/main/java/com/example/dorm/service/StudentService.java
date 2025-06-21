@@ -31,6 +31,9 @@ public class StudentService {
     }
 
     public Student saveStudent(Student student) {
+        if (student.getRoom() != null) {
+            checkRoomCapacity(student.getRoom(), student.getId());
+        }
         return studentRepository.save(student);
     }
 
@@ -42,8 +45,23 @@ public class StudentService {
         if (search == null || search.trim().isEmpty()) {
             return studentRepository.findAll(pageable);
         }
-        return studentRepository
-                .findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(search, search, pageable);
+        return studentRepository.searchByCodeOrNameWord(search, pageable);
+    }
+
+    private void checkRoomCapacity(Room room, Long studentId) {
+        Room actual = roomRepository.findById(room.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Room not found"));
+        long current = studentRepository.countByRoom_Id(room.getId());
+        if (studentId != null) {
+            studentRepository.findById(studentId).ifPresent(existing -> {
+                if (existing.getRoom() != null && existing.getRoom().getId().equals(room.getId())) {
+                    current -= 1;
+                }
+            });
+        }
+        if (current >= actual.getCapacity()) {
+            throw new IllegalStateException("Room capacity exceeded");
+        }
     }
 
     public List<Room> getAllRooms() {

@@ -37,20 +37,28 @@ public class ContractService {
         return contractRepository.findById(id);
     }
 
-    private void checkRoomCapacity(Room room) {
+    private void checkRoomCapacity(Room room, Long studentId) {
         Room actual = roomRepository.findById(room.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Room not found"));
-        long current = contractRepository.countByRoom_IdAndStatus(room.getId(), "ACTIVE");
+        long current = studentRepository.countByRoom_Id(room.getId());
+        if (studentId != null) {
+            studentRepository.findById(studentId).ifPresent(existing -> {
+                if (existing.getRoom() != null && existing.getRoom().getId().equals(room.getId())) {
+                    current -= 1;
+                }
+            });
+        }
         if (current >= actual.getCapacity()) {
             throw new IllegalStateException("Room capacity exceeded");
         }
     }
 
     public Contract createContract(Contract contract) {
-        checkRoomCapacity(contract.getRoom());
-        // assign student to the selected room
-        contract.getStudent().setRoom(contract.getRoom());
-        studentRepository.save(contract.getStudent());
+        checkRoomCapacity(contract.getRoom(), contract.getStudent() != null ? contract.getStudent().getId() : null);
+        if (contract.getStudent() != null) {
+            contract.getStudent().setRoom(contract.getRoom());
+            studentRepository.save(contract.getStudent());
+        }
         return contractRepository.save(contract);
     }
 
@@ -58,12 +66,14 @@ public class ContractService {
         Contract existing = contractRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Contract not found"));
         if (!existing.getRoom().getId().equals(contract.getRoom().getId())) {
-            checkRoomCapacity(contract.getRoom());
+            checkRoomCapacity(contract.getRoom(), contract.getStudent() != null ? contract.getStudent().getId() : null);
         }
         existing.setStudent(contract.getStudent());
         existing.setRoom(contract.getRoom());
-        contract.getStudent().setRoom(contract.getRoom());
-        studentRepository.save(contract.getStudent());
+        if (contract.getStudent() != null) {
+            contract.getStudent().setRoom(contract.getRoom());
+            studentRepository.save(contract.getStudent());
+        }
         existing.setStartDate(contract.getStartDate());
         existing.setEndDate(contract.getEndDate());
         existing.setStatus(contract.getStatus());
