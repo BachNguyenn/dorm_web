@@ -34,7 +34,7 @@ public class ContractService {
     }
 
     private void checkRoomCapacity(Room room) {
-        int current = studentRepository.findByRoom_Id(room.getId()).size();
+        long current = contractRepository.countByRoom_Id(room.getId());
         if (current >= room.getCapacity()) {
             throw new IllegalStateException("Room capacity exceeded");
         }
@@ -42,6 +42,9 @@ public class ContractService {
 
     public Contract createContract(Contract contract) {
         checkRoomCapacity(contract.getRoom());
+        // assign student to the selected room
+        contract.getStudent().setRoom(contract.getRoom());
+        studentRepository.save(contract.getStudent());
         return contractRepository.save(contract);
     }
 
@@ -53,6 +56,8 @@ public class ContractService {
         }
         existing.setStudent(contract.getStudent());
         existing.setRoom(contract.getRoom());
+        contract.getStudent().setRoom(contract.getRoom());
+        studentRepository.save(contract.getStudent());
         existing.setStartDate(contract.getStartDate());
         existing.setEndDate(contract.getEndDate());
         existing.setStatus(contract.getStatus());

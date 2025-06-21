@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label for="studentSearch">Tìm SV</label>
                 <input type="text" id="studentSearch" name="studentSearch" th:value="${studentSearch}">
-                <button type="submit" formaction="@{/contracts/new}">Lọc</button>
+                <button type="submit" formaction="@{/contracts/new}" formmethod="get">Lọc</button>
             </div>
             <div class="form-group">
                 <label for="student">Sinh Viên</label>

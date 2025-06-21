@@ -11,4 +11,8 @@ import org.springframework.data.domain.Pageable;
 public interface ContractRepository extends JpaRepository<Contract, Long> {
     Page<Contract> findByStudent_CodeContainingIgnoreCaseOrStudent_NameContainingIgnoreCaseOrRoom_NumberContainingIgnoreCaseOrStatusContainingIgnoreCase(
             String code, String studentName, String roomNumber, String status, Pageable pageable);
+
+    java.util.List<Contract> findByRoom_Id(Long roomId);
+
+    long countByRoom_Id(Long roomId);
 }

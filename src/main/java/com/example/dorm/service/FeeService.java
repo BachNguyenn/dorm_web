@@ -48,8 +48,21 @@ public class FeeService {
         if (search == null || search.trim().isEmpty()) {
             return feeRepository.findAll(pageable);
         }
+        // try to match fee type
+        FeeType type = null;
+        for (FeeType t : FeeType.values()) {
+            if (t.name().equalsIgnoreCase(search)) {
+                type = t;
+                break;
+            }
+        }
+        if (type != null) {
+            return feeRepository
+                    .findByTypeOrContract_Student_CodeContainingIgnoreCaseOrContract_Student_NameContainingIgnoreCase(
+                            type, search, search, pageable);
+        }
         return feeRepository
-                .findByContract_Student_CodeContainingIgnoreCaseOrContract_Student_NameContainingIgnoreCaseOrTypeContainingIgnoreCase(
-                        search, search, search, pageable);
+                .findByContract_Student_CodeContainingIgnoreCaseOrContract_Student_NameContainingIgnoreCase(
+                        search, search, pageable);
     }
 }
