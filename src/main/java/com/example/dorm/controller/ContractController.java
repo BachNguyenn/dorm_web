@@ -41,13 +41,9 @@ public class ContractController {
     }
 
     @GetMapping("/new")
-    public String showCreateForm(@RequestParam(value = "studentSearch", required = false) String studentSearch,
-                                 Model model) {
+    public String showCreateForm(Model model) {
         try {
             model.addAttribute("contract", new Contract());
-            var students = studentService.searchStudents(studentSearch, org.springframework.data.domain.Pageable.unpaged());
-            model.addAttribute("students", students.getContent());
-            model.addAttribute("studentSearch", studentSearch);
             model.addAttribute("rooms", roomService.getAllRooms());
             return "contracts/form";
         } catch (Exception e) {
@@ -59,7 +55,6 @@ public class ContractController {
     @PostMapping
     public String createContract(@Valid @ModelAttribute Contract contract, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("students", studentService.getAllStudents(org.springframework.data.domain.Pageable.unpaged()).getContent());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "contracts/form";
         }
@@ -95,7 +90,6 @@ public class ContractController {
             Optional<Contract> contractOptional = contractService.getContract(id);
             if (contractOptional.isPresent()) {
                 model.addAttribute("contract", contractOptional.get());
-                model.addAttribute("students", studentService.getAllStudents(org.springframework.data.domain.Pageable.unpaged()).getContent());
                 model.addAttribute("rooms", roomService.getAllRooms());
                 return "contracts/form";
             } else {
@@ -111,7 +105,6 @@ public class ContractController {
     @PostMapping("/{id}")
     public String updateContract(@PathVariable("id") Long id, @Valid @ModelAttribute Contract contract, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("students", studentService.getAllStudents(org.springframework.data.domain.Pageable.unpaged()).getContent());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "contracts/form";
         }

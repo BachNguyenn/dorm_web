@@ -130,5 +130,18 @@ public class StudentController {
         }
     }
 
+    @GetMapping(value = "/search", produces = "application/json")
+    @ResponseBody
+    public java.util.List<java.util.Map<String, Object>> autocomplete(@RequestParam("term") String term) {
+        var pageable = org.springframework.data.domain.PageRequest.of(0, 10);
+        var studentsPage = studentService.searchStudents(term, pageable);
+        return studentsPage.getContent().stream().map(s -> {
+            var map = new java.util.HashMap<String, Object>();
+            map.put("id", s.getId());
+            map.put("label", s.getCode() + " - " + s.getName());
+            return map;
+        }).toList();
+    }
+
     // search handled by listStudents
 }
