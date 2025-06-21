@@ -7,6 +7,8 @@ D:\OOP\dorm_web\src\main\java\com\example\dorm\controller\StudentController.java
 D:\OOP\dorm_web\src\main\java\com\example\dorm\DormApplication.java
 D:\OOP\dorm_web\src\main\java\com\example\dorm\model\Contract.java
 D:\OOP\dorm_web\src\main\java\com\example\dorm\model\Fee.java
+D:\OOP\dorm_web\src\main\java\com\example\dorm\model\FeeType.java
+D:\OOP\dorm_web\src\main\java\com\example\dorm\model\PaymentStatus.java
 D:\OOP\dorm_web\src\main\java\com\example\dorm\model\Room.java
 D:\OOP\dorm_web\src\main\java\com\example\dorm\model\Student.java
 D:\OOP\dorm_web\src\main\java\com\example\dorm\repository\ContractRepository.java
