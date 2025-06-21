@@ -9,6 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -33,10 +36,11 @@ class StudentServiceTest {
     @Test
     void searchStudentsEmptyReturnsAll() {
         List<Student> all = Collections.singletonList(new Student());
-        when(studentRepository.findAll()).thenReturn(all);
-        List<Student> result = studentService.searchStudents("");
-        assertEquals(1, result.size());
-        verify(studentRepository).findAll();
+        Page<Student> page = new PageImpl<>(all);
+        when(studentRepository.findAll(any(Pageable.class))).thenReturn(page);
+        Page<Student> result = studentService.searchStudents("", Pageable.unpaged());
+        assertEquals(1, result.getTotalElements());
+        verify(studentRepository).findAll(any(Pageable.class));
     }
 
     @Test
@@ -45,12 +49,12 @@ class StudentServiceTest {
         match1.setName("test");
         Student match2 = new Student();
         match2.setName("Test Nguyen");
-        Student other = new Student();
-        other.setName("example");
-        List<Student> all = Arrays.asList(match1, match2, other);
-        when(studentRepository.findAll()).thenReturn(all);
-        List<Student> result = studentService.searchStudents("test");
-        assertEquals(2, result.size());
-        verify(studentRepository).findAll();
+        List<Student> list = Arrays.asList(match1, match2);
+        Page<Student> page = new PageImpl<>(list);
+        when(studentRepository.searchByCodeOrNameWord(eq("test"), any(Pageable.class)))
+                .thenReturn(page);
+        Page<Student> result = studentService.searchStudents("test", Pageable.unpaged());
+        assertEquals(2, result.getContent().size());
+        verify(studentRepository).searchByCodeOrNameWord(eq("test"), any(Pageable.class));
     }
 }

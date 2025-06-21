@@ -3,6 +3,10 @@ package com.example.dorm.controller;
 import com.example.dorm.model.Student;
 import com.example.dorm.service.RoomService;
 import com.example.dorm.service.StudentService;
+import com.example.dorm.service.ContractService;
+import com.example.dorm.model.Contract;
+import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Optional;
 
@@ -20,10 +24,19 @@ public class StudentController {
     @Autowired
     private RoomService roomService;
 
+    @Autowired
+    private ContractService contractService;
+
     @GetMapping
-    public String listStudents(Model model) {
+    public String listStudents(@RequestParam(value = "search", required = false) String search,
+                               @RequestParam(name = "page", defaultValue = "0") int page,
+                               @RequestParam(name = "size", defaultValue = "10") int size,
+                               Model model) {
         try {
-            model.addAttribute("students", studentService.getAllStudents());
+            var pageable = org.springframework.data.domain.PageRequest.of(page, size);
+            var studentsPage = studentService.searchStudents(search, pageable);
+            model.addAttribute("studentsPage", studentsPage);
+            model.addAttribute("search", search);
             return "students/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tải danh sách sinh viên: " + e.getMessage());
@@ -44,9 +57,25 @@ public class StudentController {
     }
 
     @PostMapping
-    public String createStudent(@ModelAttribute Student student, Model model) {
+    public String createStudent(
+            @ModelAttribute Student student,
+            @RequestParam(value = "contractStartDate", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate contractStartDate,
+            @RequestParam(value = "contractEndDate", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate contractEndDate,
+            @RequestParam(value = "contractStatus", required = false) String contractStatus,
+            Model model) {
         try {
-            studentService.saveStudent(student);
+            var saved = studentService.saveStudent(student);
+            if (student.getRoom() != null && contractStartDate != null && contractEndDate != null) {
+                Contract c = new Contract();
+                c.setStudent(saved);
+                c.setRoom(saved.getRoom());
+                c.setStartDate(contractStartDate);
+                c.setEndDate(contractEndDate);
+                c.setStatus(contractStatus != null ? contractStatus : "ACTIVE");
+                contractService.createContract(c);
+            }
             return "redirect:/students";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tạo sinh viên: " + e.getMessage());
@@ -55,7 +84,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public String viewStudent(@PathVariable Long id, Model model) {
+    public String viewStudent(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Student> studentOptional = studentService.getStudent(id);
             if (studentOptional.isPresent()) {
@@ -72,7 +101,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdateForm(@PathVariable Long id, Model model) {
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Student> studentOptional = studentService.getStudent(id);
             if (studentOptional.isPresent()) {
@@ -90,7 +119,7 @@ public class StudentController {
     }
 
     @PostMapping("/{id}")
-    public String updateStudent(@PathVariable Long id, @ModelAttribute Student student, Model model) {
+    public String updateStudent(@PathVariable("id") Long id, @ModelAttribute Student student, Model model) {
         try {
             Optional<Student> studentOptional = studentService.getStudent(id);
             if (studentOptional.isPresent()) {
@@ -108,7 +137,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteStudent(@PathVariable Long id, Model model) {
+    public String deleteStudent(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Student> studentOptional = studentService.getStudent(id);
             if (studentOptional.isPresent()) {
@@ -124,15 +153,18 @@ public class StudentController {
         }
     }
 
-    @GetMapping("/search")
-    public String searchStudents(@RequestParam("search") String search, Model model) {
-        try {
-            model.addAttribute("students", studentService.searchStudents(search));
-            model.addAttribute("search", search);
-            return "students/list";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm sinh viên: " + e.getMessage());
-            return "error";
-        }
+    @GetMapping(value = "/search", produces = "application/json")
+    @ResponseBody
+    public java.util.List<java.util.Map<String, Object>> autocomplete(@RequestParam("term") String term) {
+        var pageable = org.springframework.data.domain.PageRequest.of(0, 10);
+        var studentsPage = studentService.searchStudents(term, pageable);
+        return studentsPage.getContent().stream().map(s -> {
+            java.util.Map<String, Object> map = new java.util.HashMap<>();
+            map.put("id", s.getId());
+            map.put("label", s.getCode() + " - " + s.getName());
+            return map;
+        }).toList();
     }
+
+    // search handled by listStudents
 }

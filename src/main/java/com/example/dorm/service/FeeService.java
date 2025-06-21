@@ -5,6 +5,8 @@ import com.example.dorm.model.FeeType;
 import com.example.dorm.repository.FeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +17,8 @@ public class FeeService {
     @Autowired
     private FeeRepository feeRepository;
 
-    public List<Fee> getAllFees() {
-        return feeRepository.findAll();
+    public Page<Fee> getAllFees(Pageable pageable) {
+        return feeRepository.findAll(pageable);
     }
 
     public Optional<Fee> getFee(Long id) {
@@ -42,20 +44,25 @@ public class FeeService {
         feeRepository.deleteById(id);
     }
 
-    public List<Fee> searchFees(String search) {
+    public Page<Fee> searchFees(String search, Pageable pageable) {
         if (search == null || search.trim().isEmpty()) {
-            return feeRepository.findAll();
+            return feeRepository.findAll(pageable);
         }
-        try {
-            Long id = Long.parseLong(search.trim());
-            return feeRepository.findById(id).map(java.util.List::of).orElse(java.util.List.of());
-        } catch (NumberFormatException e) {
-            try {
-                FeeType type = FeeType.valueOf(search.trim().toUpperCase());
-                return feeRepository.findByType(type);
-            } catch (IllegalArgumentException ex) {
-                return java.util.List.of();
+        // try to match fee type
+        FeeType type = null;
+        for (FeeType t : FeeType.values()) {
+            if (t.name().equalsIgnoreCase(search)) {
+                type = t;
+                break;
             }
         }
+        if (type != null) {
+            return feeRepository
+                    .findByTypeOrContract_Student_CodeContainingIgnoreCaseOrContract_Student_NameContainingIgnoreCase(
+                            type, search, search, pageable);
+        }
+        return feeRepository
+                .findByContract_Student_CodeContainingIgnoreCaseOrContract_Student_NameContainingIgnoreCase(
+                        search, search, pageable);
     }
 }

@@ -13,7 +13,7 @@
         <div class="container">
         <h2>Danh Sách Phí</h2>
         <div class="search-container">
-            <form th:action="@{/fees/search}" method="get">
+            <form th:action="@{/fees}" method="get">
                 <input type="text" name="search" placeholder="Tìm kiếm phí..." th:value="${search}">
                 <button type="submit">Tìm kiếm</button>
             </form>
@@ -24,6 +24,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Hợp Đồng</th>
+                    <th>Mã SV</th>
                     <th>Sinh Viên</th>
                     <th>Phòng</th>
                     <th>SĐT</th>
@@ -33,9 +34,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="fee : ${fees}" class="table-row">
+                <tr th:each="fee : ${feesPage.content}" class="table-row">
                     <td th:text="${fee.id}"></td>
                     <td th:text="${fee.contract.id}"></td>
+                    <td th:text="${fee.contract.student.code}"></td>
                     <td th:text="${fee.contract.student.name}"></td>
                     <td th:text="${fee.contract.room.number}"></td>
                     <td th:text="${fee.contract.student.phone}"></td>
@@ -49,6 +51,11 @@
                 </tr>
             </tbody>
         </table>
+        <div class="pagination">
+            <a th:if="${feesPage.number > 0}" th:href="@{/fees(page=${feesPage.number-1},size=${feesPage.size},search=${search})}">Trước</a>
+            <span th:text="${feesPage.number + 1}"></span>/<span th:text="${feesPage.totalPages}"></span>
+            <a th:if="${feesPage.number + 1 < feesPage.totalPages}" th:href="@{/fees(page=${feesPage.number+1},size=${feesPage.size},search=${search})}">Sau</a>
+        </div>
         </div>
     </div>
 </body>

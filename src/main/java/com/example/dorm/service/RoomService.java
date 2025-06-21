@@ -5,6 +5,8 @@ import com.example.dorm.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +15,10 @@ public class RoomService {
 
     @Autowired
     private RoomRepository roomRepository;
+
+    public Page<Room> getAllRooms(Pageable pageable) {
+        return roomRepository.findAll(pageable);
+    }
 
     public List<Room> getAllRooms() {
         return roomRepository.findAll();
@@ -44,10 +50,10 @@ public class RoomService {
         roomRepository.deleteById(id);
     }
 
-    public List<Room> searchRooms(String search) {
+    public Page<Room> searchRooms(String search, Pageable pageable) {
         if (search == null || search.trim().isEmpty()) {
-            return roomRepository.findAll();
+            return roomRepository.findAll(pageable);
         }
-        return roomRepository.findByNumberContainingIgnoreCaseOrTypeContainingIgnoreCase(search, search);
+        return roomRepository.findByNumberContainingIgnoreCaseOrTypeContainingIgnoreCase(search, search, pageable);
     }
 }

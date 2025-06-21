@@ -24,9 +24,15 @@ public class ContractController {
     private RoomService roomService;
 
     @GetMapping
-    public String listContracts(Model model) {
+    public String listContracts(@RequestParam(value = "search", required = false) String search,
+                                @RequestParam(name = "page", defaultValue = "0") int page,
+                                @RequestParam(name = "size", defaultValue = "10") int size,
+                                Model model) {
         try {
-            model.addAttribute("contracts", contractService.getAllContracts());
+            var pageable = org.springframework.data.domain.PageRequest.of(page, size);
+            var contractsPage = contractService.searchContracts(search, pageable);
+            model.addAttribute("contractsPage", contractsPage);
+            model.addAttribute("search", search);
             return "contracts/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi lấy danh sách hợp đồng: " + e.getMessage());
@@ -38,7 +44,6 @@ public class ContractController {
     public String showCreateForm(Model model) {
         try {
             model.addAttribute("contract", new Contract());
-            model.addAttribute("students", studentService.getAllStudents());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "contracts/form";
         } catch (Exception e) {
@@ -50,8 +55,12 @@ public class ContractController {
     @PostMapping
     public String createContract(@Valid @ModelAttribute Contract contract, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("students", studentService.getAllStudents());
             model.addAttribute("rooms", roomService.getAllRooms());
+            return "contracts/form";
+        }
+        if (contract.getStudent() == null || contract.getStudent().getId() == null) {
+            model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("errorMessage", "Vui lòng chọn sinh viên hợp lệ");
             return "contracts/form";
         }
         try {
@@ -64,7 +73,7 @@ public class ContractController {
     }
 
     @GetMapping("/{id}")
-    public String viewContract(@PathVariable Long id, Model model) {
+    public String viewContract(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Contract> contractOptional = contractService.getContract(id);
             if (contractOptional.isPresent()) {
@@ -81,12 +90,11 @@ public class ContractController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdateForm(@PathVariable Long id, Model model) {
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Contract> contractOptional = contractService.getContract(id);
             if (contractOptional.isPresent()) {
                 model.addAttribute("contract", contractOptional.get());
-                model.addAttribute("students", studentService.getAllStudents());
                 model.addAttribute("rooms", roomService.getAllRooms());
                 return "contracts/form";
             } else {
@@ -100,10 +108,14 @@ public class ContractController {
     }
 
     @PostMapping("/{id}")
-    public String updateContract(@PathVariable Long id, @Valid @ModelAttribute Contract contract, BindingResult result, Model model) {
+    public String updateContract(@PathVariable("id") Long id, @Valid @ModelAttribute Contract contract, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("students", studentService.getAllStudents());
             model.addAttribute("rooms", roomService.getAllRooms());
+            return "contracts/form";
+        }
+        if (contract.getStudent() == null || contract.getStudent().getId() == null) {
+            model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("errorMessage", "Vui lòng chọn sinh viên hợp lệ");
             return "contracts/form";
         }
         try {
@@ -116,7 +128,7 @@ public class ContractController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteContract(@PathVariable Long id, Model model) {
+    public String deleteContract(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Contract> contractOptional = contractService.getContract(id);
             if (contractOptional.isPresent()) {
@@ -132,15 +144,5 @@ public class ContractController {
         }
     }
 
-    @GetMapping("/search")
-    public String searchContracts(@RequestParam("search") String search, Model model) {
-        try {
-            model.addAttribute("contracts", contractService.searchContracts(search));
-            model.addAttribute("search", search);
-            return "contracts/list";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm hợp đồng: " + e.getMessage());
-            return "error";
-        }
-    }
+    // search handled by listContracts
 }

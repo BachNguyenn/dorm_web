@@ -16,9 +16,15 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping
-    public String listRooms(Model model) {
+    public String listRooms(@RequestParam(value = "search", required = false) String search,
+                            @RequestParam(name = "page", defaultValue = "0") int page,
+                            @RequestParam(name = "size", defaultValue = "10") int size,
+                            Model model) {
         try {
-            model.addAttribute("rooms", roomService.getAllRooms());
+            var pageable = org.springframework.data.domain.PageRequest.of(page, size);
+            var roomsPage = roomService.searchRooms(search, pageable);
+            model.addAttribute("roomsPage", roomsPage);
+            model.addAttribute("search", search);
             return "rooms/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tải danh sách phòng: " + e.getMessage());
@@ -54,7 +60,7 @@ public class RoomController {
     }
 
     @GetMapping("/{id}")
-    public String viewRoom(@PathVariable Long id, Model model) {
+    public String viewRoom(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {
@@ -71,7 +77,7 @@ public class RoomController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdateForm(@PathVariable Long id, Model model) {
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {
@@ -88,7 +94,7 @@ public class RoomController {
     }
 
     @PostMapping("/{id}")
-    public String updateRoom(@PathVariable Long id, @ModelAttribute Room room, Model model) {
+    public String updateRoom(@PathVariable("id") Long id, @ModelAttribute Room room, Model model) {
         try {
             Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {
@@ -105,7 +111,7 @@ public class RoomController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteRoom(@PathVariable Long id, Model model) {
+    public String deleteRoom(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {
@@ -121,15 +127,5 @@ public class RoomController {
         }
     }
 
-    @GetMapping("/search")
-    public String searchRooms(@RequestParam("search") String search, Model model) {
-        try {
-            model.addAttribute("rooms", roomService.searchRooms(search));
-            model.addAttribute("search", search);
-            return "rooms/list";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm phòng: " + e.getMessage());
-            return "error";
-        }
-    }
+    // search handled by listRooms
 }

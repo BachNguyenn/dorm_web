@@ -21,9 +21,15 @@ public class FeeController {
     private ContractService contractService;
 
     @GetMapping
-    public String listFees(Model model) {
+    public String listFees(@RequestParam(value = "search", required = false) String search,
+                           @RequestParam(name = "page", defaultValue = "0") int page,
+                           @RequestParam(name = "size", defaultValue = "10") int size,
+                           Model model) {
         try {
-            model.addAttribute("fees", feeService.getAllFees());
+            var pageable = org.springframework.data.domain.PageRequest.of(page, size);
+            var feesPage = feeService.searchFees(search, pageable);
+            model.addAttribute("feesPage", feesPage);
+            model.addAttribute("search", search);
             return "fees/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi lấy danh sách phí: " + e.getMessage());
@@ -35,7 +41,7 @@ public class FeeController {
     public String showCreateForm(Model model) {
         try {
             model.addAttribute("fee", new Fee());
-            model.addAttribute("contracts", contractService.getAllContracts());
+            model.addAttribute("contracts", contractService.getAllContracts(org.springframework.data.domain.Pageable.unpaged()).getContent());
             return "fees/form";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi hiển thị form tạo phí: " + e.getMessage());
@@ -48,7 +54,7 @@ public class FeeController {
                             @Valid @ModelAttribute Fee fee,
                             BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("contracts", contractService.getAllContracts());
+            model.addAttribute("contracts", contractService.getAllContracts(org.springframework.data.domain.Pageable.unpaged()).getContent());
             return "fees/form";
         }
         try {
@@ -62,7 +68,7 @@ public class FeeController {
     }
 
     @GetMapping("/{id}")
-    public String viewFee(@PathVariable Long id, Model model) {
+    public String viewFee(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Fee> feeOptional = feeService.getFee(id);
             if (feeOptional.isPresent()) {
@@ -79,12 +85,12 @@ public class FeeController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdateForm(@PathVariable Long id, Model model) {
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Fee> feeOptional = feeService.getFee(id);
             if (feeOptional.isPresent()) {
                 model.addAttribute("fee", feeOptional.get());
-                model.addAttribute("contracts", contractService.getAllContracts());
+                model.addAttribute("contracts", contractService.getAllContracts(org.springframework.data.domain.Pageable.unpaged()).getContent());
                 return "fees/form";
             } else {
                 model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
@@ -97,12 +103,12 @@ public class FeeController {
     }
 
     @PostMapping("/{id}")
-    public String updateFee(@PathVariable Long id,
+    public String updateFee(@PathVariable("id") Long id,
                             @RequestParam("amountInput") String amountInput,
                             @Valid @ModelAttribute Fee fee,
                             BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("contracts", contractService.getAllContracts());
+            model.addAttribute("contracts", contractService.getAllContracts(org.springframework.data.domain.Pageable.unpaged()).getContent());
             return "fees/form";
         }
         try {
@@ -124,7 +130,7 @@ public class FeeController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteFee(@PathVariable Long id, Model model) {
+    public String deleteFee(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Fee> feeOptional = feeService.getFee(id);
             if (feeOptional.isPresent()) {
@@ -140,19 +146,5 @@ public class FeeController {
         }
     }
 
-    @GetMapping("/search")
-    public String searchFees(@RequestParam("search") String search, Model model) {
-        try {
-            java.util.List<Fee> results = feeService.searchFees(search);
-            model.addAttribute("fees", results);
-            model.addAttribute("search", search);
-            if (results.isEmpty() && search != null && !search.trim().isEmpty()) {
-                model.addAttribute("errorMessage", "Không tìm thấy phí phù hợp");
-            }
-            return "fees/list";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm phí: " + e.getMessage());
-            return "error";
-        }
-    }
+    // search handled by listFees
 }

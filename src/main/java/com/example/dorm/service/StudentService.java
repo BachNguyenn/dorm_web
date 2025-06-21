@@ -7,6 +7,8 @@ import com.example.dorm.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +21,9 @@ public class StudentService {
     @Autowired
     private RoomRepository roomRepository;
 
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+
+    public Page<Student> getAllStudents(Pageable pageable) {
+        return studentRepository.findAll(pageable);
     }
 
     public Optional<Student> getStudent(Long id) {
@@ -28,6 +31,9 @@ public class StudentService {
     }
 
     public Student saveStudent(Student student) {
+        if (student.getRoom() != null) {
+            checkRoomCapacity(student.getRoom(), student.getId());
+        }
         return studentRepository.save(student);
     }
 
@@ -35,15 +41,29 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public List<Student> searchStudents(String search) {
+    public Page<Student> searchStudents(String search, Pageable pageable) {
         if (search == null || search.trim().isEmpty()) {
-            return studentRepository.findAll();
+            return studentRepository.findAll(pageable);
         }
-        String term = search.trim().toLowerCase();
-        return studentRepository.findAll().stream()
-                .filter(s -> java.util.Arrays.stream(s.getName().split("\\s+"))
-                        .anyMatch(w -> w.equalsIgnoreCase(term)))
-                .collect(java.util.stream.Collectors.toList());
+        return studentRepository.searchByCodeOrNameWord(search, pageable);
+    }
+
+    private void checkRoomCapacity(Room room, Long studentId) {
+        Room actual = roomRepository.findById(room.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Room not found"));
+        long current = studentRepository.countByRoom_Id(room.getId());
+        if (studentId != null) {
+            Optional<Student> existingOpt = studentRepository.findById(studentId);
+            if (existingOpt.isPresent()) {
+                Student existing = existingOpt.get();
+                if (existing.getRoom() != null && existing.getRoom().getId().equals(room.getId())) {
+                    current -= 1;
+                }
+            }
+        }
+        if (current >= actual.getCapacity()) {
+            throw new IllegalStateException("Room capacity exceeded");
+        }
     }
 
     public List<Room> getAllRooms() {
