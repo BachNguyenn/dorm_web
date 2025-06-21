@@ -3,6 +3,10 @@ package com.example.dorm.controller;
 import com.example.dorm.model.Student;
 import com.example.dorm.service.RoomService;
 import com.example.dorm.service.StudentService;
+import com.example.dorm.service.ContractService;
+import com.example.dorm.model.Contract;
+import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Optional;
 
@@ -19,6 +23,9 @@ public class StudentController {
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private ContractService contractService;
 
     @GetMapping
     public String listStudents(@RequestParam(value = "search", required = false) String search,
@@ -50,9 +57,25 @@ public class StudentController {
     }
 
     @PostMapping
-    public String createStudent(@ModelAttribute Student student, Model model) {
+    public String createStudent(
+            @ModelAttribute Student student,
+            @RequestParam(value = "contractStartDate", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate contractStartDate,
+            @RequestParam(value = "contractEndDate", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate contractEndDate,
+            @RequestParam(value = "contractStatus", required = false) String contractStatus,
+            Model model) {
         try {
-            studentService.saveStudent(student);
+            var saved = studentService.saveStudent(student);
+            if (student.getRoom() != null && contractStartDate != null && contractEndDate != null) {
+                Contract c = new Contract();
+                c.setStudent(saved);
+                c.setRoom(saved.getRoom());
+                c.setStartDate(contractStartDate);
+                c.setEndDate(contractEndDate);
+                c.setStatus(contractStatus != null ? contractStatus : "ACTIVE");
+                contractService.createContract(c);
+            }
             return "redirect:/students";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tạo sinh viên: " + e.getMessage());
