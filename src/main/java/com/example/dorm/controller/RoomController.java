@@ -17,8 +17,8 @@ public class RoomController {
 
     @GetMapping
     public String listRooms(@RequestParam(value = "search", required = false) String search,
-                            @RequestParam(defaultValue = "0") int page,
-                            @RequestParam(defaultValue = "10") int size,
+                            @RequestParam(name = "page", defaultValue = "0") int page,
+                            @RequestParam(name = "size", defaultValue = "10") int size,
                             Model model) {
         try {
             var pageable = org.springframework.data.domain.PageRequest.of(page, size);
