@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <td class="label">Số Tiền:</td>
-                <td class="value" th:text="${fee.amount}"></td>
+                <td class="value" th:text="${T(java.lang.String).format('%,d', fee.amount.intValue()).replace(',', '.')}" ></td>
             </tr>
             <tr>
                 <td class="label">Ngày Đáo Hạn:</td>

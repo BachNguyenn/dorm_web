@@ -33,7 +33,9 @@
             </div>
             <div class="form-group">
                 <label for="amount">Số Tiền</label>
-                <input type="number" id="amount" th:field="*{amount}" step="0.01" required>
+                <input type="text" id="amount" name="amountInput"
+                       th:value="${fee.amount != null ? T(java.lang.String).format('%,d', fee.amount.intValue()).replace(',', '.') : ''}"
+                       required>
             </div>
             <div class="form-group">
                 <label for="dueDate">Ngày Đáo Hạn</label>

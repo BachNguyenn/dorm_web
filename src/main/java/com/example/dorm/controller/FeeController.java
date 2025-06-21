@@ -44,12 +44,15 @@ public class FeeController {
     }
 
     @PostMapping
-    public String createFee(@Valid @ModelAttribute Fee fee, BindingResult result, Model model) {
+    public String createFee(@RequestParam("amountInput") String amountInput,
+                            @Valid @ModelAttribute Fee fee,
+                            BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("contracts", contractService.getAllContracts());
             return "fees/form";
         }
         try {
+            fee.setAmount(parseAmount(amountInput));
             feeService.createFee(fee);
             return "redirect:/fees";
         } catch (Exception e) {
@@ -94,18 +97,30 @@ public class FeeController {
     }
 
     @PostMapping("/{id}")
-    public String updateFee(@PathVariable Long id, @Valid @ModelAttribute Fee fee, BindingResult result, Model model) {
+    public String updateFee(@PathVariable Long id,
+                            @RequestParam("amountInput") String amountInput,
+                            @Valid @ModelAttribute Fee fee,
+                            BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("contracts", contractService.getAllContracts());
             return "fees/form";
         }
         try {
+            fee.setAmount(parseAmount(amountInput));
             feeService.updateFee(id, fee);
             return "redirect:/fees";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi cập nhật phí: " + e.getMessage());
             return "error";
         }
+    }
+
+    private java.math.BigDecimal parseAmount(String input) {
+        if (input == null || input.isBlank()) {
+            return java.math.BigDecimal.ZERO;
+        }
+        String normalized = input.replace(".", "");
+        return new java.math.BigDecimal(normalized);
     }
 
     @GetMapping("/{id}/delete")
@@ -128,24 +143,12 @@ public class FeeController {
     @GetMapping("/search")
     public String searchFees(@RequestParam("search") String search, Model model) {
         try {
-            if (search == null || search.trim().isEmpty()) {
-                model.addAttribute("fees", feeService.getAllFees());
-            } else {
-                try {
-                    Long id = Long.parseLong(search);
-                    Optional<Fee> feeOptional = feeService.getFee(id);
-                    if (feeOptional.isPresent()) {
-                        model.addAttribute("fees", java.util.List.of(feeOptional.get()));
-                    } else {
-                        model.addAttribute("fees", java.util.Collections.emptyList());
-                        model.addAttribute("errorMessage", "Không tìm thấy phí với ID: " + id);
-                    }
-                } catch (NumberFormatException e) {
-                    model.addAttribute("fees", java.util.Collections.emptyList());
-                    model.addAttribute("errorMessage", "Vui lòng nhập ID hợp lệ (số).");
-                }
-            }
+            java.util.List<Fee> results = feeService.searchFees(search);
+            model.addAttribute("fees", results);
             model.addAttribute("search", search);
+            if (results.isEmpty() && search != null && !search.trim().isEmpty()) {
+                model.addAttribute("errorMessage", "Không tìm thấy phí phù hợp");
+            }
             return "fees/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tìm kiếm phí: " + e.getMessage());
