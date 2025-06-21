@@ -4,6 +4,7 @@ import com.example.dorm.model.Contract;
 import com.example.dorm.model.Room;
 import com.example.dorm.repository.ContractRepository;
 import com.example.dorm.repository.StudentRepository;
+import com.example.dorm.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,9 @@ public class ContractService {
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private RoomRepository roomRepository;
+
     public Page<Contract> getAllContracts(Pageable pageable) {
         return contractRepository.findAll(pageable);
     }
@@ -34,8 +38,10 @@ public class ContractService {
     }
 
     private void checkRoomCapacity(Room room) {
-        long current = contractRepository.countByRoom_Id(room.getId());
-        if (current >= room.getCapacity()) {
+        Room actual = roomRepository.findById(room.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Room not found"));
+        long current = contractRepository.countByRoom_IdAndStatus(room.getId(), "ACTIVE");
+        if (current >= actual.getCapacity()) {
             throw new IllegalStateException("Room capacity exceeded");
         }
     }

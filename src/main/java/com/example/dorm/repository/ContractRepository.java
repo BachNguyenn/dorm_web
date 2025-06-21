@@ -15,4 +15,6 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     java.util.List<Contract> findByRoom_Id(Long roomId);
 
     long countByRoom_Id(Long roomId);
+
+    long countByRoom_IdAndStatus(Long roomId, String status);
 }

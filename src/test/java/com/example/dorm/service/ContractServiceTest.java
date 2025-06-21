@@ -5,6 +5,7 @@ import com.example.dorm.model.Room;
 import com.example.dorm.model.Student;
 import com.example.dorm.repository.ContractRepository;
 import com.example.dorm.repository.StudentRepository;
+import com.example.dorm.repository.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -24,6 +25,9 @@ class ContractServiceTest {
     private ContractRepository contractRepository;
     @Mock
     private StudentRepository studentRepository;
+    @Mock
+    private RoomRepository roomRepository;
+
     @InjectMocks
     private ContractService contractService;
 
@@ -37,9 +41,12 @@ class ContractServiceTest {
         Room room = new Room();
         room.setId(1L);
         room.setCapacity(1);
-        when(studentRepository.findByRoom_Id(1L)).thenReturn(List.of(new Student()));
+        when(roomRepository.findById(1L)).thenReturn(Optional.of(room));
+        when(contractRepository.countByRoom_IdAndStatus(1L, "ACTIVE")).thenReturn(1L);
         Contract contract = new Contract();
         contract.setRoom(room);
+        Student s = new Student();
+        contract.setStudent(s);
         assertThrows(IllegalStateException.class, () -> contractService.createContract(contract));
     }
 
@@ -54,10 +61,12 @@ class ContractServiceTest {
         existing.setId(10L);
         existing.setRoom(oldRoom);
         when(contractRepository.findById(10L)).thenReturn(Optional.of(existing));
-        when(studentRepository.findByRoom_Id(2L)).thenReturn(Collections.singletonList(new Student()));
+        when(roomRepository.findById(2L)).thenReturn(Optional.of(newRoom));
+        when(contractRepository.countByRoom_IdAndStatus(2L, "ACTIVE")).thenReturn(1L);
 
         Contract update = new Contract();
         update.setRoom(newRoom);
+        update.setStudent(new Student());
         assertThrows(IllegalStateException.class, () -> contractService.updateContract(10L, update));
     }
 }
