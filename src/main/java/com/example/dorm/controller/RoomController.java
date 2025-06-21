@@ -60,7 +60,7 @@ public class RoomController {
     }
 
     @GetMapping("/{id}")
-    public String viewRoom(@PathVariable Long id, Model model) {
+    public String viewRoom(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {
@@ -77,7 +77,7 @@ public class RoomController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdateForm(@PathVariable Long id, Model model) {
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {
@@ -94,7 +94,7 @@ public class RoomController {
     }
 
     @PostMapping("/{id}")
-    public String updateRoom(@PathVariable Long id, @ModelAttribute Room room, Model model) {
+    public String updateRoom(@PathVariable("id") Long id, @ModelAttribute Room room, Model model) {
         try {
             Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {
@@ -111,7 +111,7 @@ public class RoomController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteRoom(@PathVariable Long id, Model model) {
+    public String deleteRoom(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Room> roomOptional = roomService.getRoom(id);
             if (roomOptional.isPresent()) {

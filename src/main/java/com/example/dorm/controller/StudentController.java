@@ -61,7 +61,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public String viewStudent(@PathVariable Long id, Model model) {
+    public String viewStudent(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Student> studentOptional = studentService.getStudent(id);
             if (studentOptional.isPresent()) {
@@ -78,7 +78,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdateForm(@PathVariable Long id, Model model) {
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Student> studentOptional = studentService.getStudent(id);
             if (studentOptional.isPresent()) {
@@ -96,7 +96,7 @@ public class StudentController {
     }
 
     @PostMapping("/{id}")
-    public String updateStudent(@PathVariable Long id, @ModelAttribute Student student, Model model) {
+    public String updateStudent(@PathVariable("id") Long id, @ModelAttribute Student student, Model model) {
         try {
             Optional<Student> studentOptional = studentService.getStudent(id);
             if (studentOptional.isPresent()) {
@@ -114,7 +114,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteStudent(@PathVariable Long id, Model model) {
+    public String deleteStudent(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Student> studentOptional = studentService.getStudent(id);
             if (studentOptional.isPresent()) {

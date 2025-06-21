@@ -68,7 +68,7 @@ public class FeeController {
     }
 
     @GetMapping("/{id}")
-    public String viewFee(@PathVariable Long id, Model model) {
+    public String viewFee(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Fee> feeOptional = feeService.getFee(id);
             if (feeOptional.isPresent()) {
@@ -85,7 +85,7 @@ public class FeeController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdateForm(@PathVariable Long id, Model model) {
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Fee> feeOptional = feeService.getFee(id);
             if (feeOptional.isPresent()) {
@@ -103,7 +103,7 @@ public class FeeController {
     }
 
     @PostMapping("/{id}")
-    public String updateFee(@PathVariable Long id,
+    public String updateFee(@PathVariable("id") Long id,
                             @RequestParam("amountInput") String amountInput,
                             @Valid @ModelAttribute Fee fee,
                             BindingResult result, Model model) {
@@ -130,7 +130,7 @@ public class FeeController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteFee(@PathVariable Long id, Model model) {
+    public String deleteFee(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Fee> feeOptional = feeService.getFee(id);
             if (feeOptional.isPresent()) {

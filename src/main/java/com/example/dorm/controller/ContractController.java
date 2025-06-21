@@ -73,7 +73,7 @@ public class ContractController {
     }
 
     @GetMapping("/{id}")
-    public String viewContract(@PathVariable Long id, Model model) {
+    public String viewContract(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Contract> contractOptional = contractService.getContract(id);
             if (contractOptional.isPresent()) {
@@ -90,7 +90,7 @@ public class ContractController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showUpdateForm(@PathVariable Long id, Model model) {
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Contract> contractOptional = contractService.getContract(id);
             if (contractOptional.isPresent()) {
@@ -109,7 +109,7 @@ public class ContractController {
     }
 
     @PostMapping("/{id}")
-    public String updateContract(@PathVariable Long id, @Valid @ModelAttribute Contract contract, BindingResult result, Model model) {
+    public String updateContract(@PathVariable("id") Long id, @Valid @ModelAttribute Contract contract, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("students", studentService.getAllStudents(org.springframework.data.domain.Pageable.unpaged()).getContent());
             model.addAttribute("rooms", roomService.getAllRooms());
@@ -125,7 +125,7 @@ public class ContractController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteContract(@PathVariable Long id, Model model) {
+    public String deleteContract(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Contract> contractOptional = contractService.getContract(id);
             if (contractOptional.isPresent()) {
