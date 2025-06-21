@@ -42,11 +42,13 @@ public class ContractService {
                 .orElseThrow(() -> new IllegalArgumentException("Room not found"));
         long current = studentRepository.countByRoom_Id(room.getId());
         if (studentId != null) {
-            studentRepository.findById(studentId).ifPresent(existing -> {
+            Optional<com.example.dorm.model.Student> existingOpt = studentRepository.findById(studentId);
+            if (existingOpt.isPresent()) {
+                com.example.dorm.model.Student existing = existingOpt.get();
                 if (existing.getRoom() != null && existing.getRoom().getId().equals(room.getId())) {
                     current -= 1;
                 }
-            });
+            }
         }
         if (current >= actual.getCapacity()) {
             throw new IllegalStateException("Room capacity exceeded");
