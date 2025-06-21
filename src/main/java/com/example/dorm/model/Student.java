@@ -1,4 +1,3 @@
-// Entity: Student
 package com.example.dorm.model;
 
 import jakarta.persistence.*;

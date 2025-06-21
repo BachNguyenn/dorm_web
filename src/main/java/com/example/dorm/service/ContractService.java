@@ -57,9 +57,12 @@ public class ContractService {
 
     public Contract createContract(Contract contract) {
         checkRoomCapacity(contract.getRoom(), contract.getStudent() != null ? contract.getStudent().getId() : null);
-        if (contract.getStudent() != null) {
-            contract.getStudent().setRoom(contract.getRoom());
-            studentRepository.save(contract.getStudent());
+        if (contract.getStudent() != null && contract.getStudent().getId() != null) {
+            var student = studentRepository.findById(contract.getStudent().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Student not found"));
+            student.setRoom(contract.getRoom());
+            studentRepository.save(student);
+            contract.setStudent(student);
         }
         return contractRepository.save(contract);
     }
@@ -70,12 +73,16 @@ public class ContractService {
         if (!existing.getRoom().getId().equals(contract.getRoom().getId())) {
             checkRoomCapacity(contract.getRoom(), contract.getStudent() != null ? contract.getStudent().getId() : null);
         }
-        existing.setStudent(contract.getStudent());
-        existing.setRoom(contract.getRoom());
-        if (contract.getStudent() != null) {
-            contract.getStudent().setRoom(contract.getRoom());
-            studentRepository.save(contract.getStudent());
+        if (contract.getStudent() != null && contract.getStudent().getId() != null) {
+            var student = studentRepository.findById(contract.getStudent().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Student not found"));
+            student.setRoom(contract.getRoom());
+            studentRepository.save(student);
+            existing.setStudent(student);
+        } else {
+            existing.setStudent(null);
         }
+        existing.setRoom(contract.getRoom());
         existing.setStartDate(contract.getStartDate());
         existing.setEndDate(contract.getEndDate());
         existing.setStatus(contract.getStatus());

@@ -1,5 +1,3 @@
-// Repository: StudentRepository
-
 package com.example.dorm.repository;
 
 import com.example.dorm.model.Student;
