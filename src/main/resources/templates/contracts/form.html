@@ -14,10 +14,15 @@
         <h2 th:text="${contract.id} ? 'Sửa Hợp Đồng' : 'Thêm Hợp Đồng'"></h2>
         <form th:action="${contract.id} ? @{/contracts/{id}(id=${contract.id})} : @{/contracts}" th:object="${contract}" method="post">
             <div class="form-group">
+                <label for="studentSearch">Tìm SV</label>
+                <input type="text" id="studentSearch" name="studentSearch" th:value="${studentSearch}">
+                <button type="submit" formaction="@{/contracts/new}">Lọc</button>
+            </div>
+            <div class="form-group">
                 <label for="student">Sinh Viên</label>
                 <!-- Chọn sinh viên -->
                 <select id="student" th:field="*{student.id}" required>
-                    <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
+                    <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.code + ' - ' + student.name}"></option>
                 </select>
             </div>
             <div class="form-group">

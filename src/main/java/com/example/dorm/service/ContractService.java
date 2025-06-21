@@ -7,6 +7,8 @@ import com.example.dorm.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,10 @@ public class ContractService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    public Page<Contract> getAllContracts(Pageable pageable) {
+        return contractRepository.findAll(pageable);
+    }
 
     public List<Contract> getAllContracts() {
         return contractRepository.findAll();
@@ -57,12 +63,12 @@ public class ContractService {
         contractRepository.deleteById(id);
     }
 
-    public List<Contract> searchContracts(String search) {
+    public Page<Contract> searchContracts(String search, Pageable pageable) {
         if (search == null || search.trim().isEmpty()) {
-            return contractRepository.findAll();
+            return contractRepository.findAll(pageable);
         }
         return contractRepository
-                .findByStudent_NameContainingIgnoreCaseOrRoom_NumberContainingIgnoreCaseOrStatusContainingIgnoreCase(
-                        search, search, search);
+                .findByStudent_CodeContainingIgnoreCaseOrStudent_NameContainingIgnoreCaseOrRoom_NumberContainingIgnoreCaseOrStatusContainingIgnoreCase(
+                        search, search, search, search, pageable);
     }
 }

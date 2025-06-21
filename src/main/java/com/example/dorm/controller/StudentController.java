@@ -21,9 +21,15 @@ public class StudentController {
     private RoomService roomService;
 
     @GetMapping
-    public String listStudents(Model model) {
+    public String listStudents(@RequestParam(value = "search", required = false) String search,
+                               @RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "10") int size,
+                               Model model) {
         try {
-            model.addAttribute("students", studentService.getAllStudents());
+            var pageable = org.springframework.data.domain.PageRequest.of(page, size);
+            var studentsPage = studentService.searchStudents(search, pageable);
+            model.addAttribute("studentsPage", studentsPage);
+            model.addAttribute("search", search);
             return "students/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tải danh sách sinh viên: " + e.getMessage());
@@ -124,15 +130,5 @@ public class StudentController {
         }
     }
 
-    @GetMapping("/search")
-    public String searchStudents(@RequestParam("search") String search, Model model) {
-        try {
-            model.addAttribute("students", studentService.searchStudents(search));
-            model.addAttribute("search", search);
-            return "students/list";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm sinh viên: " + e.getMessage());
-            return "error";
-        }
-    }
+    // search handled by listStudents
 }

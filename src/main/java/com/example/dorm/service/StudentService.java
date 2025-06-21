@@ -7,6 +7,8 @@ import com.example.dorm.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +21,9 @@ public class StudentService {
     @Autowired
     private RoomRepository roomRepository;
 
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+
+    public Page<Student> getAllStudents(Pageable pageable) {
+        return studentRepository.findAll(pageable);
     }
 
     public Optional<Student> getStudent(Long id) {
@@ -35,15 +38,12 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public List<Student> searchStudents(String search) {
+    public Page<Student> searchStudents(String search, Pageable pageable) {
         if (search == null || search.trim().isEmpty()) {
-            return studentRepository.findAll();
+            return studentRepository.findAll(pageable);
         }
-        String term = search.trim().toLowerCase();
-        return studentRepository.findAll().stream()
-                .filter(s -> java.util.Arrays.stream(s.getName().split("\\s+"))
-                        .anyMatch(w -> w.equalsIgnoreCase(term)))
-                .collect(java.util.stream.Collectors.toList());
+        return studentRepository
+                .findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(search, search, pageable);
     }
 
     public List<Room> getAllRooms() {

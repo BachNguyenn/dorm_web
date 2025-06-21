@@ -24,9 +24,15 @@ public class ContractController {
     private RoomService roomService;
 
     @GetMapping
-    public String listContracts(Model model) {
+    public String listContracts(@RequestParam(value = "search", required = false) String search,
+                                @RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "10") int size,
+                                Model model) {
         try {
-            model.addAttribute("contracts", contractService.getAllContracts());
+            var pageable = org.springframework.data.domain.PageRequest.of(page, size);
+            var contractsPage = contractService.searchContracts(search, pageable);
+            model.addAttribute("contractsPage", contractsPage);
+            model.addAttribute("search", search);
             return "contracts/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi lấy danh sách hợp đồng: " + e.getMessage());
@@ -35,10 +41,13 @@ public class ContractController {
     }
 
     @GetMapping("/new")
-    public String showCreateForm(Model model) {
+    public String showCreateForm(@RequestParam(value = "studentSearch", required = false) String studentSearch,
+                                 Model model) {
         try {
             model.addAttribute("contract", new Contract());
-            model.addAttribute("students", studentService.getAllStudents());
+            var students = studentService.searchStudents(studentSearch, org.springframework.data.domain.Pageable.unpaged());
+            model.addAttribute("students", students.getContent());
+            model.addAttribute("studentSearch", studentSearch);
             model.addAttribute("rooms", roomService.getAllRooms());
             return "contracts/form";
         } catch (Exception e) {
@@ -50,7 +59,7 @@ public class ContractController {
     @PostMapping
     public String createContract(@Valid @ModelAttribute Contract contract, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("students", studentService.getAllStudents());
+            model.addAttribute("students", studentService.getAllStudents(org.springframework.data.domain.Pageable.unpaged()).getContent());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "contracts/form";
         }
@@ -86,7 +95,7 @@ public class ContractController {
             Optional<Contract> contractOptional = contractService.getContract(id);
             if (contractOptional.isPresent()) {
                 model.addAttribute("contract", contractOptional.get());
-                model.addAttribute("students", studentService.getAllStudents());
+                model.addAttribute("students", studentService.getAllStudents(org.springframework.data.domain.Pageable.unpaged()).getContent());
                 model.addAttribute("rooms", roomService.getAllRooms());
                 return "contracts/form";
             } else {
@@ -102,7 +111,7 @@ public class ContractController {
     @PostMapping("/{id}")
     public String updateContract(@PathVariable Long id, @Valid @ModelAttribute Contract contract, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("students", studentService.getAllStudents());
+            model.addAttribute("students", studentService.getAllStudents(org.springframework.data.domain.Pageable.unpaged()).getContent());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "contracts/form";
         }
@@ -132,15 +141,5 @@ public class ContractController {
         }
     }
 
-    @GetMapping("/search")
-    public String searchContracts(@RequestParam("search") String search, Model model) {
-        try {
-            model.addAttribute("contracts", contractService.searchContracts(search));
-            model.addAttribute("search", search);
-            return "contracts/list";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm hợp đồng: " + e.getMessage());
-            return "error";
-        }
-    }
+    // search handled by listContracts
 }

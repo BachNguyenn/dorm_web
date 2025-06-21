@@ -7,6 +7,7 @@ USE dormitory_db;
 -- Create the Student table
 CREATE TABLE student (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(50) UNIQUE,
     name VARCHAR(255) NOT NULL,
     dob DATE,
     gender ENUM('Nam', 'Nữ'), 
@@ -54,17 +55,17 @@ CREATE TABLE fee (
 -- Note: Indexes for foreign keys (student_id, room_id, contract_id) are automatically created by MySQL
 
 -- Insert sample data into Student table (đã đổi số điện thoại sang bắt đầu bằng 0)
-INSERT INTO student (name, dob, gender, phone, address, email, department, year) VALUES
-('Nguyễn Văn An', '2005-03-15', 'Nam', '0912345678', 'Hà Nội', 'an.nguyen@example.com', 'Công nghệ Thông tin', 3),
-('Trần Thị Bình', '2005-07-22', 'Nữ', '0987654321', 'Nình Bình', 'binh.tran@example.com', 'Kinh tế', 2),
-('Lê Minh Châu', '2003-11-30', 'Nam', '0911223344', 'Nghệ An', 'chau.le@example.com', 'Kỹ thuật Điện', 4),
-('Phạm Quốc Đạt', '2004-05-10', 'Nam', '0933445566', 'Thái Nguyên', 'dat.pham@example.com', 'Kỹ thuật Ô tô', 3),
-('Hoàng Thị Mai', '2005-09-25', 'Nữ', '0955667788', 'Thanh Hóa', 'mai.hoang@example.com', 'Tâm lý học', 2),
-('Nguyễn Văn Hùng', '2004-08-05', 'Nam', '0999887766', 'Hải Phòng', 'hung.nguyen@example.com', 'Sư phạm Toán', 3),
-('Trần Thị Lan', '2003-10-10', 'Nữ', '0988776655', 'Đà Nẵng', 'lan.tran@example.com', 'Kỹ thuật phần mềm', 4),
-('Lê Văn Nam', '2005-04-20', 'Nam', '0977665544', 'Hồ Chí Minh', 'nam.le@example.com', 'Khoa học Máy tính', 2),
-('Phạm Thị Oanh', '2004-09-30', 'Nữ', '0966544433', 'Cần Thơ', 'oanh.pham@example.com', 'Ngôn ngữ Anh', 3),
-('Nguyễn Văn Quân', '2003-10-10', 'Nam', '0955443322', 'Bắc Ninh', 'quan.nguyen@example.com', 'Quản trị Kinh doanh', 4);
+INSERT INTO student (code, name, dob, gender, phone, address, email, department, year) VALUES
+('SV01','Nguyễn Văn An', '2005-03-15', 'Nam', '0912345678', 'Hà Nội', 'an.nguyen@example.com', 'Công nghệ Thông tin', 3),
+('SV02','Trần Thị Bình', '2005-07-22', 'Nữ', '0987654321', 'Nình Bình', 'binh.tran@example.com', 'Kinh tế', 2),
+('SV03','Lê Minh Châu', '2003-11-30', 'Nam', '0911223344', 'Nghệ An', 'chau.le@example.com', 'Kỹ thuật Điện', 4),
+('SV04','Phạm Quốc Đạt', '2004-05-10', 'Nam', '0933445566', 'Thái Nguyên', 'dat.pham@example.com', 'Kỹ thuật Ô tô', 3),
+('SV05','Hoàng Thị Mai', '2005-09-25', 'Nữ', '0955667788', 'Thanh Hóa', 'mai.hoang@example.com', 'Tâm lý học', 2),
+('SV06','Nguyễn Văn Hùng', '2004-08-05', 'Nam', '0999887766', 'Hải Phòng', 'hung.nguyen@example.com', 'Sư phạm Toán', 3),
+('SV07','Trần Thị Lan', '2003-10-10', 'Nữ', '0988776655', 'Đà Nẵng', 'lan.tran@example.com', 'Kỹ thuật phần mềm', 4),
+('SV08','Lê Văn Nam', '2005-04-20', 'Nam', '0977665544', 'Hồ Chí Minh', 'nam.le@example.com', 'Khoa học Máy tính', 2),
+('SV09','Phạm Thị Oanh', '2004-09-30', 'Nữ', '0966544433', 'Cần Thơ', 'oanh.pham@example.com', 'Ngôn ngữ Anh', 3),
+('SV10','Nguyễn Văn Quân', '2003-10-10', 'Nam', '0955443322', 'Bắc Ninh', 'quan.nguyen@example.com', 'Quản trị Kinh doanh', 4);
 
 -- Insert sample data into Room table
 INSERT INTO room (number, type, capacity, price) VALUES

@@ -441,3 +441,13 @@ h2 {
     color: var(--text-primary);
 }
 
+.pagination {
+    margin-top: 1rem;
+    text-align: center;
+}
+.pagination a {
+    margin: 0 0.5rem;
+    text-decoration: none;
+    color: var(--primary-color);
+}
+

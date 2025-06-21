@@ -16,9 +16,15 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping
-    public String listRooms(Model model) {
+    public String listRooms(@RequestParam(value = "search", required = false) String search,
+                            @RequestParam(defaultValue = "0") int page,
+                            @RequestParam(defaultValue = "10") int size,
+                            Model model) {
         try {
-            model.addAttribute("rooms", roomService.getAllRooms());
+            var pageable = org.springframework.data.domain.PageRequest.of(page, size);
+            var roomsPage = roomService.searchRooms(search, pageable);
+            model.addAttribute("roomsPage", roomsPage);
+            model.addAttribute("search", search);
             return "rooms/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Lỗi khi tải danh sách phòng: " + e.getMessage());
@@ -121,15 +127,5 @@ public class RoomController {
         }
     }
 
-    @GetMapping("/search")
-    public String searchRooms(@RequestParam("search") String search, Model model) {
-        try {
-            model.addAttribute("rooms", roomService.searchRooms(search));
-            model.addAttribute("search", search);
-            return "rooms/list";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Lỗi khi tìm kiếm phòng: " + e.getMessage());
-            return "error";
-        }
-    }
+    // search handled by listRooms
 }
