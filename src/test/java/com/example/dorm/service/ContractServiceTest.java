@@ -69,4 +69,15 @@ class ContractServiceTest {
         update.setStudent(new Student());
         assertThrows(IllegalStateException.class, () -> contractService.updateContract(10L, update));
     }
+
+    @Test
+    void searchContractsUsesCustomQuery() {
+        org.springframework.data.domain.Page<Contract> page =
+                new org.springframework.data.domain.PageImpl<>(java.util.Collections.emptyList());
+        when(contractRepository.searchByStudentWordOrCodeOrRoomOrStatus(eq("An"), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+        var result = contractService.searchContracts("An", org.springframework.data.domain.Pageable.unpaged());
+        assertSame(page, result);
+        verify(contractRepository).searchByStudentWordOrCodeOrRoomOrStatus(eq("An"), any(org.springframework.data.domain.Pageable.class));
+    }
 }

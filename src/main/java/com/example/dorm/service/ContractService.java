@@ -98,7 +98,6 @@ public class ContractService {
             return contractRepository.findAll(pageable);
         }
         return contractRepository
-                .findByStudent_CodeContainingIgnoreCaseOrStudent_NameContainingIgnoreCaseOrRoom_NumberContainingIgnoreCaseOrStatusContainingIgnoreCase(
-                        search, search, search, search, pageable);
+                .searchByStudentWordOrCodeOrRoomOrStatus(search, pageable);
     }
 }

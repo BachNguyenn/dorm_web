@@ -37,4 +37,21 @@ class FeeServiceTest {
         assertNotNull(result);
         verify(feeRepository).save(existing);
     }
+
+    @Test
+    void searchFeesUsesCustomQueries() {
+        org.springframework.data.domain.Page<Fee> page =
+                new org.springframework.data.domain.PageImpl<>(java.util.Collections.emptyList());
+        when(feeRepository.searchByContractStudentWord(eq("An"), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+        var result = feeService.searchFees("An", org.springframework.data.domain.Pageable.unpaged());
+        assertSame(page, result);
+        verify(feeRepository).searchByContractStudentWord(eq("An"), any(org.springframework.data.domain.Pageable.class));
+
+        when(feeRepository.searchByTypeOrContractStudentWord(eq(com.example.dorm.model.FeeType.CLEANING), eq("CLEANING"), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+        result = feeService.searchFees("CLEANING", org.springframework.data.domain.Pageable.unpaged());
+        assertSame(page, result);
+        verify(feeRepository).searchByTypeOrContractStudentWord(eq(com.example.dorm.model.FeeType.CLEANING), eq("CLEANING"), any(org.springframework.data.domain.Pageable.class));
+    }
 }

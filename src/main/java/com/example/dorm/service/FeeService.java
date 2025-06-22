@@ -58,11 +58,9 @@ public class FeeService {
         }
         if (type != null) {
             return feeRepository
-                    .findByTypeOrContract_Student_CodeContainingIgnoreCaseOrContract_Student_NameContainingIgnoreCase(
-                            type, search, search, pageable);
+                    .searchByTypeOrContractStudentWord(type, search, pageable);
         }
         return feeRepository
-                .findByContract_Student_CodeContainingIgnoreCaseOrContract_Student_NameContainingIgnoreCase(
-                        search, search, pageable);
+                .searchByContractStudentWord(search, pageable);
     }
 }

@@ -16,4 +16,25 @@ public interface FeeRepository extends JpaRepository<Fee, Long> {
 
     Page<Fee> findByTypeOrContract_Student_CodeContainingIgnoreCaseOrContract_Student_NameContainingIgnoreCase(
             FeeType type, String code, String name, Pageable pageable);
+
+    @org.springframework.data.jpa.repository.Query("""
+            SELECT f FROM Fee f
+            WHERE lower(f.contract.student.code) LIKE lower(concat('%', :search, '%'))
+               OR lower(f.contract.student.name) = lower(:search)
+               OR lower(f.contract.student.name) LIKE lower(concat(:search, ' %'))
+               OR lower(f.contract.student.name) LIKE lower(concat('% ', :search))
+            """)
+    Page<Fee> searchByContractStudentWord(@org.springframework.data.repository.query.Param("search") String search, Pageable pageable);
+
+    @org.springframework.data.jpa.repository.Query("""
+            SELECT f FROM Fee f
+            WHERE f.type = :type
+               OR lower(f.contract.student.code) LIKE lower(concat('%', :search, '%'))
+               OR lower(f.contract.student.name) = lower(:search)
+               OR lower(f.contract.student.name) LIKE lower(concat(:search, ' %'))
+               OR lower(f.contract.student.name) LIKE lower(concat('% ', :search))
+            """)
+    Page<Fee> searchByTypeOrContractStudentWord(@org.springframework.data.repository.query.Param("type") FeeType type,
+                                                @org.springframework.data.repository.query.Param("search") String search,
+                                                Pageable pageable);
 }
