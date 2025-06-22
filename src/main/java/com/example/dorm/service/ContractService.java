@@ -100,4 +100,11 @@ public class ContractService {
         return contractRepository
                 .searchByStudentWordOrCodeOrRoomOrStatus(search, pageable);
     }
+
+    public Page<Contract> searchContractsAutocomplete(String search, Pageable pageable) {
+        if (search == null || search.trim().isEmpty()) {
+            return contractRepository.findAll(pageable);
+        }
+        return contractRepository.searchByIdOrStudentWord(search, pageable);
+    }
 }

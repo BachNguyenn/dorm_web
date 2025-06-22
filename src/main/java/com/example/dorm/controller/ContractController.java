@@ -144,5 +144,22 @@ public class ContractController {
         }
     }
 
+    @GetMapping(value = "/search", produces = "application/json")
+    @ResponseBody
+    public java.util.List<java.util.Map<String, Object>> autocomplete(@RequestParam("term") String term) {
+        var pageable = org.springframework.data.domain.PageRequest.of(0, 10);
+        var contractsPage = contractService.searchContractsAutocomplete(term, pageable);
+        return contractsPage.getContent().stream().map(c -> {
+            java.util.Map<String, Object> map = new java.util.HashMap<>();
+            map.put("id", c.getId());
+            if (c.getStudent() != null) {
+                map.put("label", c.getId() + " - " + c.getStudent().getCode() + " - " + c.getStudent().getName());
+            } else {
+                map.put("label", String.valueOf(c.getId()));
+            }
+            return map;
+        }).toList();
+    }
+
     // search handled by listContracts
 }
