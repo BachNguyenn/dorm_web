@@ -266,9 +266,9 @@ git clone https://github.com/BachNguyenn/dorm_web.git
 
 ---
 
-# 📋 10. Phân công công việc dự án Quản lý Ký túc xá
+## 📋 11. Phân công công việc dự án Quản lý Ký túc xá
 
-## 👥 Danh sách thành viên và phân công
+### 👥 Danh sách thành viên và phân công
 
 | 👤 **Thành viên**      | 🛠️ **Chức năng phụ trách**                                                                                                                                                                                               |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -279,25 +279,16 @@ git clone https://github.com/BachNguyenn/dorm_web.git
 
 ---
 
-## 📑 Mô tả đóng góp chính
+### 📑 Mô tả đóng góp chính
 
 * **Nguyễn Thành Dương**: Chịu trách nhiệm các chức năng backend và frontend liên quan đến quản lý sinh viên, dashboard, và cấu hình hệ thống.
 * **Lê Duy Thái Dương**: Phụ trách toàn bộ module phòng (room) cả backend lẫn frontend, đồng thời xử lý cấu hình, lỗi và sidebar.
 * **Nguyễn Tùng Bách**: Phát triển module phí và hợp đồng cả backend và frontend (giao diện, hình ảnh, style UI).
 * **Nguyễn Lệ Thu**: Giám sát, hướng dẫn, hỗ trợ kỹ thuật toàn bộ project.
 
-## 📊 Thống kê đóng góp (theo báo cáo)
+### 📊 Thống kê đóng góp (theo báo cáo)
 
 ---
-
-## 📦 Kết luận
-
-Phân công rõ ràng, các thành viên chủ động hoàn thành phần việc của mình và hỗ trợ nhóm, đảm bảo tiến độ chung của dự án quản lý ký túc xá.
-
-
----
-
-*📝 **Ghi chú:** Phân chia công việc dựa trên kiến trúc MVC và công nghệ Spring Boot + Thymeleaf được sử dụng trong dự án.*
 
 ## 📚 **Tài liệu tham khảo**
 
