@@ -32,4 +32,20 @@ class RoomServiceTest {
         Room saved = roomService.createRoom(room);
         assertEquals(2000000, saved.getPrice());
     }
+
+    @Test
+    void updateRoomKeepsExistingTypeAndPrice() {
+        Room existing = new Room();
+        existing.setId(1L);
+        existing.setType("Phòng tám");
+        existing.setPrice(1200000);
+        when(roomRepository.findById(1L)).thenReturn(java.util.Optional.of(existing));
+        when(roomRepository.save(any(Room.class))).thenAnswer(i -> i.getArgument(0));
+
+        Room update = new Room();
+        update.setNumber("N2");
+        Room result = roomService.updateRoom(1L, update);
+        assertEquals("Phòng tám", result.getType());
+        assertEquals(1200000, result.getPrice());
+    }
 }

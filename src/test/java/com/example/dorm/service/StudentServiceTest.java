@@ -57,4 +57,22 @@ class StudentServiceTest {
         assertEquals(2, result.getContent().size());
         verify(studentRepository).searchByCodeOrNameWord(eq("test"), any(Pageable.class));
     }
+
+    @Test
+    void saveStudentThrowsWhenRoomCapacityExceeded() {
+        com.example.dorm.model.Room room = new com.example.dorm.model.Room();
+        room.setId(5L);
+        room.setCapacity(1);
+        com.example.dorm.model.Student existing = new com.example.dorm.model.Student();
+        existing.setId(2L);
+        existing.setRoom(room);
+
+        when(roomRepository.findById(5L)).thenReturn(java.util.Optional.of(room));
+        when(studentRepository.countByRoom_Id(5L)).thenReturn(1L);
+
+        com.example.dorm.model.Student newStudent = new com.example.dorm.model.Student();
+        newStudent.setRoom(room);
+
+        assertThrows(IllegalStateException.class, () -> studentService.saveStudent(newStudent));
+    }
 }

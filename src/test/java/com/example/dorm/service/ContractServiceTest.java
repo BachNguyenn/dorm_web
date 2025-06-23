@@ -80,4 +80,27 @@ class ContractServiceTest {
         assertSame(page, result);
         verify(contractRepository).searchByStudentWordOrCodeOrRoomOrStatus(eq("An"), any(org.springframework.data.domain.Pageable.class));
     }
+
+    @Test
+    void createContractUpdatesStudentRoom() {
+        Room room = new Room();
+        room.setId(3L);
+        room.setCapacity(2);
+        Student student = new Student();
+        student.setId(11L);
+
+        when(roomRepository.findById(3L)).thenReturn(Optional.of(room));
+        when(studentRepository.countByRoom_Id(3L)).thenReturn(0L);
+        when(studentRepository.findById(11L)).thenReturn(Optional.of(student));
+        when(contractRepository.save(any(Contract.class))).thenAnswer(i -> i.getArgument(0));
+        when(studentRepository.save(any(Student.class))).thenAnswer(i -> i.getArgument(0));
+
+        Contract contract = new Contract();
+        contract.setRoom(room);
+        contract.setStudent(student);
+        Contract saved = contractService.createContract(contract);
+
+        assertSame(room, saved.getRoom());
+        assertSame(room, student.getRoom());
+    }
 }
