@@ -274,16 +274,18 @@ git clone https://github.com/BachNguyenn/dorm_web.git
 
 | 👤 **Thành viên** | 🛠️ **Chức năng phụ trách** |
 |:-----------------|:---------------------------|
-| **Nguyễn Tùng Bách** | Chức năng X, Y |
-| **Nguyễn Thành Dương** | Chức năng Z, kiểm thử,... |
-| **Lê Duy Thái Dương** | Chức năng ABCD |
-| **Nguyễn Lệ Thu** | Hướng dẫn, giảng dạy |
+| **Nguyễn Thành Dương** | **Backend Development:**<br/>• Student (model, controller, service, repository)<br/>• Dashboard controller<br/>• Application.properties configuration<br/><br/>**Frontend Development:**<br/>• Room templates<br/>• Fee templates<br/>• Error handling & fragment sidebar |
+| **Nguyễn Tùng Bách** | **Backend Development:**<br/>• Fee & Contract (model, controller, service, repository)<br/><br/>**Frontend Development:**<br/>• Style & CSS design<br/>• Images & UI assets |
+| **Lê Duy Thái Dương** | **Frontend Development:**<br/>• Student templates<br/>• Contract templates<br/>• Dashboard interface<br/>• Header fragment |
+| **Nguyễn Lệ Thu** | **Hướng dẫn & Giám sát:**<br/>• Hướng dẫn kỹ thuật<br/>• Review code<br/>• Giảng dạy và hỗ trợ nhóm |
 
-*📊 Đóng góp chi tiết: (theo báo cáo)*
+### **📊 Thống kê đóng góp** (THEO BÁO CÁO)
 
 </div>
 
 ---
+
+*📝 **Ghi chú:** Phân chia công việc dựa trên kiến trúc MVC và công nghệ Spring Boot + Thymeleaf được sử dụng trong dự án.*
 
 ## 📚 **Tài liệu tham khảo**
 
