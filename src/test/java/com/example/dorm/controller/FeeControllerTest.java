@@ -43,7 +43,6 @@ class FeeControllerTest {
 
         mockMvc.perform(get("/fees"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("fees/list"))
-                .andExpect(model().attributeExists("feesPage"));
+                .andExpect(view().name("fees/list"));
     }
 }

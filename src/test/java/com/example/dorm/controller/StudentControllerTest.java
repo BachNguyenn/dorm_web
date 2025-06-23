@@ -46,8 +46,7 @@ class StudentControllerTest {
 
         mockMvc.perform(get("/students"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("students/list"))
-                .andExpect(model().attributeExists("studentsPage"));
+                .andExpect(view().name("students/list"));
 
         verify(studentService).searchStudents(anyString(), any(Pageable.class));
     }

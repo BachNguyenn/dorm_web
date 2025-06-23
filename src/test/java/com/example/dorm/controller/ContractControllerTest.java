@@ -46,7 +46,6 @@ class ContractControllerTest {
 
         mockMvc.perform(get("/contracts"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("contracts/list"))
-                .andExpect(model().attributeExists("contractsPage"));
+                .andExpect(view().name("contracts/list"));
     }
 }

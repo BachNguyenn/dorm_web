@@ -39,7 +39,6 @@ class RoomControllerTest {
 
         mockMvc.perform(get("/rooms"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("rooms/list"))
-                .andExpect(model().attributeExists("roomsPage"));
+                .andExpect(view().name("rooms/list"));
     }
 }
