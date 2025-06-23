@@ -53,7 +53,12 @@
         </table>
         <div class="pagination">
             <a th:if="${contractsPage.number > 0}" th:href="@{/contracts(page=${contractsPage.number-1},size=${contractsPage.size},search=${search})}">Trước</a>
-            <span th:text="${contractsPage.number + 1}"></span>/<span th:text="${contractsPage.totalPages}"></span>
+            <span th:each="i : ${pageNumbers}">
+                <a th:href="@{/contracts(page=${i-1},size=${contractsPage.size},search=${search})}"
+                   th:text="${i}"
+                   th:classappend="${i-1 == contractsPage.number}? 'current'">
+                </a>
+            </span>
             <a th:if="${contractsPage.number + 1 < contractsPage.totalPages}" th:href="@{/contracts(page=${contractsPage.number+1},size=${contractsPage.size},search=${search})}">Sau</a>
         </div>
         </div>

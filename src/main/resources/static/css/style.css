@@ -487,3 +487,24 @@ h2 {
     cursor: pointer;
 }
 
+/* ======== PAGINATION ======== */
+.pagination {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+}
+
+.pagination a {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.pagination a.current {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+

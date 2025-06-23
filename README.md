@@ -189,6 +189,10 @@ graph TD
 
 ### 🔍 **Tính năng bổ sung:**
 - **🔎 Tìm kiếm, lọc, thống kê** (filter, search, statistics)
+- **↔️ Phân trang linh hoạt** với các nút số thứ tự và trước/sau để chuyển trang nhanh
+
+#### Cách hoạt động
+Backend sử dụng `Pageable` của Spring Data JPA để truy vấn đúng dữ liệu theo số trang được yêu cầu. Trên giao diện Thymeleaf, các số trang được lặp và tạo liên kết để người dùng nhảy trực tiếp đến trang bất kỳ.
 
 ### 🎯 **Hoạt động chính:**
 - **📝 Quản lý chu trình** từ đăng ký ở ký túc xá → tạo hợp đồng → phát sinh phí → thanh toán
