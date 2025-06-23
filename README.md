@@ -266,22 +266,34 @@ git clone https://github.com/BachNguyenn/dorm_web.git
 
 ---
 
-## 👥 11. Đóng góp & Phân chia công việc
+# 📋 10. Phân công công việc dự án Quản lý Ký túc xá
 
-<div align="center">
+## 👥 Danh sách thành viên và phân công
 
-### **🎯 Phân công theo chức năng**
+| 👤 **Thành viên**      | 🛠️ **Chức năng phụ trách**                                                                                                                                                                                               |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Nguyễn Thành Dương** | **Backend:**<br/>• Student (model, controller, service, repository)<br/>• Dashboard controller<br/>• application.properties<br/>**Frontend:**<br/>• Templates (student, contract)<br/>• Dashboard<br/>• Fragment (header) |
+| **Lê Duy Thái Dương**  | **Backend:**<br/>• Room (model, controller, service, repository)<br/>• Config<br/>• Exception handling<br/>**Frontend:**<br/>• Templates (room, fee)<br/>• Error templates<br/>• Fragment (sidebar)                       |
+| **Nguyễn Tùng Bách**   | **Backend:**<br/>• Fee & Contract (model, controller, service, repository)<br/>**Frontend:**<br/>• Style, Images                                                                                                          |
+| **Nguyễn Lệ Thu**      | **Hướng dẫn & Giám sát:**<br/>• Hướng dẫn kỹ thuật<br/>• Review code<br/>• Giảng dạy, hỗ trợ nhóm                                                                                                                         |
 
-| 👤 **Thành viên** | 🛠️ **Chức năng phụ trách** |
-|:-----------------|:---------------------------|
-| **Nguyễn Thành Dương** | **Backend Development:**<br/>• Student (model, controller, service, repository)<br/>• Dashboard controller<br/>• Application.properties configuration<br/><br/>**Frontend Development:**<br/>• Room templates<br/>• Fee templates<br/>• Error handling & fragment sidebar |
-| **Nguyễn Tùng Bách** | **Backend Development:**<br/>• Fee & Contract (model, controller, service, repository)<br/><br/>**Frontend Development:**<br/>• Style & CSS design<br/>• Images & UI assets |
-| **Lê Duy Thái Dương** | **Frontend Development:**<br/>• Student templates<br/>• Contract templates<br/>• Dashboard interface<br/>• Header fragment |
-| **Nguyễn Lệ Thu** | **Hướng dẫn & Giám sát:**<br/>• Hướng dẫn kỹ thuật<br/>• Review code<br/>• Giảng dạy và hỗ trợ nhóm |
+---
 
-### **📊 Thống kê đóng góp** (THEO BÁO CÁO)
+## 📑 Mô tả đóng góp chính
 
-</div>
+* **Nguyễn Thành Dương**: Chịu trách nhiệm các chức năng backend và frontend liên quan đến quản lý sinh viên, dashboard, và cấu hình hệ thống.
+* **Lê Duy Thái Dương**: Phụ trách toàn bộ module phòng (room) cả backend lẫn frontend, đồng thời xử lý cấu hình, lỗi và sidebar.
+* **Nguyễn Tùng Bách**: Phát triển module phí và hợp đồng cả backend và frontend (giao diện, hình ảnh, style UI).
+* **Nguyễn Lệ Thu**: Giám sát, hướng dẫn, hỗ trợ kỹ thuật toàn bộ project.
+
+## 📊 Thống kê đóng góp (theo báo cáo)
+
+---
+
+## 📦 Kết luận
+
+Phân công rõ ràng, các thành viên chủ động hoàn thành phần việc của mình và hỗ trợ nhóm, đảm bảo tiến độ chung của dự án quản lý ký túc xá.
+
 
 ---
 
