@@ -41,8 +41,8 @@
                     <td th:text="${contract.student.phone}"></td>
                     <td th:text="${contract.room.number}"></td>
                     <td th:text="${contract.student.department}"></td>
-                    <td th:text="${contract.room.price}"></td>
-                    <td th:text="${contract.startDate}"></td>
+                    <td th:text="${#numbers.formatDecimal(contract.room.price,0,0,',','.')}"></td>
+                    <td th:text="${#temporals.format(contract.startDate, 'dd/MM/yyyy')}"></td>
                     <td class="action-icons">
                         <a th:href="@{/contracts/{id}(id=${contract.id})}" class="view"><i class="fas fa-eye"></i></a>
                         <a th:href="@{/contracts/{id}/edit(id=${contract.id})}" class="edit"><i class="fas fa-edit"></i></a>
