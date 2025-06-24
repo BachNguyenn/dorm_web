@@ -4,6 +4,7 @@ import com.example.dorm.model.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Integration tests for {@link FeeRepository}.
  */
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class FeeRepositoryTest {
 
     @Autowired
