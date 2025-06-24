@@ -8,8 +8,8 @@ import com.example.dorm.service.StudentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import com.example.dorm.TestMockConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -25,17 +25,17 @@ import static org.mockito.Mockito.*;
  * Controller tests for {@link StudentController}.
  */
 @WebMvcTest(StudentController.class)
-@Import({SecurityConfig.class, TestMockConfig.class})
+@Import(SecurityConfig.class)
 class StudentControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
+    @MockBean
     private StudentService studentService;
-    @Autowired
+    @MockBean
     private RoomService roomService;
-    @Autowired
+    @MockBean
     private ContractService contractService;
 
     @Test
