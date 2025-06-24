@@ -32,7 +32,7 @@ class RoomRepositoryTest {
         r2.setType("Type2");
         roomRepository.save(r2);
 
-        Page<Room> result = roomRepository.findByNumberContainingIgnoreCaseOrTypeContainingIgnoreCase("A1", "", PageRequest.of(0,10));
+        Page<Room> result = roomRepository.findByNumberContainingIgnoreCaseOrTypeContainingIgnoreCase("A1", "Type1", PageRequest.of(0,10));
         assertEquals(1, result.getTotalElements());
         assertEquals("A1", result.getContent().get(0).getNumber());
     }

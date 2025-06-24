@@ -58,7 +58,7 @@
             <span th:each="i : ${pageNumbers}">
                 <a th:href="@{/students(page=${i-1},size=${studentsPage.size},search=${search})}"
                    th:text="${i}"
-                   th:classappend="${i-1 == studentsPage.number}? 'current'">
+                   th:classappend="${i-1 == studentsPage.number} ? 'current' : ''">
                 </a>
             </span>
             <a th:if="${studentsPage.number + 1 < studentsPage.totalPages}" th:href="@{/students(page=${studentsPage.number+1},size=${studentsPage.size},search=${search})}">Sau</a>

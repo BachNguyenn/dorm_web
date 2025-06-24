@@ -24,7 +24,7 @@ class StudentTest {
         s.setAddress("Street 1");
         s.setEmail("a@b.com");
         s.setDepartment("CS");
-        s.setYear(3);
+        s.setStudyYear(3);
         Room room = new Room();
         room.setId(10L);
         s.setRoom(room);
@@ -38,7 +38,7 @@ class StudentTest {
         assertEquals("Street 1", s.getAddress());
         assertEquals("a@b.com", s.getEmail());
         assertEquals("CS", s.getDepartment());
-        assertEquals(3, s.getYear());
+        assertEquals(3, s.getStudyYear());
         assertSame(room, s.getRoom());
         assertNotNull(s.toString());
     }
