@@ -19,15 +19,15 @@
             </tr>
             <tr>
                 <td class="label">Hợp Đồng:</td>
-                <td class="value" th:text="${fee.contract.id}"></td>
+                <td class="value" th:text="${fee.contract != null ? fee.contract.id : ''}"></td>
             </tr>
             <tr>
                 <td class="label">Mã SV:</td>
-                <td class="value" th:text="${fee.contract.student.code}"></td>
+                <td class="value" th:text="${fee.contract != null && fee.contract.student != null ? fee.contract.student.code : ''}"></td>
             </tr>
             <tr>
                 <td class="label">Sinh Viên:</td>
-                <td class="value" th:text="${fee.contract.student.name}"></td>
+                <td class="value" th:text="${fee.contract != null && fee.contract.student != null ? fee.contract.student.name : ''}"></td>
             </tr>
             <tr>
                 <td class="label">Loại Phí:</td>
