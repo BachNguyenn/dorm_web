@@ -41,7 +41,7 @@
                     <td th:text="${contract.student != null ? contract.student.phone : ''}"></td>
                     <td th:text="${contract.room != null ? contract.room.number : ''}"></td>
                     <td th:text="${contract.student != null ? contract.student.department : ''}"></td>
-                    <td th:text="${contract.room != null ? #numbers.formatDecimal(contract.room.price,0,0,',','.') : ''}"></td>
+                    <td th:text="${contract.room != null ? T(java.lang.String).format('%,d', contract.room.price).replace(',', '.') : ''}"></td>
                     <td th:text="${contract.startDate != null ? #temporals.format(contract.startDate, 'dd/MM/yyyy') : ''}"></td>
                     <td class="action-icons">
                         <a th:href="@{/contracts/{id}(id=${contract.id})}" class="view"><i class="fas fa-eye"></i></a>
