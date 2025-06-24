@@ -7,8 +7,8 @@ import com.example.dorm.service.FeeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import com.example.dorm.TestMockConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -25,15 +25,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Tests for {@link FeeController}.
  */
 @WebMvcTest(FeeController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, TestMockConfig.class})
 class FeeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
     private FeeService feeService;
-    @MockBean
+    @Autowired
     private ContractService contractService;
 
     @Test
