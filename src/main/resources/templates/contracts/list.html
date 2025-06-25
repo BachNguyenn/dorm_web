@@ -36,13 +36,13 @@
             <tbody>
                 <tr th:each="contract : ${contractsPage.content}" class="table-row">
                     <td th:text="${contract.id}"></td>
-                    <td th:text="${contract.student.code}"></td>
-                    <td th:text="${contract.student.name}"></td>
-                    <td th:text="${contract.student.phone}"></td>
-                    <td th:text="${contract.room.number}"></td>
-                    <td th:text="${contract.student.department}"></td>
-                    <td th:text="${#numbers.formatDecimal(contract.room.price,0,0,',','.')}"></td>
-                    <td th:text="${#temporals.format(contract.startDate, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${contract.student != null ? contract.student.code : ''}"></td>
+                    <td th:text="${contract.student != null ? contract.student.name : ''}"></td>
+                    <td th:text="${contract.student != null ? contract.student.phone : ''}"></td>
+                    <td th:text="${contract.room != null ? contract.room.number : ''}"></td>
+                    <td th:text="${contract.student != null ? contract.student.department : ''}"></td>
+                    <td th:text="${contract.room != null ? T(java.lang.String).format('%,d', contract.room.price).replace(',', '.') : ''}"></td>
+                    <td th:text="${contract.startDate != null ? #temporals.format(contract.startDate, 'dd/MM/yyyy') : ''}"></td>
                     <td class="action-icons">
                         <a th:href="@{/contracts/{id}(id=${contract.id})}" class="view"><i class="fas fa-eye"></i></a>
                         <a th:href="@{/contracts/{id}/edit(id=${contract.id})}" class="edit"><i class="fas fa-edit"></i></a>

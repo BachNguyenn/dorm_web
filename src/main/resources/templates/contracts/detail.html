@@ -19,23 +19,23 @@
             </tr>
             <tr>
                 <td class="label">Mã SV:</td>
-                <td class="value" th:text="${contract.student.code}"></td>
+                <td class="value" th:text="${contract.student != null ? contract.student.code : ''}"></td>
             </tr>
             <tr>
                 <td class="label">Sinh Viên:</td>
-                <td class="value" th:text="${contract.student.name}"></td>
+                <td class="value" th:text="${contract.student != null ? contract.student.name : ''}"></td>
             </tr>
             <tr>
                 <td class="label">Phòng:</td>
-                <td class="value" th:text="${contract.room.number}"></td>
+                <td class="value" th:text="${contract.room != null ? contract.room.number : ''}"></td>
             </tr>
             <tr>
                 <td class="label">Ngày Bắt Đầu:</td>
-                <td class="value" th:text="${#temporals.format(contract.startDate, 'dd/MM/yyyy')}"></td>
+                <td class="value" th:text="${contract.startDate != null ? #temporals.format(contract.startDate, 'dd/MM/yyyy') : ''}"></td>
             </tr>
             <tr>
                 <td class="label">Ngày Kết Thúc:</td>
-                <td class="value" th:text="${#temporals.format(contract.endDate, 'dd/MM/yyyy')}"></td>
+                <td class="value" th:text="${contract.endDate != null ? #temporals.format(contract.endDate, 'dd/MM/yyyy') : ''}"></td>
             </tr>
             <tr>
                 <td class="label">Trạng Thái:</td>
