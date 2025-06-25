@@ -563,4 +563,6 @@ flowchart TD
 
 [![Back to Top](https://img.shields.io/badge/⬆️_Back_to_Top-Click_Here-blue?style=for-the-badge)](#-oop_n01_term3_2025_k17_group9)
 
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/BachNguyenn/dorm_web?utm_source=oss&utm_medium=github&utm_campaign=BachNguyenn%2Fdorm_web&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+
 </div>
